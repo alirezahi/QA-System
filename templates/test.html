@@ -1,0 +1,108 @@
+{% extends 'main.html' %}
+{% block 'main-content' %}
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+    <i class="fas fa-table"></i>
+    Data Table Example</div>
+    <div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+            <th>Value</th>
+            <th>Item</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+            <th>Value</th>
+            <th>Item</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        {% for key, value in sample.items%}
+            <tr>
+                <td>{{value}}</td>
+                <td>{{key}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+<div class="pb-3">
+    <div class="card">
+        <div class="card-header">
+            Definition
+        </div>
+        <div class="card-body">
+            <div># ت( شمارش تعداد واژههای با بسامد ١ در هر متن </div>
+            <div>freq_1_count  </div>
+            <hr/>
+            <div># الف( شمارش تعداد حروف متن </div>
+            <div>char_count  </div>
+            <hr/>
+            <div># ب( شمارش تعداد واژههای با تکرار )type( در هر متن </div>
+            <div>type_count  </div>
+            <hr/>
+            <div># پ( شمارش تعداد واژههای بدون تکرار )token( در هر متن </div>
+            <div>token_count  </div>
+            <hr/>
+            <div># ث( شمارش تعداد جملههای در هر متن </div>
+            <div>sentence_count  </div>
+            <hr/>
+            <div># ج( محاسبه متوسط طول واژه در هر متن </div>
+            <div>average_word_len  </div>
+            <hr/>
+            <div># چ( محاسبه متوسط طول جمله در هر متن </div>
+            <div>average_sentence_len  </div>
+            <hr/>
+            <div># ح( محاسبه نسبت واژههای بدون تکرار به واژههای با تکرار در هر متن </div>
+            <div>token_count_to_type_count  </div>
+            <hr/>
+            <div># خ( محاسبه نسبت واژههای با بسامد ١ به واژههای با تکرار در هر متن </div>
+            <div>freq_1_count_to_type_count  </div>
+            <hr/>
+            <div># د( شمارش تعداد واژههای نقشی )مثل حرف اضافه و حرف ربط( در هر متن </div>
+            <div>word_naghshi_count  </div>
+            <hr/>
+            <div># ذ( شمارش تعداد واژههای محتوایی )مثل اسم و صفت و قید و فعل( در هر متن </div>
+            <div>word_mohtavai_count  </div>
+            <hr/>
+            <div># ر( محاسبه نسبت واژههای محتوایی به واژههای با تکرار در هر متن </div>
+            <div>word_mohtavai_count_to_type_count  </div>
+            <hr/>
+            <div># ز( محاسبه نسبت واژههای نقشی به واژههای با تکرار در هر متن </div>
+            <div>word_naghshi_freq_1_count  </div>
+            <hr/>
+            <div># ژ( محاسبه نسبت واژههای نقشی با بسامد ١ به واژههای با تکرار در هر متن </div>
+            <div>word_naghshi_freq_1_count_to_type_count  </div>
+            <hr/>
+            <div># س( محاسبه نسبت واژههای محتوایی با بسامد ١ به واژههای با تکرار در هر متن </div>
+            <div>word_bon_token_count  </div>
+            <hr/>
+            <div># ف( محاسبه متوسط هجای واژهها در هر متن </div>
+            <div>average_syllable_in_text  </div>
+            <hr/>
+            <div># ک( شمارش تعداد واژههای با تعداد هجای ١ </div>
+            <div>syllable_1_count  </div>
+            <hr/>
+            <div># گ( شمارش تعداد واژههای با تعداد هجای ٣ و بیشتر </div>
+            <div>syllable_3_more_count  </div>
+            <hr/>
+            <div># ل( محاسبه نسبت تعداد واژههای با تعداد هجای ١ به تعداد واژههای با تکرار در هر متن </div>
+            <div>syllable_1_count_to_type_count  </div>
+            <hr/>
+            <div># م( محاسبه نسبت تعداد واژههای با تعداد هجای ٣ و بیشتر به تعداد واژههای با تکرار در هر متن </div>
+            <div>syllable_3_more_count_to_type_count  </div>
+            <hr/>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

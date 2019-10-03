@@ -197,6 +197,40 @@ class Analyser():
     def f3(self):
         return (4.71 * (self.char_count / self.type_count))
 
+    def tojson(self):
+        summary = {}
+        
+        fields = ['freq_1_count',
+            'char_count',
+            'token_count',
+            'type_count',
+            'sentence_count',
+            'average_word_len',
+            'average_sentence_len',
+            'token_count_to_type_count',
+            'freq_1_count_to_type_count',
+            'word_naghshi_count',
+            'word_mohtavai_count',
+            'word_naghshi_count_to_type_count',
+            'word_mohtavai_count_to_type_count',
+            'word_naghshi_freq_1_count',
+            'word_mohtavai_freq_1_count',
+            'word_naghshi_freq_1_count_to_type_count',
+            'word_mohtavai_freq_1_count_to_type_count',
+            'word_bon_type_count',
+            'word_bon_token_count',
+            'average_syllable_in_text',
+            'syllable_1_count',
+            'syllable_3_more_count',
+            'syllable_1_count_to_type_count',
+            'syllable_3_more_count_to_type_count',
+        ]
+
+        for field in fields:
+            summary[field] = str(self.__dict__[field])
+            
+        return summary
+
     def __str__(self):
         summary = ''
         for index, row in self.words.iterrows():
@@ -242,3 +276,4 @@ words = pd.read_csv('./sampleInputToDBSmall.csv')
 a = Analyser(words)
 a.analyse()
 print(a)
+print(a.tojson())
