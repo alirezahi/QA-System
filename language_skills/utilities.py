@@ -272,7 +272,7 @@ class Analyser():
         return summary
         
 
-words = pd.read_csv('./sampleInputToDBSmall.csv')
+words = pd.read_csv('./sampleInputToDB.csv')
 a = Analyser(words)
 a.analyse()
 print(a)
