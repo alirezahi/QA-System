@@ -11,6 +11,8 @@ class Analyser():
     def __init__(self, words):
         self.words = words
         self.freq_dict = 0
+        self.freq_dict_bon = 0
+        self.freq_dict_dep = 0
         # ت( شمارش تعداد واژههای با بسامد ١ در هر متن
         self.freq_1_count = 0
         # الف( شمارش تعداد حروف متن
@@ -44,6 +46,11 @@ class Analyser():
         self.word_mohtavai_freq_1_count_to_type_count = 0
         self.word_bon_type_count = 0
         self.word_bon_token_count = 0
+        self.word_bon_type_count_to_type_count = 0
+        self.word_bon_token_count_to_type_count = 0
+        self.word_bon_freq_1_to_type_count = 0
+        self.ravabet_dastori_dar_tajziye_vabastegi = 0
+        self.grehaye_sakhtari_dar_tajzie_sazei = 0
         # ف( محاسبه متوسط هجای واژهها در هر متن
         self.average_syllable_in_text = 0
         # ک( شمارش تعداد واژههای با تعداد هجای ١
@@ -71,8 +78,13 @@ class Analyser():
             self.word_pos_count_to_type_count_analyse(posType)
             self.word_pos_freq_1_count_analyse(posType)
             self.word_pos_freq_1_count_to_type_count_analyse(posType)
-        # self.word_bon_type_count_analyse()
-        # self.word_bon_token_count_analyse()
+        self.word_bon_type_count_analyse()
+        self.word_bon_token_count_analyse()
+        self.word_bon_type_count_to_type_count_analyse()
+        self.word_bon_token_count_to_type_count_analyse()
+        self.word_bon_freq_1_to_type_count_analyse()
+        self.grehaye_sakhtari_dar_tajzie_sazei_analyse()
+        self.ravabet_dastori_dar_tajziye_vabastegi_analyse()
         self.average_syllable_in_text_analyse()
         self.syllable_1_count_analyse()
         self.syllable_3_more_count_analyse()
@@ -83,6 +95,8 @@ class Analyser():
 
     def freq_analyse(self):
         freq_dict = {}
+        freq_dict_bon = {}
+        freq_dict_dep = {}
         for index, row in self.words.iterrows():
             if not math.isnan(row['SentIndex']):
                 word = row['wordForm']
@@ -90,7 +104,19 @@ class Analyser():
                     freq_dict[word] = freq_dict[word]+1
                 else:
                     freq_dict[word] = 1
+                bon = row['Lemma']
+                if bon in freq_dict_bon:
+                    freq_dict_bon[bon] = freq_dict_bon[bon]+1
+                else:
+                    freq_dict_bon[bon] = 1
+                dep = row['DepType']
+                if dep in freq_dict_dep:
+                    freq_dict_dep[dep] = freq_dict_dep[dep]+1
+                else:
+                    freq_dict_dep[dep] = 1
         self.freq_dict = freq_dict
+        self.freq_dict_bon = freq_dict_bon
+        self.freq_dict_dep = freq_dict_dep
 
     def freq_1_analyse(self):
         self.freq_1_count = sum(value == 1 for value in self.freq_dict.values())
@@ -115,7 +141,7 @@ class Analyser():
         self.average_word_len = self.char_count / self.token_count
 
     def average_sentence_len_analyse(self):
-        self.average_sentence_len = self.char_count / self.sentence_count
+        self.average_sentence_len = self.token_count / self.sentence_count
 
     def token_count_to_type_count_analyse(self):
         self.token_count_to_type_count = self.token_count / self.type_count
@@ -145,19 +171,30 @@ class Analyser():
         self.__dict__['word_'+posType+'_freq_1_count_to_type_count'] = self.__dict__['word_'+posType+'_freq_1_count'] / self.type_count
     
     def word_bon_type_count_analyse(self):
-        words = set()
-        for index, row in self.words.iterrows():
-            if row['POS'] in posTypeDict['bon']:
-                words.add(row['wordForm'])
-        self.word_bon_type_count = len(words)
+        self.word_bon_type_count = len(self.freq_dict_bon)
 
     def word_bon_token_count_analyse(self):
-        count = 0
+        self.word_bon_token_count = sum(self.freq_dict.values())
+
+
+    def word_bon_type_count_to_type_count_analyse(self):
+        self.word_bon_type_count_to_type_count = self.word_bon_type_count / self.type_count
+
+    def word_bon_token_count_to_type_count_analyse(self):
+        self.word_bon_token_count_to_type_count = self.word_bon_token_count / self.type_count
+
+    def word_bon_freq_1_to_type_count_analyse(self):
+        self.word_bon_freq_1_to_type_count = sum(value == 1 for value in self.freq_dict_bon.values())
+
+    def ravabet_dastori_dar_tajziye_vabastegi_analyse(self):
+        self.ravabet_dastori_dar_tajziye_vabastegi = len(self.freq_dict_dep)
+
+    def grehaye_sakhtari_dar_tajzie_sazei_analyse(self):
+        result = 0
         for index, row in self.words.iterrows():
-            if row['POS'] in posTypeDict['bon']:
-                print(row['POS'], posTypeDict['bon'])
-                count += 1
-        self.word_bon_token_count = count
+            if not math.isnan(row['SentIndex']):
+                result += row['ConstituencyNumberOfNodes']
+        self.grehaye_sakhtari_dar_tajzie_sazei = result
 
     def average_syllable_in_text_analyse(self):
         result = 0
@@ -195,7 +232,7 @@ class Analyser():
         return 3.6363 + (0.1579 * (self.syllable_3_more_count / self.token_count)) + (0.496 * self.average_sentence_len)
     
     def f3(self):
-        return (4.71 * (self.char_count / self.type_count))
+        return (4.71 * (self.char_count / self.type_count)) + (0.5 * (self.type_count / self.sentence_count)) - 21.43
 
     def tojson(self):
         summary = {}
@@ -259,6 +296,11 @@ class Analyser():
             'word_mohtavai_freq_1_count_to_type_count',
             'word_bon_type_count',
             'word_bon_token_count',
+            'word_bon_type_count_to_type_count',
+            'word_bon_token_count_to_type_count',
+            'word_bon_freq_1_to_type_count',
+            'ravabet_dastori_dar_tajziye_vabastegi',
+            'grehaye_sakhtari_dar_tajzie_sazei',
             'average_syllable_in_text',
             'syllable_1_count',
             'syllable_3_more_count',
@@ -272,8 +314,8 @@ class Analyser():
         return summary
         
 
-words = pd.read_csv('./sampleInputToDB.csv')
+words = pd.read_csv('./sampleInputToDB-new.csv')
 a = Analyser(words)
 a.analyse()
 print(a)
-print(a.tojson())
+# print(a.tojson())
