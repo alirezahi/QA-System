@@ -1,5 +1,5 @@
 db.sqlite3
 PipFile
 .vscode
-*.pyc
-*.sqlite3
+**/*.pyc
+**/*.sqlite3
