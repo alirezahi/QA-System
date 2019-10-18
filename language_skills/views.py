@@ -78,6 +78,11 @@ class MCQuestionHistoryListTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'question/mc-history-list.html'
 
 
+class MCQuestionHistoryListTemplate1(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
+    template_name = 'question/mcc-question.html'
+
+
 class MCQuestionListTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'question/mc-list.html'

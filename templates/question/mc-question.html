@@ -84,8 +84,8 @@
                 <div class="p-2">';
         for(var i=0;i<question_choices[counter]['options'].length;i++){
             input_text_answers += '<div class="custom-control custom-radio custom-control-inline">\
-                            <input type="radio" id="customRadioInline'+(i)+'" name="'+(counter+1)+'" class="custom-control-input" value="'+question_choices[counter]['options'][i]+'"{% if answer_page %} disabled{% endif %} {% if answer_page %} '+answer_status(user_answers[counter].text, question_choices[counter]['options'][i])+'{% endif %}>\
-                            <label class="custom-control-label" for="customRadioInline'+(i)+'">'+question_choices[counter]['options'][i]+'</label>\
+                            <input type="radio" id="customRadioInline'+(counter*4+i)+'" name="'+(counter+1)+'" class="custom-control-input" value="'+question_choices[counter]['options'][i]+'"{% if answer_page %} disabled{% endif %} {% if answer_page %} '+answer_status(user_answers[counter].text, question_choices[counter]['options'][i])+'{% endif %}>\
+                            <label class="custom-control-label" for="customRadioInline'+(counter*4+i)+'">'+question_choices[counter]['options'][i]+'</label>\
                         </div>';
         }
         input_text_answers += '</div>';

@@ -26,6 +26,7 @@ urlpatterns = [
     # mc-questions
     path('mc/list', MCQuestionListTemplate.as_view()),
     path('mc/history-list', MCQuestionHistoryListTemplate.as_view()),
+    path('mc/mcc', MCQuestionHistoryListTemplate1.as_view()),
     path('mc/check-answers/<question_id>', check_answer_mc),
     path('mc/<question_id>', MCQuestionTemplate.as_view()),
 ]
