@@ -1,15 +1,72 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load templatetags_custom %}
 {% block 'main-content' %}
-        
-    <div class="text-right p-3 bg-light rounded">
-        سلام به <input type="text" class="v-question-input" placeholder="1"/> دوستان سلام به . اومدم که یک تستی رو انجام بدم. دوستان سلام به <input type="text" class="v-question-input" placeholder="3"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="4"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="5"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="6"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="7"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="8"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="9"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="10"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="11"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="12"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="13"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="14"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="15"/> دوستان سلام به <input type="text" class="v-question-input" placeholder="16"/> دوستان 
+    <form action="/question/v/check-answers/{{question.id}}" method="POST">
+    {% csrf_token %}
+        <div id="question-container" class="text-right p-3 bg-light rounded" >
+            
+        </div>
+        {% if not answer_page %}
+        <div class="text-center p-3">
+            <button class="btn btn-success">
+                ارسال پاسخ
+            </button>
+        </div>
+        {% endif %}
+    </form>
+    {% if answer_page %}
+    <div class="text-right mt-3">
+        <div class="alert alert-info text-center">
+            پاسخ‌ها
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for answer in answers %}
+            <li class="list-group-item">سوال {{answer.order}}: {{answer.text}}</li>
+            {% endfor %}
+        </ul>
     </div>
-    <div class="text-center p-3">
-        <button class="btn btn-success">
-            ارسال پاسخ
-        </button>
-    </div>
+    {% endif %}
 
 
+
+
+{% endblock %}
+{% block 'js-block' %}
+<script>
+    var text = '{{ question.text }}';
+    var reg = /&amp;&amp;__question__&amp;&amp;/g;
+    var result;
+    var counter = 0;
+
+    var answer_status = function(user_answer, answer){
+        return (user_answer === answer ? 'right-answer' : 'wrong-answer');
+    };
+    {% if answer_page %}
+    var answers = [
+        {% for answer in answers %}
+        {
+            order:{{answer.order}},
+            text:'{{answer.text}}',
+        },
+        {% endfor %}
+    ];
+    var user_answers = [
+        {% for answer in user_answers %}
+        {
+            order:{{answer.order}},
+            text:'{{answer.text}}',
+        },
+        {% endfor %}
+    ];
+    {% endif %}
+    while((result = reg.exec(text)) !== null) {
+        var input_text = '<input name="'+(counter+1)+'" type="text" class="v-question-input{% if answer_page %} '+answer_status(user_answers[counter].text, answers[counter].text)+'{% endif %}" placeholder="'+(counter+1)+'" {% if answer_page %}disabled value="'+user_answers[counter].text+'"{% endif %}/>';
+        text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
+        counter++;
+    }
+
+    
+    $('#question-container').html(text);
+</script>
 {% endblock %}

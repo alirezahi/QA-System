@@ -16,8 +16,10 @@ Including another URLconf
 from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('profile/', TemplateView.as_view(template_name='profile.html')),
+    path('dashboard/', TemplateView.as_view(template_name='profile.html')),
     path('login/', LoginView.as_view(redirect_authenticated_user=True)),
+    path('profile/', RedirectView.as_view(permanent=False, url='/accounts/dashboard')),
 ]

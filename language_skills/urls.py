@@ -13,18 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.views.generic import TemplateView
-from django.contrib.auth.views import LoginView, LogoutView
-from account.views import TestView
-
+from django.contrib.auth.views import LoginView
+from .views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('account.urls')),
-    path('question/', include('language_skills.urls')),
-    path('test/', TestView.as_view()),
-    path('login/', TemplateView.as_view(template_name='login.html')),
-    path('logout/', LogoutView.as_view()),
+    path('v/list', VQuestionListTemplate.as_view()),
+    path('v/history-list', VQuestionHistoryListTemplate.as_view()),
+    path('v/check-answers/<question_id>', check_answer),
+    path('v/<question_id>', VacancyQuestionTemplate.as_view()),
+    # mc-questions
+    path('mc/list', MCQuestionListTemplate.as_view()),
+    path('mc/history-list', MCQuestionHistoryListTemplate.as_view()),
+    path('mc/check-answers/<question_id>', check_answer_mc),
+    path('mc/<question_id>', MCQuestionTemplate.as_view()),
 ]

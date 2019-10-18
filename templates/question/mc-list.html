@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% load templatetags_custom %}
+{% block 'main-content' %}
+<div class="card mb-3 text-right">
+    <div class="card-header">
+    <i class="fas fa-table"></i>
+    سوالات چهارگزینه‌ای
+    </div>
+    <div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+            <th>شماره سوال</th>
+            <th>قسمتی از سوال</th>
+            <th>ورود به سوال</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+            <th>شماره سوال</th>
+            <th>قسمتی از سوال</th>
+            <th>ورود به سوال</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        {% for q in questions.all %}
+            <tr>
+                <td>{{q.id}}</td>
+                <td>{% question_format q.text %}</td>
+                <td>
+                    <a href="/question/mc/{{q.id}}">
+                        پاسخ‌دهی
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="card-footer small text-muted">سوالات چهارگزینه‌ای</div>
+</div>
+
+{% endblock %}

@@ -11037,3 +11037,12 @@ body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
 }
+
+
+.right-answer{
+  border-color: darkseagreen;
+}
+
+.wrong-answer {
+  border-color: firebrick;
+}
