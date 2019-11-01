@@ -6,8 +6,8 @@ import networkx as nx
 from scipy import spatial
 
 posTypeDict = {
-    'naghshi': ['Jr-'],
-    'mohtavai': ['Nasp---', 'Ncsp--z'],
+    'naghshi': ['f'],
+    'mohtavai': ['c'],
     'bon': ['Vpykshs----']
 }
 
@@ -18,7 +18,7 @@ fields = ['freq_1_count',
     'sentence_count',
     'average_word_len',
     'average_sentence_len',
-    'token_count_to_type_count',
+    'type_count_to_token_count',
     'freq_1_count_to_type_count',
     'word_naghshi_count',
     'word_mohtavai_count',
@@ -73,7 +73,7 @@ class Analyser():
         # چ( محاسبه متوسط طول جمله در هر متن
         self.average_sentence_len = 0
         # ح( محاسبه نسبت واژههای بدون تکرار به واژههای با تکرار در هر متن
-        self.token_count_to_type_count = 0
+        self.type_count_to_token_count = 0
         # خ( محاسبه نسبت واژههای با بسامد ١ به واژههای با تکرار در هر متن
         self.freq_1_count_to_type_count = 0
         # د( شمارش تعداد واژههای نقشی )مثل حرف اضافه و حرف ربط( در هر متن
@@ -119,7 +119,7 @@ class Analyser():
         self.sentence_count_analyse()
         self.average_word_len_analyse()
         self.average_sentence_len_analyse()
-        self.token_count_to_type_count_analyse()
+        self.type_count_to_token_count_analyse()
         self.freq_1_count_to_type_count_analyse()
         for posType in ['naghshi', 'mohtavai']:
             self.word_pos_count_analyse(posType)
@@ -194,8 +194,8 @@ class Analyser():
     def average_sentence_len_analyse(self):
         self.average_sentence_len = self.token_count / self.sentence_count
 
-    def token_count_to_type_count_analyse(self):
-        self.token_count_to_type_count = self.token_count / self.type_count
+    def type_count_to_token_count_analyse(self):
+        self.type_count_to_token_count = self.type_count / self.token_count
 
     def freq_1_count_to_type_count_analyse(self):
         self.freq_1_count_to_type_count = self.freq_1_count / self.type_count
@@ -204,7 +204,7 @@ class Analyser():
     def word_pos_count_analyse(self, posType):
         count = 0
         for index, row in self.words.iterrows():
-            if row['POS'] in posTypeDict[posType]:
+            if row['POS type (functional/content)'] in posTypeDict[posType]:
                 count += 1
         self.__dict__['word_'+posType+'_count'] = count
 
@@ -214,7 +214,7 @@ class Analyser():
     def word_pos_freq_1_count_analyse(self, posType):
         count = 0
         for index, row in self.words.iterrows():
-            if row['POS'] in posTypeDict[posType] and self.freq_dict[row['wordForm']] == 1:
+            if row['POS type (functional/content)'] in posTypeDict[posType] and self.freq_dict[row['wordForm']] == 1:
                 count += 1
         self.__dict__['word_' + posType+ '_freq_1_count'] = count
         
