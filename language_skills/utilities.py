@@ -45,6 +45,12 @@ fields = ['freq_1_count',
     'f3'
 ]
 
+def save_text(text, fileName):
+    f = open("../codes-data-folders/data/persian-archieve/new/fileName.txt","w+")
+    f.write(text)
+    f.close()
+
+
 def run_perl():
     perl_script = subprocess.Popen(
         ["perl", "../codes-data-folders/0-persian-commands-pipeline.pl", "externalFile"],
@@ -346,12 +352,26 @@ class Analyser():
         return result
         
 
-words = pd.read_csv('./sampleInputToDB-new.csv')
-a = Analyser(words)
-a.analyse()
-result = a.get_vacancy_questions()
-print(*result, sep='\n\n')
-print(a)
+# words = pd.read_csv('./sampleInputToDB-new.csv')
+# a = Analyser(words)
+# a.analyse()
+# result = a.get_vacancy_questions()
+# print(*result, sep='\n\n')
+# print(a)
 # print(a.tojson())
 
 # run_perl()
+
+# m = {}
+# for field in fields:
+#     m[field] = 0
+
+# for i in range(1, 7):
+#     words = pd.read_csv('./csvToDB/levelA-amuzeshe-zabane-farsi-samare-1.csv')
+#     a = Analyser(words)
+#     a.analyse()
+#     print(a.tojson(), '\n\n\n')
+#     for field in fields:
+#         m[field] = a.__dict__[field]
+
+# print(m)
