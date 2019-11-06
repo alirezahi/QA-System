@@ -45,6 +45,8 @@ fields = ['freq_1_count',
     'f3'
 ]
 
+alpha = {'freq_1_count': 128, 'char_count': 2403, 'token_count': 776, 'type_count': 223, 'sentence_count': 90, 'average_word_len': 3.481012658227848, 'average_sentence_len': 10.846153846153847, 'type_count_to_token_count': 0.6111111111111112, 'freq_1_count_to_type_count': 0.765625, 'word_naghshi_count': 348, 'word_mohtavai_count': 428, 'word_naghshi_count_to_type_count': 1.5605381165919283, 'word_mohtavai_count_to_type_count': 1.9192825112107623, 'word_naghshi_freq_1_count': 9, 'word_mohtavai_freq_1_count': 124, 'word_naghshi_freq_1_count_to_type_count': 0.21212121212121213, 'word_mohtavai_freq_1_count_to_type_count': 0.71875, 'word_bon_type_count': 183, 'word_bon_token_count': 776, 'word_bon_type_count_to_type_count': 0.96875, 'word_bon_token_count_to_type_count': 3.4798206278026904, 'word_bon_freq_1_to_type_count': 94, 'ravabet_dastori_dar_tajziye_vabastegi': 33, 'grehaye_sakhtari_dar_tajzie_sazei': 1512, 'average_syllable_in_text': 1.8987341772151898, 'syllable_1_count': 425, 'syllable_3_more_count': 152, 'syllable_1_count_to_type_count': 1.905829596412556, 'syllable_3_more_count_to_type_count': 0.6816143497757847, 'f1': 56.13859908361974, 'f2': 9.060786633933443, 'f3': 30.5628350772297}
+
 def save_text(text, fileName):
     f = open("../codes-data-folders/data/persian-archieve/new/fileName.txt","w+")
     f.write(text)
@@ -316,7 +318,8 @@ class Analyser():
     def get_difficulty_level(self):
         features = []
         for field in fields:
-            features.append(min(self.__dict__[field] / 100, 1))
+            features.append(min(self.__dict__[field] / alpha[field], 1))
+        print('injaaaaa', features)
         result = spatial.distance.cosine(features, [1]*len(features))
         if result > 0.7: return 'A'
         if result > 0.3: return 'B'
@@ -352,13 +355,13 @@ class Analyser():
         return result
         
 
-# words = pd.read_csv('./sampleInputToDB-new.csv')
-# a = Analyser(words)
-# a.analyse()
-# result = a.get_vacancy_questions()
-# print(*result, sep='\n\n')
-# print(a)
-# print(a.tojson())
+words = pd.read_csv('./sampleInputToDB-new.csv')
+a = Analyser(words)
+a.analyse()
+result = a.get_vacancy_questions()
+print(*result, sep='\n\n')
+print(a)
+print(a.tojson())
 
 # run_perl()
 
