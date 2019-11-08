@@ -4,3 +4,4 @@ PipFile
 **/*.pyc
 **/*.sqlite3
 **/__pycache__
+codes-data-folders

@@ -1,11 +1,64 @@
 import pandas as pd
 import math
+import subprocess
+import sys
+import networkx as nx
+from scipy import spatial
 
 posTypeDict = {
-    'naghshi': ['Jr-'],
-    'mohtavai': ['Nasp---', 'Ncsp--z'],
+    'naghshi': ['f'],
+    'mohtavai': ['c'],
     'bon': ['Vpykshs----']
 }
+
+fields = ['freq_1_count',
+    'char_count',
+    'token_count',
+    'type_count',
+    'sentence_count',
+    'average_word_len',
+    'average_sentence_len',
+    'type_count_to_token_count',
+    'freq_1_count_to_type_count',
+    'word_naghshi_count',
+    'word_mohtavai_count',
+    'word_naghshi_count_to_type_count',
+    'word_mohtavai_count_to_type_count',
+    'word_naghshi_freq_1_count',
+    'word_mohtavai_freq_1_count',
+    'word_naghshi_freq_1_count_to_type_count',
+    'word_mohtavai_freq_1_count_to_type_count',
+    'word_bon_type_count',
+    'word_bon_token_count',
+    'word_bon_type_count_to_type_count',
+    'word_bon_token_count_to_type_count',
+    'word_bon_freq_1_to_type_count',
+    'ravabet_dastori_dar_tajziye_vabastegi',
+    'grehaye_sakhtari_dar_tajzie_sazei',
+    'average_syllable_in_text',
+    'syllable_1_count',
+    'syllable_3_more_count',
+    'syllable_1_count_to_type_count',
+    'syllable_3_more_count_to_type_count',
+    'f1',
+    'f2',
+    'f3'
+]
+
+alpha = {'freq_1_count': 128, 'char_count': 2403, 'token_count': 776, 'type_count': 223, 'sentence_count': 90, 'average_word_len': 3.481012658227848, 'average_sentence_len': 10.846153846153847, 'type_count_to_token_count': 0.6111111111111112, 'freq_1_count_to_type_count': 0.765625, 'word_naghshi_count': 348, 'word_mohtavai_count': 428, 'word_naghshi_count_to_type_count': 1.5605381165919283, 'word_mohtavai_count_to_type_count': 1.9192825112107623, 'word_naghshi_freq_1_count': 9, 'word_mohtavai_freq_1_count': 124, 'word_naghshi_freq_1_count_to_type_count': 0.21212121212121213, 'word_mohtavai_freq_1_count_to_type_count': 0.71875, 'word_bon_type_count': 183, 'word_bon_token_count': 776, 'word_bon_type_count_to_type_count': 0.96875, 'word_bon_token_count_to_type_count': 3.4798206278026904, 'word_bon_freq_1_to_type_count': 94, 'ravabet_dastori_dar_tajziye_vabastegi': 33, 'grehaye_sakhtari_dar_tajzie_sazei': 1512, 'average_syllable_in_text': 1.8987341772151898, 'syllable_1_count': 425, 'syllable_3_more_count': 152, 'syllable_1_count_to_type_count': 1.905829596412556, 'syllable_3_more_count_to_type_count': 0.6816143497757847, 'f1': 56.13859908361974, 'f2': 9.060786633933443, 'f3': 30.5628350772297}
+
+def save_text(text, fileName):
+    f = open("../codes-data-folders/data/persian-archieve/new/fileName.txt","w+")
+    f.write(text)
+    f.close()
+
+
+def run_perl():
+    perl_script = subprocess.Popen(
+        ["perl", "../codes-data-folders/0-persian-commands-pipeline.pl", "externalFile"],
+        stdout=sys.stdout
+    )
+    perl_script.communicate()
 
 class Analyser():
     def __init__(self, words):
@@ -28,7 +81,7 @@ class Analyser():
         # چ( محاسبه متوسط طول جمله در هر متن
         self.average_sentence_len = 0
         # ح( محاسبه نسبت واژههای بدون تکرار به واژههای با تکرار در هر متن
-        self.token_count_to_type_count = 0
+        self.type_count_to_token_count = 0
         # خ( محاسبه نسبت واژههای با بسامد ١ به واژههای با تکرار در هر متن
         self.freq_1_count_to_type_count = 0
         # د( شمارش تعداد واژههای نقشی )مثل حرف اضافه و حرف ربط( در هر متن
@@ -61,6 +114,9 @@ class Analyser():
         self.syllable_1_count_to_type_count = 0
         # م( محاسبه نسبت تعداد واژههای با تعداد هجای ٣ و بیشتر به تعداد واژههای با تکرار در هر متن
         self.syllable_3_more_count_to_type_count = 0
+        self.f1 = 0
+        self.f2 = 0
+        self.f3 = 0
         
     def analyse(self):
         self.freq_analyse()
@@ -71,7 +127,7 @@ class Analyser():
         self.sentence_count_analyse()
         self.average_word_len_analyse()
         self.average_sentence_len_analyse()
-        self.token_count_to_type_count_analyse()
+        self.type_count_to_token_count_analyse()
         self.freq_1_count_to_type_count_analyse()
         for posType in ['naghshi', 'mohtavai']:
             self.word_pos_count_analyse(posType)
@@ -90,6 +146,9 @@ class Analyser():
         self.syllable_3_more_count_analyse()
         self.syllable_1_count_to_type_count_analyse()
         self.syllable_3_more_count_to_type_count_analyse()
+        self.f1_analyse()
+        self.f2_analyse()
+        self.f3_analyse()
     
 
 
@@ -98,7 +157,7 @@ class Analyser():
         freq_dict_bon = {}
         freq_dict_dep = {}
         for index, row in self.words.iterrows():
-            if not math.isnan(row['SentIndex']):
+            if not math.isnan(row['q']):
                 word = row['wordForm']
                 if word in freq_dict:
                     freq_dict[word] = freq_dict[word]+1
@@ -130,12 +189,12 @@ class Analyser():
     def char_count_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if not math.isnan(row['SentIndex']):
+            if not math.isnan(row['q']):
                 result += row['WordCharacter']
         self.char_count = result
 
     def sentence_count_analyse(self):
-        self.sentence_count = self.words['SentIndex'].max()
+        self.sentence_count = self.words['q'].max()
 
     def average_word_len_analyse(self):
         self.average_word_len = self.char_count / self.token_count
@@ -143,8 +202,8 @@ class Analyser():
     def average_sentence_len_analyse(self):
         self.average_sentence_len = self.token_count / self.sentence_count
 
-    def token_count_to_type_count_analyse(self):
-        self.token_count_to_type_count = self.token_count / self.type_count
+    def type_count_to_token_count_analyse(self):
+        self.type_count_to_token_count = self.type_count / self.token_count
 
     def freq_1_count_to_type_count_analyse(self):
         self.freq_1_count_to_type_count = self.freq_1_count / self.type_count
@@ -153,7 +212,7 @@ class Analyser():
     def word_pos_count_analyse(self, posType):
         count = 0
         for index, row in self.words.iterrows():
-            if row['POS'] in posTypeDict[posType]:
+            if row['POS type (functional/content)'] in posTypeDict[posType]:
                 count += 1
         self.__dict__['word_'+posType+'_count'] = count
 
@@ -163,7 +222,7 @@ class Analyser():
     def word_pos_freq_1_count_analyse(self, posType):
         count = 0
         for index, row in self.words.iterrows():
-            if row['POS'] in posTypeDict[posType] and self.freq_dict[row['wordForm']] == 1:
+            if row['POS type (functional/content)'] in posTypeDict[posType] and self.freq_dict[row['wordForm']] == 1:
                 count += 1
         self.__dict__['word_' + posType+ '_freq_1_count'] = count
         
@@ -192,14 +251,14 @@ class Analyser():
     def grehaye_sakhtari_dar_tajzie_sazei_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if not math.isnan(row['SentIndex']):
+            if not math.isnan(row['q']):
                 result += row['ConstituencyNumberOfNodes']
         self.grehaye_sakhtari_dar_tajzie_sazei = result
 
     def average_syllable_in_text_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if not math.isnan(row['SentIndex']):
+            if not math.isnan(row['q']):
                 result += row['SyllableNumber']
         self.average_syllable_in_text = result / self.token_count
 
@@ -225,43 +284,17 @@ class Analyser():
         self.syllable_3_more_count_to_type_count = self.syllable_3_more_count / self.type_count
 
 
-    def f1(self):
-        return 206.835 - (1.015 * self.average_sentence_len) - (84.6 * self.average_syllable_in_text)
+    def f1_analyse(self):
+        self.f1 = 206.835 - (1.015 * self.average_sentence_len) - (84.6 * self.average_syllable_in_text)
 
-    def f2(self):
-        return 3.6363 + (0.1579 * (self.syllable_3_more_count / self.token_count)) + (0.496 * self.average_sentence_len)
+    def f2_analyse(self):
+        self.f2 = 3.6363 + (0.1579 * (self.syllable_3_more_count / self.token_count)) + (0.496 * self.average_sentence_len)
     
-    def f3(self):
-        return (4.71 * (self.char_count / self.type_count)) + (0.5 * (self.type_count / self.sentence_count)) - 21.43
+    def f3_analyse(self):
+        self.f3 = (4.71 * (self.char_count / self.type_count)) + (0.5 * (self.type_count / self.sentence_count)) - 21.43
 
     def tojson(self):
         summary = {}
-        
-        fields = ['freq_1_count',
-            'char_count',
-            'token_count',
-            'type_count',
-            'sentence_count',
-            'average_word_len',
-            'average_sentence_len',
-            'token_count_to_type_count',
-            'freq_1_count_to_type_count',
-            'word_naghshi_count',
-            'word_mohtavai_count',
-            'word_naghshi_count_to_type_count',
-            'word_mohtavai_count_to_type_count',
-            'word_naghshi_freq_1_count',
-            'word_mohtavai_freq_1_count',
-            'word_naghshi_freq_1_count_to_type_count',
-            'word_mohtavai_freq_1_count_to_type_count',
-            'word_bon_type_count',
-            'word_bon_token_count',
-            'average_syllable_in_text',
-            'syllable_1_count',
-            'syllable_3_more_count',
-            'syllable_1_count_to_type_count',
-            'syllable_3_more_count_to_type_count',
-        ]
 
         for field in fields:
             summary[field] = str(self.__dict__[field])
@@ -271,51 +304,77 @@ class Analyser():
     def __str__(self):
         summary = ''
         for index, row in self.words.iterrows():
-            if math.isnan(row['SentIndex']):
+            if math.isnan(row['q']):
                 summary += '\n'
                 continue
             summary += (row['wordForm']) + ' '
         summary += '\n'
-        
-        fields = ['freq_1_count',
-            'char_count',
-            'token_count',
-            'type_count',
-            'sentence_count',
-            'average_word_len',
-            'average_sentence_len',
-            'token_count_to_type_count',
-            'freq_1_count_to_type_count',
-            'word_naghshi_count',
-            'word_mohtavai_count',
-            'word_naghshi_count_to_type_count',
-            'word_mohtavai_count_to_type_count',
-            'word_naghshi_freq_1_count',
-            'word_mohtavai_freq_1_count',
-            'word_naghshi_freq_1_count_to_type_count',
-            'word_mohtavai_freq_1_count_to_type_count',
-            'word_bon_type_count',
-            'word_bon_token_count',
-            'word_bon_type_count_to_type_count',
-            'word_bon_token_count_to_type_count',
-            'word_bon_freq_1_to_type_count',
-            'ravabet_dastori_dar_tajziye_vabastegi',
-            'grehaye_sakhtari_dar_tajzie_sazei',
-            'average_syllable_in_text',
-            'syllable_1_count',
-            'syllable_3_more_count',
-            'syllable_1_count_to_type_count',
-            'syllable_3_more_count_to_type_count',
-        ]
 
         for field in fields:
             summary += field + ': ' + str(self.__dict__[field]) + '\n'
             
         return summary
+    
+    def get_difficulty_level(self):
+        features = []
+        for field in fields:
+            features.append(min(self.__dict__[field] / alpha[field], 1))
+        print('injaaaaa', features)
+        result = spatial.distance.cosine(features, [1]*len(features))
+        if result > 0.7: return 'A'
+        if result > 0.3: return 'B'
+        return 'C'
+        
+    
+
+    def get_vacancy_questions(self):
+        result = []
+        for i in range(1, int(self.sentence_count) + 1):
+            sentence_words = self.words[self.words.q == i]
+            
+            sentence_analyser = Analyser(sentence_words)
+            sentence_analyser.analyse()
+
+            G = nx.DiGraph()
+            for index, row in sentence_words.iterrows():
+                if not math.isnan(row['q']):
+                    if int(row['DepRelation']) != 0:
+                        G.add_edge(int(row['WordIndex']), int(row['DepRelation']))
+            pr = nx.pagerank(G, alpha=0.9)
+            
+
+            keyword_index = max(pr.keys(), key = lambda x: pr[x])
+            
+            processed_words = []
+            for index, row in sentence_words.iterrows():
+                if not math.isnan(row['q']):
+                    processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex'] == keyword_index, 'DepType': row['DepType']})
+            
+
+            result.append({'level': sentence_analyser.get_difficulty_level(), 'words': processed_words})
+        return result
         
 
 words = pd.read_csv('./sampleInputToDB-new.csv')
 a = Analyser(words)
 a.analyse()
+result = a.get_vacancy_questions()
+print(*result, sep='\n\n')
 print(a)
-# print(a.tojson())
+print(a.tojson())
+
+# run_perl()
+
+# m = {}
+# for field in fields:
+#     m[field] = 0
+
+# for i in range(1, 7):
+#     words = pd.read_csv('./csvToDB/levelA-amuzeshe-zabane-farsi-samare-1.csv')
+#     a = Analyser(words)
+#     a.analyse()
+#     print(a.tojson(), '\n\n\n')
+#     for field in fields:
+#         m[field] = a.__dict__[field]
+
+# print(m)
