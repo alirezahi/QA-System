@@ -1,2 +1,4 @@
 django
 pandas
+networkx
+scipy

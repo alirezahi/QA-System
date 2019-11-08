@@ -5,8 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from django.shortcuts import redirect
 
-SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) or 30
-SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) or 'false'
+# SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) or 30
+SET_COUNT = 30
+# SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) or 'false'
+SHOW_WHOLE_TEXT = 'false'
 
 # Create your views here.
 
