@@ -1,13 +1,7 @@
 from django.contrib import admin
-from .models import *
+from django.apps import apps
 # Register your models here.
 
-admin.site.register(Text)
-admin.site.register(QAUser)
-admin.site.register(MCAnswer)
-admin.site.register(OptionAnswer)
-admin.site.register(VacancyAnswer)
-admin.site.register(VacancyQuestion)
-admin.site.register(VQuestionHistory)
-admin.site.register(MCQuestionHistory)
-admin.site.register(MultipleChoiceQuestion)
+app = apps.get_app_config('language_skills')
+for model_name, model in app.models.items():
+    admin.site.register(model)

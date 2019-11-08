@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic.base import RedirectView
 from account.views import TestView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('registration/login/',
+    #      RedirectView.as_view(permanent=False, url='/accounts/login')),
     path('accounts/', include('account.urls')),
     path('question/', include('language_skills.urls')),
     path('test/', TestView.as_view()),

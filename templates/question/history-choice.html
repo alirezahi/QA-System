@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+{% load templatetags_custom %}
+{% block 'main-content' %}
+<div class="text-center">
+    <a href="/question/v/history-list" class="rounded d-inline-block m-1 p-2 bg-light">
+        <div class="flex flex-column">
+        <i class="fa fa-question fa-4x"></i>
+        <div>
+        سوالات جای خالی
+        </div>
+        </div>
+    </a>
+    <a href="/question/mc/history-list" class="rounded d-inline-block m-1 p-2 bg-light">
+        <div class="flex flex-column">
+        <i class="fa fa-bars fa-4x"></i>
+        <div>
+        سوالات چندگزینه‌ای
+        </div>
+        </div>
+    </a>
+</div>
+{% endblock %}

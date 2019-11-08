@@ -2,8 +2,7 @@
 {% load static %}
 {% load templatetags_custom %}
 {% block 'main-content' %}
-    <form action="/question/v/check-answers/{{question.id}}" method="POST">
-    {% csrf_token %}
+    <form action="{{next}}" method="GET">
         <div id="question-container" class="text-right p-3 bg-light rounded" >
             
         </div>
@@ -20,9 +19,15 @@
         <div class="alert alert-info text-center">
             پاسخ‌ها
         </div>
+        <div class="text-center">
+            <div dir="ltr" class="btn-group py-3 text-center" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary">{{state.answer_percentage}}</button>
+                <button type="button" class="btn btn-dark">نسبت پاسخ صحیح به کل</button>
+            </div>
+        </div>
         <ul class="list-group list-group-flush">
-            {% for answer in answers %}
-            <li class="list-group-item">سوال {{answer.order}}: {{answer.text}}</li>
+            {% for question in questions %}
+            <li class="list-group-item">سوال {{question.order}}: {{question.question.answer}}</li>
             {% endfor %}
         </ul>
     </div>
@@ -34,7 +39,9 @@
 {% endblock %}
 {% block 'js-block' %}
 <script>
-    var text = '{{ question.text }}';
+    {% comment %} var text = '{{ question.text }}'; {% endcomment %}
+    var text = '';
+    var question_text = '';
     var reg = /&amp;&amp;__question__&amp;&amp;/g;
     var result;
     var counter = 0;
@@ -43,11 +50,13 @@
         return (user_answer === answer ? 'right-answer' : 'wrong-answer');
     };
     {% if answer_page %}
-    var answers = [
-        {% for answer in answers %}
+    var questions = [
+        {% for question in questions %}
         {
-            order:{{answer.order}},
-            text:'{{answer.text}}',
+            order:{{question.order}},
+            answer:'{{question.question.answer}}',
+            user_answer:'{{question.answer|default_if_none:''}}',
+            text: '{{question.question.text}}',
         },
         {% endfor %}
     ];
@@ -59,12 +68,19 @@
         },
         {% endfor %}
     ];
-    {% endif %}
-    while((result = reg.exec(text)) !== null) {
-        var input_text = '<input name="'+(counter+1)+'" type="text" class="v-question-input{% if answer_page %} '+answer_status(user_answers[counter].text, answers[counter].text)+'{% endif %}" placeholder="'+(counter+1)+'" {% if answer_page %}disabled value="'+user_answers[counter].text+'"{% endif %}/>';
+    for(var i=0;i< questions.length; i++){
+        text+= '<div class="p-2">'+questions[i].text+'</div>';
+        var input_text = '<input name="answer'+(questions[i].order)+'" type="text" class="v-question-input{% if answer_page %} '+answer_status(questions[i].user_answer, questions[counter].answer)+'{% endif %}" placeholder="'+(questions[i].order)+'" {% if answer_page %}disabled value="('+(questions[i].order)+') '+questions[i].user_answer+'"{% endif %}/>';
         text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
         counter++;
     }
+    {% else %}
+    text = '{{question.text}}';
+    var input_text = '<input name="answer" type="text" class="v-question-input" placeholder="'+({{order}})+'" />';
+    text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
+    {% endif %}
+    
+        
 
     
     $('#question-container').html(text);

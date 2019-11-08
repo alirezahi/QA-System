@@ -6,29 +6,48 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+# =======   general classes    ========
+class RandomManager(models.Manager):
+    
+  def get_random(self, items=1):
+    '''
+    items is integer value
+    By default it returns 1 random item
+    '''
+    if isinstance(items, int):
+        return self.model.objects.order_by('?')[:items]
+    return self.all()
+
+# ===============
+
 class QAUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    v_questions = models.ManyToManyField('VQuestionHistory', blank=True)
-    mc_questions = models.ManyToManyField('MCQuestionHistory', blank=True)
-
-
-class VQuestionHistory(models.Model):
-    question = models.ForeignKey('VacancyQuestion', on_delete=models.CASCADE)
-    right_answers = models.IntegerField()
-    answers_count = models.IntegerField()
-    answer_percentage = models.FloatField()
 
 
 class MCQuestionHistory(models.Model):
-    question = models.ForeignKey('MultipleChoiceQuestion', on_delete=models.CASCADE)
+    question = models.ForeignKey('MCQuestionSet', on_delete=models.CASCADE)
     right_answers = models.IntegerField()
     answers_count = models.IntegerField()
     answer_percentage = models.FloatField()
 
 
 class AbstractAnswer(models.Model):
-    text = models.CharField(max_length=200)
+    answer = models.CharField(max_length=200)
+    answer_type = models.CharField(max_length=50)
+
+    class Meta:
+        abstract = True
+
+
+class AbstractOrder(models.Model):
     order = models.IntegerField()
+
+    class Meta:
+        abstract = True
+
+
+class AbstractActive(models.Model):
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         abstract = True
@@ -49,38 +68,66 @@ class OptionAnswer(models.Model):
         return self.text[:20] or ''
 
 
-class MCAnswer(AbstractAnswer):
-    options = models.ManyToManyField(OptionAnswer)
+class MultipleChoiceQuestion(AbstractAnswer, AbstractActive):
+    text = models.TextField()
+    whole_text = models.TextField()
+    level = models.CharField(max_length=4)
+    options = models.ManyToManyField(OptionAnswer, blank=True)
+    origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
+
+    objects = RandomManager()
 
     def __str__(self):
         return self.text[:20] or ''
+
+
+class SelectedMCQuestion(AbstractOrder):
+    question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=200, blank=True, null=True)
     
 
-class MultipleChoiceQuestion(models.Model):
+class MCQuestionSet(models.Model):
+    questions = models.ManyToManyField(SelectedMCQuestion, blank=True)
+    right_answers = models.IntegerField(blank=True, null=True)
+    question_count = models.IntegerField(blank=True, null=True)
+    answer_percentage = models.FloatField(blank=True, null=True)
+    user = models.ForeignKey(
+        QAUser, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class VacancyQuestion(AbstractAnswer, AbstractActive):
     text = models.TextField()
+    whole_text = models.TextField()
     level = models.CharField(max_length=4)
-    answers = models.ManyToManyField(MCAnswer)
     origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.text[:20] or ''
-
-
-class VacancyAnswer(AbstractAnswer):
-    text = models.TextField()
+    objects = RandomManager()
 
     def __str__(self):
         return self.text[:20] or ''
 
 
-class VacancyQuestion(models.Model):
-    text = models.TextField()
-    level = models.CharField(max_length=4)
-    answers = models.ManyToManyField(VacancyAnswer)
-    origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
+class SelectedVacancyQuestion(AbstractOrder):
+    question = models.ForeignKey(VacancyQuestion, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=200, blank=True, null=True)
+
+
+class VacancyQuestionSet(models.Model):
+    questions = models.ManyToManyField(SelectedVacancyQuestion, blank=True)
+    right_answers = models.IntegerField(blank=True, null=True)
+    question_count = models.IntegerField(blank=True, null=True)
+    answer_percentage = models.FloatField(blank=True, null=True)
+    user = models.ForeignKey(QAUser, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class Config(models.Model):
+    name = models.CharField(max_length=200, null=False, blank=False)
+    value = models.CharField(max_length=200, null=False, blank=False)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.text[:20] or ''
+        return self.name + ' - ' + self.value
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

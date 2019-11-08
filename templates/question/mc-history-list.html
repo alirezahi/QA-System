@@ -10,25 +10,25 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-            <th>شماره سوال</th>
+            <th>شماره</th>
             <th>نسبت پاسخ صحیح به کل سوالات</th>
-            <th>ورود به سوال</th>
+            <th>ورود به نتایج</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-            <th>شماره سوال</th>
+            <th>شماره</th>
             <th>نسبت پاسخ صحیح به کل سوالات</th>
-            <th>ورود به سوال</th>
+            <th>ورود به نتایج</th>
             </tr>
         </tfoot>
         <tbody>
-        {% for q in user.qauser.mc_questions.all %}
+        {% for q in user.qauser.mcquestionset_set.all %}
             <tr>
-                <td>{{q.question.id}}</td>
+                <td>{{forloop.counter}}</td>
                 <td>{{q.answer_percentage}}</td>
                 <td>
-                    <a href="/question/mc/{{q.question.id}}">
+                    <a href="/question/mc/check-answers/{{q.id}}">
                         ورود
                     </a>
                 </td>

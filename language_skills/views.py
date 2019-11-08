@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
+from django.shortcuts import redirect
+
+SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) or 30
+SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) or 'false'
 
 # Create your views here.
 
@@ -11,10 +15,58 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
-        question_id = self.kwargs['question_id']
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
-        context['question'] = VacancyQuestion.objects.filter(id=question_id).last()
+        question_set = VacancyQuestionSet.objects.get(id=set_id)
+        if answer:
+            last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last',None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/v/' + str(set_id)+'/'+str(question_select.order+1)+''
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        question_set = VacancyQuestionSet.objects.get(id=set_id)
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            return redirect('/question/v/check-answers/'+str(set_id)+'')
+        return super(VacancyQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+class VQuestionNewTemplate(LoginRequiredMixin, RedirectView):
+    template_name = 'question/v-question.html'
+    login_url = '/login/'
+    
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        question_set = generate_vquestion_set(self.request.user)
+        return '/question/v/'+str(question_set.id)+'/1'
+
+
+class HistoryChoiceTemplate(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
+    template_name = 'question/history-choice.html'
 
 
 class VQuestionHistoryListTemplate(LoginRequiredMixin, TemplateView):
@@ -32,45 +84,111 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
         return context
 
 
+def generate_vquestion_set(user):
+    v_list = VacancyQuestion.objects.get_random(SET_COUNT)
+    v_set = VacancyQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for v in v_list:
+        v_obj = SelectedVacancyQuestion.objects.create(question=v, order=order_counter)
+        v_set.questions.add(v_obj)
+        order_counter += 1
+    return v_set
+
+
 def check_answer(request, question_id):
-    if request.method == 'POST':
-        data = request.POST
-        if question_id and VacancyQuestion.objects.filter(id=question_id).exists():
-            question = VacancyQuestion.objects.get(id=question_id)
-            answers = question.answers.all().order_by('order')
-            answers_count = len(answers)
+    if request.method == 'GET':
+        data = request.GET
+        if question_id and VacancyQuestionSet.objects.filter(id=question_id).exists():
+            v_set = VacancyQuestionSet.objects.get(id=question_id)
+            questions = v_set.questions.all().order_by('order')
+            answers_count = questions.count()
             my_data = []
             true_count = 0
             user_answers = []
-            for q, v in data.items():
-                if q.isdigit():
-                    answer = answers.get(order=int(q))
-                    user_answers.append({'order':int(q), 'text': v})
-                    if(answer.text == v):
-                        true_count += 1
-            # vch = VQuestionHistory.objects.filter(question=question, right_answers=true_count, answers_count=answers_count,answer_percentage = true_count/answers_count).last()
-            vch = VQuestionHistory(question=question, right_answers=true_count, answers_count=answers_count,answer_percentage = true_count/answers_count)
-            vch.save()
-            user = request.user.qauser
-            user.v_questions.add(vch)
-            return render(request, template_name='question/v-question.html', context={'question': question,'answers': answers, 'user_answers': user_answers, 'answer_page': True})
+            answers = []
+            for q in questions:
+                answer = q.answer
+                order = q.order
+                user_answers.append(
+                    {'order': int(order), 'text': answer})
+                if(answer == q.question.answer):
+                    true_count += 1
+            v_set.right_answers = true_count
+            v_set.question_count = answers_count
+            v_set.answer_percentage = true_count/answers_count if answers_count else 0
+            v_set.save()
+            return render(request, template_name='question/v-question.html', context={'questions': questions, 'user_answers': user_answers, 'answer_page': True, 'state':v_set})
     return redirect('/accounts/dashboard/')
 
 
 
-
-
 # ===========================
+
+
+class MCQuestionNewTemplate(LoginRequiredMixin, RedirectView):
+    template_name = 'question/mc-question.html'
+    login_url = '/login/'
+    
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        question_set = generate_mcquestion_set(self.request.user)
+        return '/question/mc/'+str(question_set.id)+'/1'
+
 
 class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'question/mc-question.html'
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
-        question_id = self.kwargs['question_id']
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
-        context['question'] = MultipleChoiceQuestion.objects.filter(id=question_id).last()
+        question_set = MCQuestionSet.objects.get(id=set_id)
+        if answer:
+            last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last',None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/mc/' + str(set_id)+'/'+str(question_select.order+1)+''
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        question_set = MCQuestionSet.objects.get(id=set_id)
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            return redirect('/question/mc/check-answers/'+str(set_id)+'')
+        return super(MCQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+def generate_mcquestion_set(user):
+    mc_list = MultipleChoiceQuestion.objects.get_random(SET_COUNT)
+    mc_set = MCQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for mc in mc_list:
+        mc_obj = SelectedMCQuestion.objects.create(question=mc, order=order_counter)
+        mc_set.questions.add(mc_obj)
+        order_counter += 1
+    return mc_set
+
 
 
 class MCQuestionHistoryListTemplate(LoginRequiredMixin, TemplateView):
@@ -94,24 +212,45 @@ class MCQuestionListTemplate(LoginRequiredMixin, TemplateView):
 
 
 def check_answer_mc(request, question_id):
-    if request.method == 'POST':
-        data = request.POST
-        if question_id and MultipleChoiceQuestion.objects.filter(id=question_id).exists():
-            question = MultipleChoiceQuestion.objects.get(id=question_id)
-            answers = question.answers.all().order_by('order')
-            answers_count = len(answers)
+    if request.method == 'GET':
+        data = request.GET
+        if question_id and MCQuestionSet.objects.filter(id=question_id).exists():
+            mc_set = MCQuestionSet.objects.get(id=question_id)
+            questions = mc_set.questions.all().order_by('order')
+            answers_count = questions.count()
             my_data = []
             true_count = 0
             user_answers = []
-            for q, v in data.items():
-                if q.isdigit():
-                    answer = answers.get(order=int(q))
-                    user_answers.append({'order':int(q), 'text': v})
-                    if(answer.text == v):
-                        true_count += 1
-            mch = MCQuestionHistory(question=question, right_answers=true_count, answers_count=answers_count,answer_percentage = true_count/answers_count)
-            mch.save()
-            user = request.user.qauser
-            user.mc_questions.add(mch)
-            return render(request, template_name='question/mc-question.html', context={'question': question,'answers': answers, 'user_answers': user_answers, 'answer_page': True})
+            answers = []
+            for q in questions:
+                answer = q.answer
+                order = q.order
+                user_answers.append(
+                    {'order': int(order), 'text': answer})
+                if(answer == q.question.answer):
+                    true_count += 1
+            mc_set.right_answers = true_count
+            mc_set.question_count = answers_count
+            mc_set.answer_percentage = true_count/answers_count if answers_count else 0
+            mc_set.save()
+            return render(request, template_name='question/mc-question.html', context={'questions': questions, 'user_answers': user_answers, 'answer_page': True, 'state':mc_set})
+        # data = request.GET
+        # if question_id and MultipleChoiceQuestion.objects.filter(id=question_id).exists():
+        #     question = MultipleChoiceQuestion.objects.get(id=question_id)
+        #     answers = question.answers.all().order_by('order')
+        #     answers_count = len(answers)
+        #     my_data = []
+        #     true_count = 0
+        #     user_answers = []
+        #     for q, v in data.items():
+        #         if q.isdigit():
+        #             answer = answers.get(order=int(q))
+        #             user_answers.append({'order':int(q), 'text': v})
+        #             if(answer.text == v):
+        #                 true_count += 1
+        #     mch = MCQuestionHistory(question=question, right_answers=true_count, answers_count=answers_count,answer_percentage = true_count/answers_count)
+        #     mch.save()
+        #     user = request.user.qauser
+        #     user.mc_questions.add(mch)
+        #     return render(request, template_name='question/mc-question.html', context={'question': question,'answers': answers, 'user_answers': user_answers, 'answer_page': True})
     return redirect('/accounts/dashboard/')
