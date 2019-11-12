@@ -53,7 +53,6 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
             answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
         context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
-        import pdb;pdb.set_trace()
         question_set = VacancyQuestionSet.objects.get(id=set_id)
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
