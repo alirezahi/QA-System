@@ -197,7 +197,7 @@ class Analyser():
 
     def sentence_count_analyse(self):
         # import pdb;pdb.set_trace()
-        self.sentence_count = int(self.words['q'].max())
+        self.sentence_count = int(self.words['q'].map(lambda x: int(x)).max())
 
     def average_word_len_analyse(self):
         self.average_word_len = self.char_count / self.token_count if self.token_count != 0 else 0
@@ -262,7 +262,7 @@ class Analyser():
         result = 0
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
-                result += row['SyllableNumber'] if not math.isnan(row['SyllableNumber']) else 0
+                result += row['SyllableNumber'] if not math.isnan(row['SyllableNumber']) and row['SyllableNumber'].isdigit() else 0
         self.average_syllable_in_text = result / self.token_count
 
     def syllable_1_count_analyse(self):
