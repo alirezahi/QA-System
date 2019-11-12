@@ -268,7 +268,7 @@ class Analyser():
                     elif not math.isnan(row['SyllableNumber']) :
                         result += row['SyllableNumber']
                 except:
-                    import pdb;pdb.set_trace()
+                    pass
         self.average_syllable_in_text = result / self.token_count
 
     def syllable_1_count_analyse(self):
