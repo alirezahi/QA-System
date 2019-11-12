@@ -346,7 +346,8 @@ class Analyser():
             pr = nx.pagerank(G, alpha=0.9)
             # import pdb;pdb.set_trace()
             
-
+            if len(pr) ==0:
+                import pdb;pdb.set_trace();
             keyword_index = max(pr.keys(), key = lambda x: pr[x])
             
             processed_words = []
