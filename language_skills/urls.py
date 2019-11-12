@@ -20,6 +20,7 @@ from .views import *
 
 urlpatterns = [
     path('history-choice', HistoryChoiceTemplate.as_view()),
+    path('new', NewQuestionTemplate.as_view()),
     # v-questions
     path('v/new', VQuestionNewTemplate.as_view()),
     path('v/list', VQuestionListTemplate.as_view()),

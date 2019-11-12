@@ -20,6 +20,14 @@
         <span>نمودار پیشرفت</span>
     </a>
     </li>
+    {% if request.user.is_staff %}
+    <li class="nav-item dropdown">
+    <a class="nav-link text-right" href="/question/new" id="pagesDropdown" role="button">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>ایجاد سوال</span>
+    </a>
+    </li>
+    {% endif %}
 </ul>
 
 {% endblock %}

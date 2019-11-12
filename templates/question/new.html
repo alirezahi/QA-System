@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load templatetags_custom %}
+{% block 'main-content' %}
+<form action="/create-question" method="POST" class="text-right">
+    <label for="question_text">متن را وارد کنید</label>
+    <textarea class="form-control" name="question_text" id="question_text" cols="30" rows="10" placeholder="متن سوال در این قسمت قرار می‌گیرد..."></textarea>
+    <div class="py-2 text-center">
+        <button class="btn btn-info">اضافه کردن</button>
+    </div>
+</form>
+{% endblock %}

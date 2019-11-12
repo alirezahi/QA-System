@@ -157,7 +157,7 @@ class Analyser():
         freq_dict_bon = {}
         freq_dict_dep = {}
         for index, row in self.words.iterrows():
-            if not math.isnan(row['q']):
+            if not math.isnan(float(row['q'])):
                 word = row['wordForm']
                 if word in freq_dict:
                     freq_dict[word] = freq_dict[word]+1
@@ -189,18 +189,18 @@ class Analyser():
     def char_count_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if not math.isnan(row['q']):
-                result += row['WordCharacter']
+            if not math.isnan(float(row['q'])):
+                result += row['WordCharacter'] if not math.isnan(row['WordCharacter']) else 0
         self.char_count = result
 
     def sentence_count_analyse(self):
-        self.sentence_count = self.words['q'].max()
+        self.sentence_count = int(self.words['q'].max())
 
     def average_word_len_analyse(self):
-        self.average_word_len = self.char_count / self.token_count
+        self.average_word_len = self.char_count / self.token_count if self.token_count != 0 else 0
 
     def average_sentence_len_analyse(self):
-        self.average_sentence_len = self.token_count / self.sentence_count
+        self.average_sentence_len = self.token_count / int(self.sentence_count)
 
     def type_count_to_token_count_analyse(self):
         self.type_count_to_token_count = self.type_count / self.token_count
@@ -251,15 +251,15 @@ class Analyser():
     def grehaye_sakhtari_dar_tajzie_sazei_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if not math.isnan(row['q']):
-                result += row['ConstituencyNumberOfNodes']
+            if not math.isnan(float(row['q'])):
+                result += row['ConstituencyNumberOfNodes'] if not math.isnan(row['ConstituencyNumberOfNodes']) else 0
         self.grehaye_sakhtari_dar_tajzie_sazei = result
 
     def average_syllable_in_text_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if not math.isnan(row['q']):
-                result += row['SyllableNumber']
+            if not math.isnan(float(row['q'])):
+                result += row['SyllableNumber'] if not math.isnan(row['SyllableNumber']) else 0
         self.average_syllable_in_text = result / self.token_count
 
     def syllable_1_count_analyse(self):
@@ -291,7 +291,7 @@ class Analyser():
         self.f2 = 3.6363 + (0.1579 * (self.syllable_3_more_count / self.token_count)) + (0.496 * self.average_sentence_len)
     
     def f3_analyse(self):
-        self.f3 = (4.71 * (self.char_count / self.type_count)) + (0.5 * (self.type_count / self.sentence_count)) - 21.43
+        self.f3 = (4.71 * (self.char_count / int(self.type_count))) + (0.5 * (self.type_count / int(self.sentence_count))) - 21.43
 
     def tojson(self):
         summary = {}
@@ -304,7 +304,7 @@ class Analyser():
     def __str__(self):
         summary = ''
         for index, row in self.words.iterrows():
-            if math.isnan(row['q']):
+            if math.isnan(int(row['q'])):
                 summary += '\n'
                 continue
             summary += (row['wordForm']) + ' '
@@ -330,15 +330,15 @@ class Analyser():
     def get_vacancy_questions(self):
         result = []
         for i in range(1, int(self.sentence_count) + 1):
-            sentence_words = self.words[self.words.q == i]
+            sentence_words = self.words[self.words.q == str(i)]
             
             sentence_analyser = Analyser(sentence_words)
             sentence_analyser.analyse()
 
             G = nx.DiGraph()
             for index, row in sentence_words.iterrows():
-                if not math.isnan(row['q']):
-                    if int(row['DepRelation']) != 0:
+                if not math.isnan(int(row['q'])):
+                    if not math.isnan(row['DepRelation']) and int(row['DepRelation']) != 0:
                         G.add_edge(int(row['WordIndex']), int(row['DepRelation']))
             pr = nx.pagerank(G, alpha=0.9)
             
@@ -347,7 +347,7 @@ class Analyser():
             
             processed_words = []
             for index, row in sentence_words.iterrows():
-                if not math.isnan(row['q']):
+                if not math.isnan(int(row['q'])):
                     processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex'] == keyword_index, 'DepType': row['DepType']})
             
 
@@ -355,13 +355,32 @@ class Analyser():
         return result
         
 
-words = pd.read_csv('./sampleInputToDB-new.csv')
+# words = pd.read_csv('./sampleInputToDB-new.csv')
+import re
+words = pd.read_csv('./levelC-zabane-farsi-saffarMoqaddam-9.csv')
+for i, row in words.iterrows():
+    if 'not found' in str(row['q']):
+        print(i)
+        words.loc[i, 'WordIndex'] = last_index+1
+        words.loc[i, 'q'] = last_q
+        words.loc[i, 'wordForm'] = re.search(
+            'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
+        last_index = last_index+1
+    else:
+        last_index = row['WordIndex']+1
+        last_q = row['q']
+# df.sport = df.sport.apply(lambda x: 'ball sport' if 'ball' in x else x)
 a = Analyser(words)
 a.analyse()
 result = a.get_vacancy_questions()
+# import pdb;pdb.set_trace()
+res = ''
+for t in result[0]['words']:
+    res += t['word']+' '
 print(*result, sep='\n\n')
 print(a)
 print(a.tojson())
+print(res)
 
 # run_perl()
 

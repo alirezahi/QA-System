@@ -1,14 +1,37 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from django.shortcuts import redirect
 
+
+
 # SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) or 30
 SET_COUNT = 30
 # SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) or 'false'
 SHOW_WHOLE_TEXT = 'false'
+
+
+class StaffRequiredMixin(object):
+    """
+    View mixin which requires that the authenticated user is a staff member
+    (i.e. `is_staff` is True).
+    """
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            messages.error(
+                request,
+                'You do not have the permission required to perform the '
+                'requested operation.')
+            return redirect(settings.LOGIN_URL)
+        return super(StaffRequiredMixin, self).dispatch(request,
+                                                        *args, **kwargs)
 
 # Create your views here.
 
@@ -69,6 +92,11 @@ class VQuestionNewTemplate(LoginRequiredMixin, RedirectView):
 class HistoryChoiceTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'question/history-choice.html'
+
+
+class NewQuestionTemplate(StaffRequiredMixin, TemplateView):
+    login_url = '/login/'
+    template_name = 'question/new.html'
 
 
 class VQuestionHistoryListTemplate(LoginRequiredMixin, TemplateView):
