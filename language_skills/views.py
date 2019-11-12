@@ -262,7 +262,7 @@ class CreateQuestions(View):
             for i, row in words.iterrows():
                 if 'not found' in str(row['q']):
                     print(i)
-                    words.loc[i, 'WordIndex'] = str(last_index+1)
+                    words.loc[i, 'WordIndex'] = '0' if i!= 0 else last_index
                     words.loc[i, 'q'] = last_q
                     words.loc[i, 'wordForm'] = re.search(
                         'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
