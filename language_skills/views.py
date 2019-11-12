@@ -44,6 +44,8 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
         set_id = self.kwargs['set_id']
         order = self.kwargs['order']
         if self.request.method == 'GET':
@@ -121,6 +123,8 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
 
 
 def generate_vquestion_set(user):
+    SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
+    ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
     v_list = VacancyQuestion.objects.get_random(SET_COUNT)
     v_set = VacancyQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
@@ -179,6 +183,8 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
         set_id = self.kwargs['set_id']
         order = self.kwargs['order']
         if self.request.method == 'GET':
@@ -217,6 +223,8 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
 
 
 def generate_mcquestion_set(user):
+    SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
+    ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
     mc_list = MultipleChoiceQuestion.objects.get_random(SET_COUNT)
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
