@@ -263,7 +263,7 @@ class Analyser():
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
                 try:
-                    if not math.isnan(row['SyllableNumber']) and not isinstance(row['SyllableNumber'], str):
+                    if not math.isnan(int(row['SyllableNumber'])) and not isinstance(row['SyllableNumber'], str):
                         result += row['SyllableNumber']
                 except:
                     import pdb;pdb.set_trace()
