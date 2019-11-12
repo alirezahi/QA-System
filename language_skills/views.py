@@ -16,7 +16,7 @@ import os
 
 SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) if Config.objects.filter(name='question_set_count', active=True) else 30
 # SET_COUNT = 30
-SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last().value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
 # SHOW_WHOLE_TEXT = 'false'
 
 
