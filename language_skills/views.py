@@ -273,7 +273,6 @@ class CreateQuestions(View):
             a = Analyser(words)
             a.analyse()
             result = a.get_vacancy_questions()
-            import pdb;pdb.set_trace()
             whole_text = ''
             res = ''
             sentences = []
