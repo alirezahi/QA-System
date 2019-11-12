@@ -5,8 +5,13 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
+import pandas as pd
 from .models import *
+from django.views import View
 from django.shortcuts import redirect
+from .utilities import Analyser
+from django.http import HttpResponse
+import os
 
 
 
@@ -240,6 +245,97 @@ class MCQuestionListTemplate(LoginRequiredMixin, TemplateView):
         context['questions'] = MultipleChoiceQuestion.objects.all()
         return context
 
+
+class CreateQuestions(View):
+    def get(self, request):
+        files = os.listdir('./data')
+        csv_files = []
+        for file in files:
+            if file.endswith('.csv'):
+                csv_files.append(file)
+
+        for file in csv_files:
+            import re
+            words = pd.read_csv('./data/'+file)
+            for i, row in words.iterrows():
+                if 'not found' in str(row['q']):
+                    print(i)
+                    words.loc[i, 'WordIndex'] = last_index+1
+                    words.loc[i, 'q'] = last_q
+                    words.loc[i, 'wordForm'] = re.search(
+                        'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
+                    last_index = last_index+1
+                else:
+                    last_index = row['WordIndex']+1
+                    last_q = row['q']
+            a = Analyser(words)
+            a.analyse()
+            result = a.get_vacancy_questions()
+            whole_text = ''
+            res = ''
+            sentences = []
+            index = 0
+            for sentence in result:
+                origin = ' '.join([word['word'] for word in sentence['words']])
+                res += origin
+                vacancy_arr = []
+                answer = ''
+                answer_type = ''
+                for word in sentence['words']:
+                    if not word['is_vacancy']:
+                        vacancy_arr.append(word['word'])
+                    else:
+                        vacancy_arr.append('/&&__question__&&/')
+                        answer = word['word']
+                        if word['POSType'] and word['POSType'].startswith('V'):
+                            answer_type = 'verb'
+                        if word['POSType'] and (word['POSType'].startswith('J') or word['POSType'].startswith('E')):
+                            answer_type = 'preposition'
+                vacancy_text = ' '.join(vacancy_arr)
+                origin = origin.replace('-', '‌')
+                vacancy_text = vacancy_text.replace('-', '‌')
+                answer = answer.replace('-', '‌')
+                sentences.append({
+                    'index': index,
+                    'origin': origin,
+                    'vacancy': vacancy_text,
+                    'answer': answer,
+                    'answer_type': answer_type,
+                    'level': sentence['level'],
+                })
+                index += 1
+
+            for index, sentence in enumerate(sentences):
+                whole_vacancy = ''
+                for tmp_sen in sentences:
+                    if tmp_sen['index'] == index:
+                        whole_vacancy += tmp_sen['vacancy']
+                    else:
+                        whole_vacancy += tmp_sen['origin']
+                res = res.replace('-', '‌')
+                whole_vacancy = whole_vacancy.replace('-', '‌')
+                sentence['origin-text'] = res
+                sentence['whole_vacancy'] = whole_vacancy
+
+            text = Text.objects.create(
+                text=res,
+                level=''
+            )
+            for q in sentences:
+                # import pdb;pdb.set_trace()
+                if q['answer_type'] in ['verb', 'preposition']:
+                    is_verb = q['answer_type'] == 'verb'
+                    is_preposition = q['answer_type'] == 'preposition'
+                    VacancyQuestion.objects.create(
+                        text=q['vacancy'],
+                        whole_text=q['whole_vacancy'],
+                        origin_text=text,
+                        level=q['level'],
+                        answer=q['answer'],
+                        is_verb=is_verb,
+                        is_preposition=is_preposition,
+                    )
+        return HttpResponse('Done')
 
 def check_answer_mc(request, question_id):
     if request.method == 'GET':

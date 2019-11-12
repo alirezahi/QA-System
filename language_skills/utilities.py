@@ -1,9 +1,11 @@
+import pdb
 import pandas as pd
 import math
 import subprocess
 import sys
 import networkx as nx
 from scipy import spatial
+from language_skills.models import *
 
 posTypeDict = {
     'naghshi': ['f'],
@@ -341,6 +343,7 @@ class Analyser():
                     if not math.isnan(row['DepRelation']) and int(row['DepRelation']) != 0:
                         G.add_edge(int(row['WordIndex']), int(row['DepRelation']))
             pr = nx.pagerank(G, alpha=0.9)
+            # import pdb;pdb.set_trace()
             
 
             keyword_index = max(pr.keys(), key = lambda x: pr[x])
@@ -348,7 +351,8 @@ class Analyser():
             processed_words = []
             for index, row in sentence_words.iterrows():
                 if not math.isnan(int(row['q'])):
-                    processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex'] == keyword_index, 'DepType': row['DepType']})
+                    processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex']
+                                            == keyword_index, 'DepType': row['DepType'], 'POSType': row['POS']})
             
 
             result.append({'level': sentence_analyser.get_difficulty_level(), 'words': processed_words})
@@ -356,31 +360,95 @@ class Analyser():
         
 
 # words = pd.read_csv('./sampleInputToDB-new.csv')
-import re
-words = pd.read_csv('./levelC-zabane-farsi-saffarMoqaddam-9.csv')
-for i, row in words.iterrows():
-    if 'not found' in str(row['q']):
-        print(i)
-        words.loc[i, 'WordIndex'] = last_index+1
-        words.loc[i, 'q'] = last_q
-        words.loc[i, 'wordForm'] = re.search(
-            'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
-        last_index = last_index+1
-    else:
-        last_index = row['WordIndex']+1
-        last_q = row['q']
-# df.sport = df.sport.apply(lambda x: 'ball sport' if 'ball' in x else x)
-a = Analyser(words)
-a.analyse()
-result = a.get_vacancy_questions()
+# import re
+# words = pd.read_csv('./levelC-zabane-farsi-saffarMoqaddam-9.csv')
+# for i, row in words.iterrows():
+#     if 'not found' in str(row['q']):
+#         print(i)
+#         words.loc[i, 'WordIndex'] = last_index+1
+#         words.loc[i, 'q'] = last_q
+#         words.loc[i, 'wordForm'] = re.search(
+#             'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
+#         last_index = last_index+1
+#     else:
+#         last_index = row['WordIndex']+1
+#         last_q = row['q']
+# # df.sport = df.sport.apply(lambda x: 'ball sport' if 'ball' in x else x)
+# a = Analyser(words)
+# a.analyse()
+# result = a.get_vacancy_questions()
+# # import pdb;pdb.set_trace()
+# whole_text = ''
+# res = ''
+# sentences = []
+# index = 0
+# for sentence in result:
+#     origin = ' '.join([word['word'] for word in sentence['words']])
+#     res += origin 
+#     vacancy_arr = []
+#     answer = ''
+#     answer_type = ''
+#     for word in sentence['words']:
+#         if not word['is_vacancy']:
+#             vacancy_arr.append(word['word'])
+#         else:
+#             vacancy_arr.append('/&&__question__&&/')
+#             answer = word['word']
+#             if word['POSType'] and word['POSType'].startswith('V'):
+#                 answer_type = 'verb'
+#             if word['POSType'] and (word['POSType'].startswith('J') or word['POSType'].startswith('E')):
+#                 answer_type = 'preposition'
+#     vacancy_text = ' '.join(vacancy_arr)
+#     origin = origin.replace('-', '‌')
+#     vacancy_text = vacancy_text.replace('-', '‌')
+#     answer = answer.replace('-', '‌')
+#     sentences.append({
+#         'index': index,
+#         'origin': origin,
+#         'vacancy': vacancy_text,
+#         'answer': answer,
+#         'answer_type': answer_type,
+#         'level': sentence['level'],
+#     })
+#     index += 1
+
+# for index, sentence in enumerate(sentences):
+#     whole_vacancy = ''
+#     for tmp_sen in sentences:
+#         if tmp_sen['index'] == index:
+#             whole_vacancy += tmp_sen['vacancy']
+#         else:
+#             whole_vacancy += tmp_sen['origin']
+#     res = res.replace('-', '‌')
+#     whole_vacancy = whole_vacancy.replace('-', '‌')
+#     sentence['origin-text'] = res
+#     sentence['whole_vacancy'] = whole_vacancy
+
+# # import pdb;pdb.set_trace()
+# text = Text.objects.create(
+#     text=res,
+#     level=''
+# )
+# for q in sentences:
+#     # import pdb;pdb.set_trace()
+#     if q['answer_type'] in ['verb', 'preposition']:
+#         is_verb = q['answer_type'] == 'verb'
+#         is_preposition = q['answer_type'] == 'preposition'
+#         VacancyQuestion.objects.create(
+#             text=q['vacancy'],
+#             whole_text=q['whole_vacancy'],
+#             origin_text=text,
+#             level=q['level'],
+#             answer=q['answer'],
+#             is_verb=is_verb,
+#             is_preposition=is_preposition,
+#         )
+
 # import pdb;pdb.set_trace()
-res = ''
-for t in result[0]['words']:
-    res += t['word']+' '
-print(*result, sep='\n\n')
-print(a)
-print(a.tojson())
-print(res)
+# print(*result, sep='\n\n')
+# print(a)
+# print(a.tojson())
+# print(res)
 
 # run_perl()
 

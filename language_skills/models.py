@@ -33,7 +33,8 @@ class MCQuestionHistory(models.Model):
 
 class AbstractAnswer(models.Model):
     answer = models.CharField(max_length=200)
-    answer_type = models.CharField(max_length=50)
+    is_verb = models.BooleanField(default=False)
+    is_preposition = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
@@ -55,7 +56,7 @@ class AbstractActive(models.Model):
 
 class Text(models.Model):
     text = models.TextField()
-    level = models.CharField(max_length=4)
+    level = models.CharField(max_length=4, null=True, blank=True)
 
     def __str__(self):
         return self.text[:20] or ''
