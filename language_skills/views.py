@@ -256,8 +256,8 @@ class CreateQuestions(View):
 
         for file in csv_files:
             import re
-            last_index = 0
-            last_q = 0
+            last_index = '0'
+            last_q = '0'
             words = pd.read_csv('./data/'+file)
             for i, row in words.iterrows():
                 if 'not found' in str(row['q']):

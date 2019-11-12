@@ -196,7 +196,6 @@ class Analyser():
         self.char_count = result
 
     def sentence_count_analyse(self):
-        import pdb;pdb.set_trace()
         self.sentence_count = int(self.words['q'].max())
 
     def average_word_len_analyse(self):
