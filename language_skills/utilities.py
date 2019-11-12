@@ -345,19 +345,17 @@ class Analyser():
                         G.add_edge(int(row['WordIndex']), int(row['DepRelation']))
             pr = nx.pagerank(G, alpha=0.9)
             # import pdb;pdb.set_trace()
-            
-            if len(pr) ==0:
-                import pdb;pdb.set_trace();
-            keyword_index = max(pr.keys(), key = lambda x: pr[x])
-            
-            processed_words = []
-            for index, row in sentence_words.iterrows():
-                if not math.isnan(int(row['q'])):
-                    processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex']
-                                            == keyword_index, 'DepType': row['DepType'], 'POSType': row['POS']})
-            
+            if len(pr) != 0:
+                keyword_index = max(pr.keys(), key = lambda x: pr[x])
+                
+                processed_words = []
+                for index, row in sentence_words.iterrows():
+                    if not math.isnan(int(row['q'])):
+                        processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex']
+                                                == keyword_index, 'DepType': row['DepType'], 'POSType': row['POS']})
+                
 
-            result.append({'level': sentence_analyser.get_difficulty_level(), 'words': processed_words})
+                result.append({'level': sentence_analyser.get_difficulty_level(), 'words': processed_words})
         return result
         
 
