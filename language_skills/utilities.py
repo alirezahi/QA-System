@@ -262,7 +262,11 @@ class Analyser():
         result = 0
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
-                result += row['SyllableNumber'] if not math.isnan(row['SyllableNumber']) and not isinstance(row['SyllableNumber'],str) else 0
+                if not math.isnan(row['SyllableNumber']) and not isinstance(row['SyllableNumber'], str):
+                    try:
+                        result += row['SyllableNumber']
+                    except:
+                        import pdb;pdb.set_trace()
         self.average_syllable_in_text = result / self.token_count
 
     def syllable_1_count_analyse(self):
