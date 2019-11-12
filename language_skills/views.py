@@ -14,11 +14,10 @@ from django.http import HttpResponse
 import os
 
 
-
-# SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) or 30
-SET_COUNT = 30
-# SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) or 'false'
-SHOW_WHOLE_TEXT = 'false'
+SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) if Config.objects.filter(name='question_set_count', active=True) else 30
+# SET_COUNT = 30
+SHOW_WHOLE_TEXT = int(Config.objects.filter(name='show_whole_text', active=True).last().value) if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+# SHOW_WHOLE_TEXT = 'false'
 
 
 class StaffRequiredMixin(object):
@@ -51,6 +50,7 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
         question_set = VacancyQuestionSet.objects.get(id=set_id)
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
@@ -184,6 +184,7 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
         question_set = MCQuestionSet.objects.get(id=set_id)
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
@@ -294,9 +295,10 @@ class CreateQuestions(View):
                         if word['POSType'] and (word['POSType'].startswith('J') or word['POSType'].startswith('E')):
                             answer_type = 'preposition'
                 vacancy_text = ' '.join(vacancy_arr)
-                origin = origin.replace('-', '‌')
-                vacancy_text = vacancy_text.replace('-', '‌')
-                answer = answer.replace('-', '‌')
+                origin = origin.replace('-', '‌').replace('&quot;','\"')
+                vacancy_text = vacancy_text.replace(
+                    '-', '‌').replace('&quot;', '\"')
+                answer = answer.replace('-', '‌').replace('&quot;', '\"')
                 sentences.append({
                     'index': index,
                     'origin': origin,
@@ -314,8 +316,9 @@ class CreateQuestions(View):
                         whole_vacancy += tmp_sen['vacancy']
                     else:
                         whole_vacancy += tmp_sen['origin']
-                res = res.replace('-', '‌')
-                whole_vacancy = whole_vacancy.replace('-', '‌')
+                res = res.replace('-', '‌').replace('&quot;','\"')
+                whole_vacancy = whole_vacancy.replace(
+                    '-', '‌').replace('&quot;', '\"')
                 sentence['origin-text'] = res
                 sentence['whole_vacancy'] = whole_vacancy
 

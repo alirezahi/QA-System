@@ -57,6 +57,7 @@
             answer:'{{question.question.answer}}',
             user_answer:'{{question.answer|default_if_none:''}}',
             text: '{{question.question.text}}',
+            whole_text: '{{question.question.whole_text}}',
         },
         {% endfor %}
     ];
@@ -75,7 +76,11 @@
         counter++;
     }
     {% else %}
+    {% if whole_text %}
     text = '{{question.text}}';
+    {% else %}
+    text = '{{question.whole_text}}';
+    {% endif %}
     var input_text = '<input name="answer" type="text" class="v-question-input" placeholder="'+({{order}})+'" />';
     text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
     {% endif %}
