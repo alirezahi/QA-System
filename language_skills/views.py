@@ -256,13 +256,13 @@ class CreateQuestions(View):
 
         for file in csv_files:
             import re
-            last_index = '0'
-            last_q = '0'
+            last_index = 0
+            last_q = 0
             words = pd.read_csv('./data/'+file)
             for i, row in words.iterrows():
                 if 'not found' in str(row['q']):
                     print(i)
-                    words.loc[i, 'WordIndex'] = last_index+1
+                    words.loc[i, 'WordIndex'] = str(last_index+1)
                     words.loc[i, 'q'] = last_q
                     words.loc[i, 'wordForm'] = re.search(
                         'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
