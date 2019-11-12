@@ -265,7 +265,7 @@ class Analyser():
                 try:
                     if isinstance(row['SyllableNumber'], str) and row['SyllableNumber'].isdigit():
                         result += int(row['SyllableNumber'])
-                    elif not math.isnan(row['SyllableNumber']) and not isinstance(row['SyllableNumber'], str):
+                    elif not math.isnan(row['SyllableNumber']) :
                         result += row['SyllableNumber']
                 except:
                     import pdb;pdb.set_trace()
@@ -282,8 +282,11 @@ class Analyser():
     def syllable_3_more_count_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if row['SyllableNumber'] >= 3:
-                result += 1
+            try: #TODO: correct here
+                if row['SyllableNumber'] >= 3:
+                    result += 1
+            except:
+                pass
         self.syllable_3_more_count = result
 
     def syllable_1_count_to_type_count_analyse(self):
