@@ -196,7 +196,6 @@ class Analyser():
         self.char_count = result
 
     def sentence_count_analyse(self):
-        # import pdb;pdb.set_trace()
         self.sentence_count = int(self.words['q'].map(lambda x: int(x)).max())
 
     def average_word_len_analyse(self):
@@ -342,7 +341,7 @@ class Analyser():
     def get_vacancy_questions(self):
         result = []
         for i in range(1, int(self.sentence_count) + 1):
-            sentence_words = self.words[self.words.q == str(i)]
+            sentence_words = self.words[self.words.q == i]
             
             sentence_analyser = Analyser(sentence_words)
             sentence_analyser.analyse()

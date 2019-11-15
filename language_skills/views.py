@@ -301,10 +301,13 @@ class CreateQuestions(View):
                     else:
                         vacancy_arr.append('/&&__question__&&/')
                         answer = word['word']
-                        if word['POSType'] and word['POSType'].startswith('V'):
-                            answer_type = 'verb'
-                        if word['POSType'] and (word['POSType'].startswith('J') or word['POSType'].startswith('E')):
-                            answer_type = 'preposition'
+                        try:
+                            if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
+                                answer_type = 'verb'
+                            if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
+                                answer_type = 'preposition'
+                        except:
+                            import pdb;pdb.set_trace()
                 vacancy_text = ' '.join(vacancy_arr)
                 origin = origin.replace('-', '‌').replace('&quot;','\"')
                 vacancy_text = vacancy_text.replace(
@@ -338,7 +341,6 @@ class CreateQuestions(View):
                 level=''
             )
             for q in sentences:
-                # import pdb;pdb.set_trace()
                 if q['answer_type'] in ['verb', 'preposition']:
                     is_verb = q['answer_type'] == 'verb'
                     is_preposition = q['answer_type'] == 'preposition'

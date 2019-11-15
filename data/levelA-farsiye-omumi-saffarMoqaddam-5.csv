@@ -9,11 +9,11 @@ q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,W
 1,8,سال,سال,Ncspt--,4,APPOS,CVC,1,3,c,(Ncspt----- *)),1,0,1,0
 1,9,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *)))),1,0,1,1
 1,10,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
-***not found***او***Zrsh----
+2,1,او,***not found***او***Zrsh----
 2,2,در,در,E-,5,VMOD,CVC,1,2,f,(VPC (PPC (E------- *),3,0,1,0
 2,3,بازار,بازار,Ncspk--,2,POBJ,CVCVC,2,5,c,(Ncspk----- *)),1,0,1,1
 2,4,فرش,فرش,Ncsp---,5,MWE,CVCC,1,3,c,(MV (Ncsp------ *),2,1,0,0
-***not found***می-فروشد***Vpysshsi---
+2,5,می-فروشد,***not found***می-فروشد***Vpysshsi---
 2,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
 3,1,مادر,مادر,Ncsp--z,5,NSUBJ,CVCVCV,3,4,c,(ROOT (S (NPA (Ncsp----z- *),4,0,0,3
 3,2,فاطمه,فاطمه,Nasp---,1,NN,CVCVCV,3,5,c,(NPA (NUM (Nasp------ *),3,0,0,3
@@ -42,8 +42,8 @@ q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,W
 5,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
 5,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
 6,1,دو,دو,Urns---,2,NUM,CV,1,2,f,(ROOT (S (VPS (NPC (Urns----- *),5,0,0,1
-***not found***عمه-اش***Ncsp----3-
-***not found***خانه-دار***Aps-
+6,2,عمه-اش,***not found***عمه-اش***Ncsp----3-
+6,3,خانه-دار,***not found***خانه-دار***Aps-
 6,4,هستند,بودن,Vpyklhs----,5,VerbCOOR,CVCCVCC,2,5,c,(VPC (NPA-nid-DiscA (NPA-nid (NUM-nid (As--- *)),5,1,1,0
 6,5,و,و,Jr-,0,ROOT,CV,1,1,f,(Vpyk-lhs------ *)),1,0,0,1
 6,6,بچه,بچه,Ncsp--z,8,DOBJ,CVCCVV,3,3,c,(DiscA (NUM (Jr------- *),3,0,1,0
@@ -51,7 +51,7 @@ q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,W
 6,8,دارند,داشتن,Vpyslhs----,5,VerbCOOR,CVCVCC,2,5,c,(MV (As--- *),2,1,0,1
 6,9,.,.,Oe,5,PUNC,.,1,1,f,(Vpys-lhs------ *)))),1,0,0,1
 7,1,دایی,دایی,Ncsp--z,5,NSUBJ,CVCVV,3,4,c,(ROOT (S (VPS (NPC (Ncsp----z- *),5,0,0,1
-***not found***او***Zrsh----
+7,2,او,***not found***او***Zrsh----
 7,3,مهندس,مهندس,Ncsp--z,5,COPCOMP,CVCVCCVCV,4,5,c,(VPC (ADJPA (Ncsp----z- *),3,0,1,3
 7,4,نفت,نفت,Ncsp---,3,NN,CVCC,1,3,c,(Ncsp------ *)),1,1,0,0
 7,5,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
@@ -75,35 +75,35 @@ q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,W
 9,7,سالم,سالم,Aps-,6,AdjCOOR,CVCVC,2,4,c,(N (As--- *),2,0,1,1
 9,8,هستند,بودن,Vpyklhs----,9,VerbCOOR,CVCCVCC,2,5,c,(Vpyk-lhs------ *),1,1,1,0
 9,9,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *)))))),1,0,0,1
-***not found***هر***Tf-------
+9,10,هر,***not found***هر***Tf-------
 9,11,روز,روز,Ncspt--,10,DETCOMP,CVC,1,3,c,(Ncspt----- *))),1,0,1,0
 9,12,کار,کار,Ncsp---,13,MWE,CVC,1,3,c,(MV (Ncsp------ *),2,0,1,0
-***not found***می-کنند***Vpyslhsi---
+9,13,می-کنند,***not found***می-کنند***Vpyslhsi---
 9,14,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
-***not found***آنها***Zml-----
-***not found***می-گویند***Vpyk------a-6-
+10,1,آنها,***not found***آنها***Zml-----
+10,2,می-گویند,***not found***می-گویند***Vpyk------a-6-
 10,3,:,:,Oo,6,PUNC,:,1,1,f,(VPS (Oo *),2,0,0,1
-***not found***&quot;***Ncsp--z
+10,4,&quot;,***not found***&quot;***Ncsp--z
 10,5,ورزش,ورزش,Ncsp---,6,MWE,CVCCVC,2,4,c,(Ncsp------ *)),1,0,2,0
 10,6,کنید,کردن,Vpyslt--u--,2,CCOMP,CVCCVC,2,4,c,(Vpys-lt--u---- *))))),1,0,2,0
 10,7,.,.,Oe,2,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
 11,1,زیاد,زیاد,Aps-,2,MWE,CVCVC,2,4,c,(ROOT (S (VPSD (As--- *),4,0,1,1
-***not found***نخورید***Vnyslt--m--
+11,2,نخورید,***not found***نخورید***Vnyslt--m--
 11,3,.,.,Oe,2,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
-***not found***زود***Dgp-t--
+12,1,زود,***not found***زود***Dgp-t--
 12,2,بخوابید,خوابیدن,Vpyslt--m--,3,VerbCOOR,CVCVCVC,3,7,c,(NPA (Vpys-lt--m---- *),2,0,1,2
 12,3,و,و,Jr-,0,ROOT,CV,1,1,f,(CPC-adj (Jr------- *),2,0,0,1
-***not found***زود***Dgp-t--
+12,4,زود,***not found***زود***Dgp-t--
 12,5,بیدار,بیدار,Aps-,6,MWE,CVCVC,2,5,c,(As--- *)))),1,0,1,1
 12,6,شوید,شدن,Vpyslt--u--,3,VerbCOOR,CVCVC,2,4,c,(Vpys-lt--u---- *)),1,0,1,1
 12,7,.,.,Oe,3,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
-***not found***&quot;***Nasp---
+13,1,&quot;,***not found***&quot;***Nasp---
 13,2,در,در,E-,10,VMOD,CVC,1,2,f,(NPC (E------- *),2,0,1,0
 13,3,خانواده,خانواده,Ncsp--z,2,POBJ,CVCVCVCVV,5,7,c,(NPA (Ncsp----z- *),2,0,0,3
 13,4,امامی,امامی,Nasp---,3,NN,CVCVCV,3,5,c,(Nasp------ *)))),1,0,0,3
 13,5,،,،,Oc,2,PUNC,،,1,1,f,(Oc *)),1,0,0,1
-***not found***همه***Zfs-----
-***not found***یکدیگر***Zc------
+13,6,همه,***not found***همه***Zfs-----
+13,7,یکدیگر,***not found***یکدیگر***Zc------
 13,8,را,را,P,6,ACC,CV,1,2,f,(P *)),1,0,0,1
 13,9,دوست,دوست,Ncsp---,10,MWE,CVCC,1,4,c,(MV (Ncsp------ *),2,1,0,0
 13,10,دارند,داشتن,Vpyslhs----,0,ROOT,CVCVCC,2,5,c,(Vpys-lhs------ *))))),1,1,0,1
