@@ -301,11 +301,10 @@ class CreateQuestions(View):
                     else:
                         vacancy_arr.append('/&&__question__&&/')
                         answer = word['word']
-                        try:
-                            if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
-                                answer_type = 'verb'
-                            if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
-                                answer_type = 'preposition'
+                        if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
+                            answer_type = 'verb'
+                        if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
+                            answer_type = 'preposition'
                         except:
                             import pdb;pdb.set_trace()
                 vacancy_text = ' '.join(vacancy_arr)
