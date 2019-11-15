@@ -27,7 +27,7 @@ urlpatterns = [
     path('v/list', VQuestionListTemplate.as_view()),
     path('v/history-list', VQuestionHistoryListTemplate.as_view()),
     path('v/check-answers/<question_id>', check_answer),
-    path('v/<set_id>/<order>', VacancyQuestionTemplate.as_view()),
+    path('v/<set_id>/<order>', BlankQuestionTemplate.as_view()),
     # mc-questions
     path('mc/new', MCQuestionNewTemplate.as_view()),
     path('mc/list', MCQuestionListTemplate.as_view()),

@@ -96,7 +96,7 @@ class MCQuestionSet(models.Model):
         QAUser, null=True, blank=True, on_delete=models.CASCADE)
 
 
-class VacancyQuestion(AbstractAnswer, AbstractActive):
+class BlankQuestion(AbstractAnswer, AbstractActive):
     text = models.TextField()
     whole_text = models.TextField()
     level = models.CharField(max_length=4)
@@ -108,17 +108,36 @@ class VacancyQuestion(AbstractAnswer, AbstractActive):
         return self.text[:20] or ''
 
 
-class SelectedVacancyQuestion(AbstractOrder):
-    question = models.ForeignKey(VacancyQuestion, on_delete=models.CASCADE)
+class SelectedBlankQuestion(AbstractOrder):
+    question = models.ForeignKey(BlankQuestion, on_delete=models.CASCADE)
     answer = models.CharField(max_length=200, blank=True, null=True)
 
 
-class VacancyQuestionSet(models.Model):
-    questions = models.ManyToManyField(SelectedVacancyQuestion, blank=True)
+class BlankQuestionSet(models.Model):
+    questions = models.ManyToManyField(SelectedBlankQuestion, blank=True)
     right_answers = models.IntegerField(blank=True, null=True)
     question_count = models.IntegerField(blank=True, null=True)
     answer_percentage = models.FloatField(blank=True, null=True)
     user = models.ForeignKey(QAUser, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class Verb(models.Model):
+    text = models.CharField(max_length=100)
+    verb_id = models.IntegerField()
+
+    objects = RandomManager()
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class PrePosition(models.Model):
+    text = models.CharField(max_length=100)
+
+    objects = RandomManager()
+
+    def __str__(self):
+        return self.text[:20] or ''
 
 
 class Config(models.Model):

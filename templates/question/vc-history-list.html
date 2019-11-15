@@ -23,7 +23,7 @@
             </tr>
         </tfoot>
         <tbody>
-        {% for q in user.qauser.vacancyquestionset_set.all %}
+        {% for q in user.qauser.blankquestionset_set.all %}
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{q.answer_percentage}}</td>

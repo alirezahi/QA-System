@@ -71,7 +71,7 @@
     ];
     for(var i=0;i< questions.length; i++){
         text+= '<div class="p-2">'+questions[i].text+'</div>';
-        var input_text = '<input name="answer'+(questions[i].order)+'" type="text" class="v-question-input{% if answer_page %} '+answer_status(questions[i].user_answer, questions[counter].answer)+'{% endif %}" placeholder="'+(questions[i].order)+'" {% if answer_page %}disabled value="('+(questions[i].order)+') '+questions[i].user_answer+'"{% endif %}/>';
+        var input_text = '<input name="answer'+(questions[i].order)+'" type="text" autocomplete="off" class="v-question-input{% if answer_page %} '+answer_status(questions[i].user_answer, questions[counter].answer)+'{% endif %}" placeholder="'+(questions[i].order)+'" {% if answer_page %}disabled value="('+(questions[i].order)+') '+questions[i].user_answer+'"{% endif %}/>';
         text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
         counter++;
     }
@@ -81,7 +81,7 @@
     {% else %}
     text = '{{question.text}}';
     {% endif %}
-    var input_text = '<input name="answer" type="text" class="v-question-input" placeholder="'+({{order}})+'" />';
+    var input_text = '<input name="answer" type="text" class="v-question-input" autocomplete="off" {% if answer_required %} required {% endif %}placeholder="'+({{order}})+'" />';
     text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
     {% endif %}
     

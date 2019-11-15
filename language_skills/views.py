@@ -39,13 +39,15 @@ class StaffRequiredMixin(object):
 
 # Create your views here.
 
-class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
+class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'question/v-question.html'
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
         SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+            ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
+            ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
         set_id = self.kwargs['set_id']
         order = self.kwargs['order']
         if self.request.method == 'GET':
@@ -53,7 +55,8 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
             answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
         context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
-        question_set = VacancyQuestionSet.objects.get(id=set_id)
+        context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
+        question_set = BlankQuestionSet.objects.get(id=set_id)
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
             last_question.answer = answer
@@ -70,7 +73,7 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
         kwargs['last'] = True
         set_id = self.kwargs['set_id']
         order = self.kwargs['order']
-        question_set = VacancyQuestionSet.objects.get(id=set_id)
+        question_set = BlankQuestionSet.objects.get(id=set_id)
         question_select = question_set.questions.filter(
             order=order).last()
         last_question = question_set.questions.order_by('order').last()
@@ -80,7 +83,7 @@ class VacancyQuestionTemplate(LoginRequiredMixin, TemplateView):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
             return redirect('/question/v/check-answers/'+str(set_id)+'')
-        return super(VacancyQuestionTemplate, self).dispatch(request, *args, **kwargs)
+        return super(BlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
 
 
 class VQuestionNewTemplate(LoginRequiredMixin, RedirectView):
@@ -117,18 +120,18 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['questions'] = VacancyQuestion.objects.all()
+        context['questions'] = BlankQuestion.objects.all()
         return context
 
 
 def generate_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
-    v_list = VacancyQuestion.objects.get_random(SET_COUNT)
-    v_set = VacancyQuestionSet.objects.create(user=user.qauser)
+    v_list = BlankQuestion.objects.get_random(SET_COUNT)
+    v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
-        v_obj = SelectedVacancyQuestion.objects.create(question=v, order=order_counter)
+        v_obj = SelectedBlankQuestion.objects.create(question=v, order=order_counter)
         v_set.questions.add(v_obj)
         order_counter += 1
     return v_set
@@ -137,8 +140,8 @@ def generate_vquestion_set(user):
 def check_answer(request, question_id):
     if request.method == 'GET':
         data = request.GET
-        if question_id and VacancyQuestionSet.objects.filter(id=question_id).exists():
-            v_set = VacancyQuestionSet.objects.get(id=question_id)
+        if question_id and BlankQuestionSet.objects.filter(id=question_id).exists():
+            v_set = BlankQuestionSet.objects.get(id=question_id)
             questions = v_set.questions.all().order_by('order')
             answers_count = questions.count()
             my_data = []
@@ -265,20 +268,20 @@ class CreateQuestions(View):
 
         for file in csv_files:
             import re
-            last_index = 0
-            last_q = 0
+            # last_index = 0
+            # last_q = 0
             words = pd.read_csv('./data/'+file)
-            for i, row in words.iterrows():
-                if 'not found' in str(row['q']):
-                    print(i)
-                    words.loc[i, 'WordIndex'] = str(last_index)
-                    words.loc[i, 'q'] = str(last_q)
-                    words.loc[i, 'wordForm'] = re.search(
-                        'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
-                    last_index = last_index+1
-                else:
-                    last_index = row['WordIndex']+1
-                    last_q = row['q']
+            # for i, row in words.iterrows():
+            #     if 'not found' in str(row['Lemma']):
+            #         print(i)
+            #         words.loc[i, 'WordIndex'] = str(last_index)
+            #         words.loc[i, 'q'] = str(last_q)
+            #         words.loc[i, 'wordForm'] = re.search(
+            #             'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
+            #         last_index = last_index+1
+            #     else:
+            #         last_index = row['WordIndex']+1
+            #         last_q = row['q']
             a = Analyser(words)
             a.analyse()
             result = a.get_vacancy_questions()
@@ -288,7 +291,7 @@ class CreateQuestions(View):
             index = 0
             for sentence in result:
                 origin = ' '.join([word['word'] for word in sentence['words']])
-                res += origin
+                res += origin + ' '
                 vacancy_arr = []
                 answer = ''
                 answer_type = ''
@@ -321,9 +324,9 @@ class CreateQuestions(View):
                 whole_vacancy = ''
                 for tmp_sen in sentences:
                     if tmp_sen['index'] == index:
-                        whole_vacancy += tmp_sen['vacancy']
+                        whole_vacancy += tmp_sen['vacancy'] + ' '
                     else:
-                        whole_vacancy += tmp_sen['origin']
+                        whole_vacancy += tmp_sen['origin'] + ' '
                 res = res.replace('-', '‌').replace('&quot;','\"')
                 whole_vacancy = whole_vacancy.replace(
                     '-', '‌').replace('&quot;', '\"')
@@ -339,7 +342,7 @@ class CreateQuestions(View):
                 if q['answer_type'] in ['verb', 'preposition']:
                     is_verb = q['answer_type'] == 'verb'
                     is_preposition = q['answer_type'] == 'preposition'
-                    VacancyQuestion.objects.create(
+                    BlankQuestion.objects.create(
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
                         origin_text=text,
