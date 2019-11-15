@@ -6,3 +6,4 @@ PipFile
 **/__pycache__
 codes-data-folders
 data
+data-tmp
