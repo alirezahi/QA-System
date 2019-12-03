@@ -2,26 +2,46 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
-
+REASONS = (
+    (1, 'تحصیل دانشجوی خارجی در ایران'),
+    (2, 'اختلال در یادگیری زبان فارسی'),
+    (3, 'ایرانی مقیم خارج از کشور'),
+    (4, 'علاقه شخصی'),
+)
 
 # =======   general classes    ========
+
+
 class RandomManager(models.Manager):
-    
-  def get_random(self, items=1):
-    '''
-    items is integer value
-    By default it returns 1 random item
-    '''
-    if isinstance(items, int):
-        return self.model.objects.order_by('?')[:items]
-    return self.all()
+
+    def get_random(self, items=1):
+        '''
+        items is integer value
+        By default it returns 1 random item
+        '''
+        if isinstance(items, int):
+            return self.model.objects.order_by('?')[:items]
+        return self.all()
 
 # ===============
 
+
 class QAUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    birth_date = models.DateField(default=timezone.now)
+    birth_country = models.CharField(max_length=200, null=True, blank=True)
+    native_lang = models.CharField(max_length=200, null=True, blank=True)
+    is_parent_persian = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
+    university = models.CharField(max_length=200, null=True, blank=True)
+    major = models.CharField(max_length=200, null=True, blank=True)
+    lang_reason = models.CharField(
+        choices=REASONS, max_length=50, null=True, blank=True)
+    is_knowing_persian = models.BooleanField(default=False)
+    persian_knowing_reason = models.TextField(null=True, blank=True)
 
 
 class MCQuestionHistory(models.Model):
@@ -83,9 +103,10 @@ class MultipleChoiceQuestion(AbstractAnswer, AbstractActive):
 
 
 class SelectedMCQuestion(AbstractOrder):
-    question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE)
+    question = models.ForeignKey(
+        MultipleChoiceQuestion, on_delete=models.CASCADE)
     answer = models.CharField(max_length=200, blank=True, null=True)
-    
+
 
 class MCQuestionSet(models.Model):
     questions = models.ManyToManyField(SelectedMCQuestion, blank=True)
@@ -118,7 +139,15 @@ class BlankQuestionSet(models.Model):
     right_answers = models.IntegerField(blank=True, null=True)
     question_count = models.IntegerField(blank=True, null=True)
     answer_percentage = models.FloatField(blank=True, null=True)
-    user = models.ForeignKey(QAUser, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        QAUser, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class UserQuestionRelation(models.Model):
+    question = models.ManyToManyField(BlankQuestion)
+    user = models.ForeignKey(
+        QAUser, null=True, blank=True, on_delete=models.CASCADE)
+    similarity = models.FloatField(default=0)
 
 
 class Verb(models.Model):
@@ -149,11 +178,26 @@ class Config(models.Model):
         return self.name + ' - ' + self.value
 
 
+# ==================
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-      QAUser.objects.create(user=instance)
+        QAUser.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-     instance.qauser.save()
+    instance.qauser.save()
+
+
+# ==================
+
+
+# @receiver(post_save, sender=BlankQuestion)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         for user in QAUser.objects.all():
+#             QAUser.objects.first().blankquestionset_set.values_list('questions__id').distinct()
+#       QAUser.objects.create(user=instance)

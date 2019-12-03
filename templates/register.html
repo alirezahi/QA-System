@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body dir="rtl">
+    <div class="d-flex justify-content-center m-5">
+        <form action="/accounts/register/" method="POST" class="form-row w-75 border rounded border-light bg-light p-3 text-right">
+        <div class="alert alert-info w-100 text-center">
+            ثبت‌نام
+        </div>
+        {% csrf_token %}                                
+            <div class="form-group col-md-12">
+                <label for="username">نام کاربری(آدرس ایمیل)</label>
+                <input type="email" class="form-control" id="username" name="username" placeholder="email@gmail.com"/>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="password">پسورد</label>
+                <input type="password" pattern="^[a-zA-Z0-9-_\.]{8,}$" class="form-control" id="password" name="password" placeholder="پسورد"/>
+                <small class="text-danger">
+                    پسورد باید ترکیبی از حروف و اعداد و حداقل ۸ رقم باشد
+                </small>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="name">نام</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="محمد"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lastname">نام خانوادگی</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="محمدی"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="birth-date">تاریخ تولد(میلادی)</label>
+                <input type="date" class="form-control" id="birth-date" name="birth-date" placeholder="2000-02-03" value="2000-12-30" max="2020-01-01"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="country">متولد کشور</label>
+                <input type="text" class="form-control" id="country" name="country" placeholder="مثال: ایران"/>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="native-language">زبان مادری</label>
+                <input type="text" class="form-control" id="native-language" name="native-language" placeholder="مثال: فارسی"/>
+            </div>
+            <div class="custom-control custom-switch d-flex align-items-center col-md-12">
+                <div>زبان مادری پدر و مادر فارسی است؟</div>
+                <input type="checkbox" name="" class="custom-control-input" id="parent-lang" dir="ltr"/>
+                <label id="parent-lang-togg" class="custom-control-label" for="parent-lang" dir="ltr">خیر</label>
+            </div>
+            <div class="custom-control custom-switch d-flex align-items-center col-md-12">
+                <div>دانشجو هستید؟</div>
+                <input type="checkbox" name="is_student" class="custom-control-input" id="is-student" dir="ltr"/>
+                <label id="is-student-label" class="custom-control-label" for="is-student" dir="ltr">خیر</label>
+            </div>
+            <div class="form-group col-md-6 is-student-yes d-none">
+                <label for="university">نام دانشگاه</label>
+                <input type="text" class="form-control" id="university" name="university" placeholder="دانشگاه صنعتی امیرکبیر"/>
+            </div>
+            <div class="form-group col-md-6 is-student-yes d-none">
+                <label for="major">رشته تحصیلی</label>
+                <input type="text" class="form-control" id="major" name="major" placeholder="مهندسی کامپیوتر"/>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="reason">دلیل یادگیری زبان فارسی :</label>
+                <select name="reason" placeholder="دلیل یادگیری زبان فارسی" class="col-md-12">
+                    <option value="1">تحصیل دانشجوی خارجی در ایران</option>
+                    <option value="2">اختلال در یادگیری زبان فارسی</option>
+                    <option value="3">ایرانی مقیم خارج از کشور</option>
+                    <option value="4">علاقه شخصی</option>
+                </select>
+            </div>
+            <div class="custom-control custom-switch d-flex align-items-center col-md-12 mb-md-2">
+                <div>آیا با زبان فارسی آشنایی دارید؟</div>
+                <input type="checkbox" name="is_knowing_persian" class="custom-control-input" id="knowing" dir="ltr"/>
+                <label id="knowing-togg" class="custom-control-label" for="knowing" dir="ltr">خیر</label>
+            </div>
+            <div class="form-group col-md-12 d-none knowing-how">
+                <label for="reason">چگونه با زبان فارسی آشنایی دارید؟</label>
+                <textarea class="form-control" id="how-knowing"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">ثبت‌نام</button>
+        </form>
+    </div>
+</body>
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script>
+    $('#is-student').on('change',function(){
+        var checked = this.checked;
+        if(checked){
+            $('.is-student-yes').removeClass('d-none');
+        } else {
+            $('.is-student-yes').addClass('d-none');
+        }
+        $('#is-student-label').text(checked ? 'بله' : 'خیر');
+    })
+    $('#knowing').on('change',function(){
+        var checked = this.checked;
+        if(checked){
+            $('.knowing-how').removeClass('d-none');
+        } else {
+            $('.knowing-how').addClass('d-none');
+        }
+        $('#knowing-togg').text(checked ? 'بله' : 'خیر');
+    })
+    $('#parent-lang').on('change',function(){
+        var checked = this.checked;
+        $('#parent-lang-togg').text(checked ? 'بله' : 'خیر');
+    })
+</script>
+</html>

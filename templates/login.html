@@ -14,6 +14,9 @@
     <div class="d-flex justify-content-center m-5">
         <form action="/accounts/login/" method="POST" class="border rounded border-light bg-light p-3 text-right">
         {% csrf_token %}
+            <div class="text-center">
+                <img class="bg-white p-1 rounded" src="{% static 'img/ihcsLogo.png' %}" alt="پژوهشگاه علوم انسانی" style="max-height:80px;">
+            </div>
             <div class="form-group">
                 <label for="username">نام کاربری</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="نام کاربری">
@@ -23,6 +26,13 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="پسورد">
             </div>
             <button type="submit" class="btn btn-primary w-100">ورود</button>
+            <div class="text-center mt-1">
+            <a href="/signup">
+                <span class="badge badge-success">
+                    ثبت نام
+                </span>
+                </a>
+            </div>
         </form>
     </div>
 </body>

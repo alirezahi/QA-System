@@ -29,5 +29,6 @@ urlpatterns = [
     path('question/', include('language_skills.urls')),
     path('test/', TestView.as_view()),
     path('login/', TemplateView.as_view(template_name='login.html')),
+    path('signup/', TemplateView.as_view(template_name='register.html')),
     path('logout/', LogoutView.as_view()),
 ]

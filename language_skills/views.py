@@ -127,7 +127,7 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
 def generate_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
-    v_list = BlankQuestion.objects.get_random(SET_COUNT)
+    v_list = BlankQuestion.objects.get_random(SET_COUNT).order_by('origin_text__id')
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
