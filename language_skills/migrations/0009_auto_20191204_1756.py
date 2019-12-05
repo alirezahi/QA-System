@@ -10,9 +10,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='qauser',
-            name='birth_date',
-            field=models.DateField(blank=True, null=True),
-        ),
+        # migrations.AlterField(
+        #     model_name='qauser',
+        #     name='birth_date',
+        #     field=models.DateField(blank=True, null=True),
+        # ),
     ]

@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='qauser',
             name='birth_date',
-            field=models.DateTimeField(default=django.utils.timezone.now),
+            field=models.DateField(blank=True, null=True),
         ),
         migrations.AddField(
             model_name='qauser',

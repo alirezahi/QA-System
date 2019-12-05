@@ -11,9 +11,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='qauser',
-            name='birth_date',
-            field=models.DateField(default=django.utils.timezone.now),
-        ),
+        # migrations.AlterField(
+        #     model_name='qauser',
+        #     name='birth_date',
+        #     field=models.DateField(default=django.utils.timezone.now),
+        # ),
     ]
