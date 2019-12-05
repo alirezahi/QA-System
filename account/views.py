@@ -19,7 +19,6 @@ class TestView(TemplateView):
 
 def register(request):
     if request.method == 'POST':
-        import pdb;pdb.set_trace()
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         name = request.POST.get('name', '')

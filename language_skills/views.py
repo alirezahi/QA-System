@@ -127,7 +127,8 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
 def generate_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
-    v_list = BlankQuestion.objects.get_random(SET_COUNT).order_by('origin_text__id')
+    v_list = BlankQuestion.objects.get_random(
+        order=['origin_text__id'], items=SET_COUNT)
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
@@ -227,7 +228,8 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
 def generate_mcquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
-    mc_list = MultipleChoiceQuestion.objects.get_random(SET_COUNT)
+    mc_list = MultipleChoiceQuestion.objects.get_random(
+        order=['origin_text__id'], items=SET_COUNT)
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for mc in mc_list:
@@ -268,20 +270,7 @@ class CreateQuestions(View):
 
         for file in csv_files:
             import re
-            # last_index = 0
-            # last_q = 0
             words = pd.read_csv('./data/'+file)
-            # for i, row in words.iterrows():
-            #     if 'not found' in str(row['Lemma']):
-            #         print(i)
-            #         words.loc[i, 'WordIndex'] = str(last_index)
-            #         words.loc[i, 'q'] = str(last_q)
-            #         words.loc[i, 'wordForm'] = re.search(
-            #             'not found\*\*\*(.*)\*\*\*', row['q']).group(1)
-            #         last_index = last_index+1
-            #     else:
-            #         last_index = row['WordIndex']+1
-            #         last_q = row['q']
             a = Analyser(words)
             a.analyse()
             result = a.get_vacancy_questions()
@@ -351,6 +340,115 @@ class CreateQuestions(View):
                         is_preposition=is_preposition,
                     )
         return HttpResponse('Done')
+
+
+class CreateMCQuestions(View):
+    def get(self, request):
+        files = os.listdir('./data')
+        csv_files = []
+        for file in files:
+            if file.endswith('.csv'):
+                csv_files.append(file)
+
+        for file in csv_files:
+            import re
+            words = pd.read_csv('./data/'+file)
+            a = Analyser(words)
+            a.analyse()
+            result = a.get_vacancy_questions()
+            whole_text = ''
+            res = ''
+            sentences = []
+            index = 0
+            for sentence in result:
+                origin = ' '.join([word['word'] for word in sentence['words']])
+                res += origin + ' '
+                vacancy_arr = []
+                answer = ''
+                answer_type = ''
+                for word in sentence['words']:
+                    if not word['is_vacancy']:
+                        vacancy_arr.append(word['word'])
+                    else:
+                        vacancy_arr.append('/&&__question__&&/')
+                        answer = word['word']
+                        if word['POSType'] and (not isinstance(word['POSType'], float)) and str(word['POSType']).startswith('V'):
+                            answer_type = 'verb'
+                        if word['POSType'] and (not isinstance(word['POSType'], float)) and (str(word['POSType']).startswith('J') or str(word['POSType']).startswith('E')):
+                            answer_type = 'preposition'
+                vacancy_text = ' '.join(vacancy_arr)
+                origin = origin.replace('-', '‌').replace('&quot;', '\"')
+                vacancy_text = vacancy_text.replace(
+                    '-', '‌').replace('&quot;', '\"')
+                answer = answer.replace('-', '‌').replace('&quot;', '\"')
+                sentences.append({
+                    'index': index,
+                    'origin': origin,
+                    'vacancy': vacancy_text,
+                    'answer': answer,
+                    'answer_type': answer_type,
+                    'level': sentence['level'],
+                })
+                index += 1
+
+            for index, sentence in enumerate(sentences):
+                whole_vacancy = ''
+                for tmp_sen in sentences:
+                    if tmp_sen['index'] == index:
+                        whole_vacancy += tmp_sen['vacancy'] + ' '
+                    else:
+                        whole_vacancy += tmp_sen['origin'] + ' '
+                res = res.replace('-', '‌').replace('&quot;', '\"')
+                whole_vacancy = whole_vacancy.replace(
+                    '-', '‌').replace('&quot;', '\"')
+                sentence['origin-text'] = res
+                sentence['whole_vacancy'] = whole_vacancy
+
+            text = Text.objects.create(
+                text=res,
+                level=''
+            )
+            for q in sentences:
+                if q['answer_type'] in ['verb', 'preposition']:
+                    is_verb = q['answer_type'] == 'verb'
+                    is_preposition = q['answer_type'] == 'preposition'
+                    mc = MultipleChoiceQuestion.objects.create(
+                        text=q['vacancy'],
+                        whole_text=q['whole_vacancy'],
+                        origin_text=text,
+                        level=q['level'],
+                        answer=q['answer'],
+                        is_verb=is_verb,
+                        is_preposition=is_preposition,
+                    )
+                    o, is_created = OptionAnswer.objects.get_or_create(text=q['answer'])
+                    mc.options.add(o)
+                    if is_verb:
+                        # TODO: make more options
+                        if VerbForm.objects.filter(form=q['answer']).exists():
+                            verb_form = VerbForm.objects.filter(
+                                form=q['answer']).last()
+                            v_forms = verb_form.verb.verbform_set.exclude(form=q['answer']).order_by('?')[:3]
+                            for v in v_forms:
+                                o, is_created = OptionAnswer.objects.get_or_create(
+                                    text=v.form)
+                                mc.options.add(o)
+                        else:
+                            v_forms = VerbForm.objects.exclude(
+                                form=q['answer']).order_by('?')[:3]
+                            for v in v_forms:
+                                o, is_created = OptionAnswer.objects.get_or_create(text=v.form)
+                                mc.options.add(o)
+                    if is_preposition:
+                        pres = PrePosition.objects.exclude(
+                            text=q['answer']).order_by('?')[:3]
+                        for p in pres:
+                            o, is_created = OptionAnswer.objects.get_or_create(
+                                text=p.text)
+                            mc.options.add(o)
+
+        return HttpResponse('Done')
+    
 
 def check_answer_mc(request, question_id):
     if request.method == 'GET':

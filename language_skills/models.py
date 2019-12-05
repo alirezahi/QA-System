@@ -17,13 +17,13 @@ REASONS = (
 
 class RandomManager(models.Manager):
 
-    def get_random(self, items=1):
+    def get_random(self,order=[], items=1):
         '''
         items is integer value
         By default it returns 1 random item
         '''
         if isinstance(items, int):
-            return self.model.objects.order_by('?')[:items]
+            return self.model.objects.order_by('?',*order)[:items]
         return self.all()
 
 # ===============
@@ -31,7 +31,7 @@ class RandomManager(models.Manager):
 
 class QAUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    birth_date = models.DateField(default=timezone.now)
+    birth_date = models.DateField(null=True, blank=True)
     birth_country = models.CharField(max_length=200, null=True, blank=True)
     native_lang = models.CharField(max_length=200, null=True, blank=True)
     is_parent_persian = models.BooleanField(default=False)
@@ -150,16 +150,6 @@ class UserQuestionRelation(models.Model):
     similarity = models.FloatField(default=0)
 
 
-class Verb(models.Model):
-    text = models.CharField(max_length=100)
-    verb_id = models.IntegerField()
-
-    objects = RandomManager()
-
-    def __str__(self):
-        return self.text[:20] or ''
-
-
 class PrePosition(models.Model):
     text = models.CharField(max_length=100)
 
@@ -167,6 +157,26 @@ class PrePosition(models.Model):
 
     def __str__(self):
         return self.text[:20] or ''
+
+
+class VerbInfo(models.Model):
+    infinitive = models.CharField(max_length=100)
+    past_root = models.CharField(max_length=100)
+    passive = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.infinitive
+
+
+class VerbForm(models.Model):
+    tense = models.CharField(max_length=100)
+    form = models.CharField(max_length=100)
+    verb = models.ForeignKey(VerbInfo, on_delete=models.CASCADE)
+
+    objects = RandomManager()
+
+    def __str__(self):
+        return self.form
 
 
 class Config(models.Model):

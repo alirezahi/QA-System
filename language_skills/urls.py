@@ -22,6 +22,7 @@ urlpatterns = [
     path('history-choice', HistoryChoiceTemplate.as_view()),
     path('new', NewQuestionTemplate.as_view()),
     path('create', CreateQuestions.as_view()),
+    path('create-mc', CreateMCQuestions.as_view()),
     # v-questions
     path('v/new', VQuestionNewTemplate.as_view()),
     path('v/list', VQuestionListTemplate.as_view()),
