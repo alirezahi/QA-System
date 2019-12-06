@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
+from django.conf import settings
 import pandas as pd
 from .models import *
 from django.views import View
@@ -12,13 +14,6 @@ from django.shortcuts import redirect
 from .utilities import Analyser
 from django.http import HttpResponse
 import os
-
-
-SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last().value) if Config.objects.filter(name='question_set_count', active=True) else 30
-# SET_COUNT = 30
-SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last().value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
-# SHOW_WHOLE_TEXT = 'false'
-
 
 class StaffRequiredMixin(object):
     """
@@ -107,6 +102,28 @@ class HistoryChoiceTemplate(LoginRequiredMixin, TemplateView):
 class NewQuestionTemplate(StaffRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'question/new.html'
+
+
+class ChangePasswordTemplate(TemplateView):
+    login_url = '/login/'
+    template_name = 'registration/change-password.html'
+
+
+class SuccessMailTemplate(TemplateView):
+    login_url = '/login/'
+    template_name = 'registration/success-mail.html'
+
+
+class FinalChangePasswordTemplate(TemplateView):
+    login_url = '/login/'
+    template_name = 'registration/final-change-password.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['uuid'] = self.kwargs['uuid']
+        return context
 
 
 class VQuestionHistoryListTemplate(LoginRequiredMixin, TemplateView):
@@ -493,3 +510,33 @@ def check_answer_mc(request, question_id):
         #     user.mc_questions.add(mch)
         #     return render(request, template_name='question/mc-question.html', context={'question': question,'answers': answers, 'user_answers': user_answers, 'answer_page': True})
     return redirect('/accounts/dashboard/')
+
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username','')
+        if User.objects.filter(username=username).exists():
+            user = User.objects.filter(username=username).last()
+            if not user.qauser.uuid:
+                user.qauser.uuid = uuid.uuid4
+                user.qauser.save()
+            subject = 'تغییر رمز - سامانه یادگیری زبان فارسی'
+            message = 'جهت تغییر رمز کاربری خود وارد لینک زیر شوید:\n' + \
+                'http://46.209.4.197:8000/final-change-password/'+str(user.qauser.uuid)
+            email(subject, message, username)
+        return redirect('/send-success-mail')
+
+
+def email(subject, message, dest):
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [dest, ]
+    send_mail(subject, message, email_from, recipient_list)
+
+
+def change_password(request, uuid):
+    if User.objects.filter(qauser__uuid=uuid).exists():
+        user = User.objects.filter(qauser__uuid=uuid).last()
+        user.set_password(request.POST.get('password','123456'))
+        user.save()
+        return redirect('/login')

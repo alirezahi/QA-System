@@ -19,6 +19,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.base import RedirectView
 from account.views import TestView
+from language_skills.views import reset_password, change_password, ChangePasswordTemplate, FinalChangePasswordTemplate, SuccessMailTemplate
 
 
 urlpatterns = [
@@ -30,5 +31,14 @@ urlpatterns = [
     path('test/', TestView.as_view()),
     path('login/', TemplateView.as_view(template_name='login.html')),
     path('signup/', TemplateView.as_view(template_name='register.html')),
+    path('change-password-mail/',
+        ChangePasswordTemplate.as_view()),
+    path('request-change-password/',
+        reset_password),
+    path('send-success-mail', SuccessMailTemplate.as_view()),
+    path('final-change-password/<uuid>',
+        FinalChangePasswordTemplate.as_view()),
+    path('validate-change-password/<uuid>',
+        change_password),
     path('logout/', LogoutView.as_view()),
 ]

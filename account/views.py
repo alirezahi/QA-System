@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 # from language_skills.utilities import a
@@ -19,6 +19,7 @@ class TestView(TemplateView):
 
 def register(request):
     if request.method == 'POST':
+        print('12')
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         name = request.POST.get('name', '')
@@ -26,17 +27,19 @@ def register(request):
         birth_date = request.POST.get(
             'birth-date', '1990-01-01') or '1990-01-01'
         country = request.POST.get('country', '')
+        print('32')
         native_language = request.POST.get('native-language', '')
         is_parent_persian = request.POST.get('is_parent_persian', False)
         is_student = request.POST.get('is_student',False)
         university = request.POST.get('university','')
         major = request.POST.get('major','')
+        print('1235')
         reason = request.POST.get('reason','')
         is_knowing_persian = request.POST.get('is_knowing_persian', False)
         how_knowing = request.POST.get('how-knowing', '')
-
+        print('eq')
         if User.objects.filter(username=username).exists():
-            return ''
+            return HttpResponse('User Duplicate')
         
         user = User.objects.create(username=username,first_name=name,last_name=lastname)
         user.set_password(password)
@@ -53,6 +56,7 @@ def register(request):
         qauser.is_knowing_persian = is_knowing_persian
         qauser.persian_knowing_reason = how_knowing
         qauser.save()
+        print('piejhf')
         new_user = authenticate(username=username,
                                 password=password,
                                 )

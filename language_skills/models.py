@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.utils import timezone
+import uuid
 
 # Create your models here.
 REASONS = (
@@ -42,6 +43,8 @@ class QAUser(models.Model):
         choices=REASONS, max_length=50, null=True, blank=True)
     is_knowing_persian = models.BooleanField(default=False)
     persian_knowing_reason = models.TextField(null=True, blank=True)
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
 
 
 class MCQuestionHistory(models.Model):
