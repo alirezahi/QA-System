@@ -327,6 +327,7 @@ class CreateQuestions(View):
 
         for file in csv_files:
             import re
+            file_level = get_level(file)
             words = pd.read_csv('./data/'+file)
             a = Analyser(words)
             a.analyse()
@@ -391,13 +392,22 @@ class CreateQuestions(View):
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
                         origin_text=text,
-                        level=q['level'],
+                        level=file_level,
                         answer=q['answer'],
                         is_verb=is_verb,
                         is_preposition=is_preposition,
                     )
         return HttpResponse('Done')
 
+
+def get_level(file):
+    if file.startswith('levelA'):
+        return 'A'
+    if file.startswith('levelB'):
+        return 'B'
+    if file.startswith('levelC'):
+        return 'C'
+    return 'C'
 
 class CreateMCQuestions(View):
     def get(self, request):
@@ -409,6 +419,7 @@ class CreateMCQuestions(View):
 
         for file in csv_files:
             import re
+            file_level = get_level(file)
             words = pd.read_csv('./data/'+file)
             a = Analyser(words)
             a.analyse()
@@ -473,7 +484,7 @@ class CreateMCQuestions(View):
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
                         origin_text=text,
-                        level=q['level'],
+                        level=file_level,
                         answer=q['answer'],
                         is_verb=is_verb,
                         is_preposition=is_preposition,
