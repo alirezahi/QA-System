@@ -53,7 +53,7 @@
                         <input type="number" class="form-control" id="birth-date-month" name="birth-date-month" placeholder="ماه تولد" value="01" min="0" max="12"/>
                     </div>
                     <div class="col-md-4">
-                        <input type="number" class="form-control" id="birth-date-day" name="birth-date-day" placeholder="روز تولد" value="01" min=""max="31"/>
+                        <input type="number" class="form-control" id="birth-date-day" name="birth-date-day" placeholder="روز تولد" value="01" min="0" max="31"/>
                     </div>
                 </div>
             </div>
@@ -110,9 +110,20 @@
                 <input type="checkbox" name="is_knowing_persian" class="custom-control-input" id="knowing" dir="ltr"/>
                 <label id="knowing-togg" class="custom-control-label" for="knowing" dir="ltr">خیر</label>
             </div>
+            <div id="how-knowing-select" class="d-none col-md-12 mb-1">
+                <label for="how-reason">چگونه با زبان فارسی آشنایی دارید؟</label>
+                <select id="how-reason" name="how-reason" class="col-md-12">
+                    <option value="مطالعه انفرادی">مطالعه انفرادی</option>
+                    <option value="شرکت در کلاس‌های آزاد آموزشی خصوصی">شرکت در کلاس‌های آزاد آموزشی خصوصی</option>
+                    <option value="شرکت در کلاس‌های آزاد آموزشی عمومی">شرکت در کلاس‌های آزاد آموزشی عمومی</option>
+                    <option value="از طریق پدر یا مادر">از طریق پدر یا مادر</option>
+                    <option value="از طریق دوست">از طریق دوست</option>
+                    <option value="سایر">سایر</option>
+                </select>
+            </div>
             <div class="form-group col-md-12 d-none knowing-how">
                 <label for="reason">چگونه با زبان فارسی آشنایی دارید؟</label>
-                <textarea class="form-control" id="how-knowing"></textarea>
+                <textarea class="form-control" id="how-knowing" placeholder="چگونه با زبان فارسی آشنایی دارید؟"></textarea>
             </div>
             <button type="submit" class="btn btn-primary w-100" id="submit-form">ثبت‌نام</button>
         </form>
@@ -132,11 +143,21 @@
     $('#knowing').on('change',function(){
         var checked = this.checked;
         if(checked){
-            $('.knowing-how').removeClass('d-none');
+            $('#how-knowing-select').removeClass('d-none');
         } else {
-            $('.knowing-how').addClass('d-none');
+            $('#how-knowing-select').addClass('d-none');
         }
         $('#knowing-togg').text(checked ? 'بله' : 'خیر');
+    })
+    $('#how-reason').on('change',function(){
+        debugger;
+        if(this.value === 'سایر'){
+            $('.knowing-how').removeClass('d-none');
+            $('#how-knowing').val('');
+        } else {
+            $('.knowing-how').addClass('d-none');
+            $('#how-knowing').val($('#how-reason').val());
+        }
     })
     $('#mother-lang').on('change',function(){
         var checked = this.checked;
