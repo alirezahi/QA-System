@@ -976,7 +976,7 @@ def calc_total_level_mc(user):
     else:
         level = 'C'
     is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
-    is_preposition_prob = 0 if is_preposition/is_preposition_count < 0.5 else 1
+    is_preposition_prob = 0 if is_preposition_count == 0 or is_preposition/is_preposition_count < 0.5 else 1
     return level, is_verb_prob, is_preposition_prob
     
 
@@ -1012,5 +1012,5 @@ def calc_total_level_blank(user):
     else:
         level = 'C'
     is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
-    is_preposition_prob = 0 if is_preposition/is_preposition_count < 0.5 else 1
+    is_preposition_prob = 0 if is_preposition_count ==0 or is_preposition/is_preposition_count < 0.5 else 1
     return level, is_verb_prob, is_preposition_prob
