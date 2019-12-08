@@ -166,6 +166,8 @@ class OfferVQuestionNewTemplate(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         super().get_redirect_url(*args, **kwargs)
         question_set = generate_offer_vquestion_set(self.request.user)
+        if question_set.questions.all().count() == 0:
+            return '/accounts/dashboard'
         return '/question/v/offer/'+str(question_set.id)+'/1'
 
 
@@ -233,8 +235,8 @@ def generate_vquestion_set(user):
 def generate_offer_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_offer_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_offer_set_count', active=True) else 10
-    v_list = BlankQuestion.objects.get_random(
-        order=['origin_text__id'], items=SET_COUNT)
+    v_list = BlankQuestion.objects.filter(userblankquestionrelation__user=user.qauser).order_by(
+        '-userblankquestionrelation__cosine_similarity')[:SET_COUNT]
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
@@ -316,6 +318,8 @@ class OfferMCQuestionNewTemplate(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         super().get_redirect_url(*args, **kwargs)
         question_set = generate_offer_mcquestion_set(self.request.user)
+        if question_set.questions.all().count() == 0:
+            return '/accounts/dashboard'
         return '/question/mc/offer/'+str(question_set.id)+'/1'
 
 
@@ -436,8 +440,8 @@ def generate_mcquestion_set(user):
 def generate_offer_mcquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_offer_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_offer_set_count', active=True) else 30
-    mc_list = MultipleChoiceQuestion.objects.get_random(
-        order=['origin_text__id'], items=SET_COUNT)
+    mc_list = MultipleChoiceQuestion.objects.filter(usermcquestionrelation__user=user.qauser).order_by(
+        '-usermcquestionrelation__cosine_similarity')[:SET_COUNT]
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for mc in mc_list:

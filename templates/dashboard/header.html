@@ -24,7 +24,13 @@
     </ul>
 
 
-    <a class="navbar-brand mr-1 ml-auto" href="/accounts/dashboard">زبان‌آموز</a>
+    <a class="navbar-brand mr-1 ml-auto" href="/accounts/dashboard">
+        {% if request.user.first_name %}
+            {{ request.user.first_name }} {{ request.user.last_name }}
+        {% else %}
+        زبان‌آموز
+        {% endif %}
+    </a>
 
 
 

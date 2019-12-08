@@ -20,6 +20,7 @@ from .views import *
 
 urlpatterns = [
     path('history-choice', HistoryChoiceTemplate.as_view()),
+    path('offer-options', TemplateView.as_view(template_name='question/offer-option.html')),
     path('new', NewQuestionTemplate.as_view()),
     path('create', CreateQuestions.as_view()),
     path('create-mc', CreateMCQuestions.as_view()),

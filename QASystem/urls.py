@@ -40,5 +40,5 @@ urlpatterns = [
         FinalChangePasswordTemplate.as_view()),
     path('validate-change-password/<uuid>',
         change_password),
-    path('logout/', LogoutView.as_view()),
+    path('logout/', LogoutView.as_view(next_page='/login')),
 ]
