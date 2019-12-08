@@ -688,6 +688,8 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
 def level_check(request):
     if request.method == 'GET':
         data = request.GET
+        l_detect = LevelDetectionQuestion.objects.filter(
+            user=request.user).last()
         mc_set = LevelDetectionQuestion.objects.filter(user=request.user).last().mc
         questions = mc_set.questions.all().order_by('order')
         answers_count = questions.count()
@@ -735,6 +737,8 @@ def level_check(request):
         v_set.save()
         level = calc_level(levels)
         request.user.qauser.level = level
+        l_detect.has_answered_blank = True
+        l_detect.has_answered_mc = True
         return render(request, template_name='result.html', context={'level':level})
 
 
