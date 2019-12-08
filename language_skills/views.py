@@ -155,6 +155,25 @@ def generate_vquestion_set(user):
     return v_set
 
 
+def generate_leveled_vquestion_set(user):
+    SET_COUNT = 5
+    v_list_A = BlankQuestion.objects.filter(
+        level='A').order_by('?', 'origin_text__id')[:SET_COUNT]
+    v_list_B = BlankQuestion.objects.filter(
+        level='B').order_by('?', 'origin_text__id')[:SET_COUNT]
+    v_list_C = BlankQuestion.objects.filter(
+        level='C').order_by('?', 'origin_text__id')[:SET_COUNT]
+    v_set = BlankQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for v_list in [v_list_A, v_list_B, v_list_C]:
+        for v in v_list:
+            v_obj = SelectedBlankQuestion.objects.create(
+            question=v, order=order_counter)
+            v_set.questions.add(v_obj)
+            order_counter += 1
+    LevelDetectionQuestion.objects.create(user=user, blank=v_set)
+    return v_set
+
 def check_answer(request, question_id):
     if request.method == 'GET':
         data = request.GET
@@ -255,6 +274,27 @@ def generate_mcquestion_set(user):
         order_counter += 1
     return mc_set
 
+
+def generate_leveled_mcquestion_set(user):
+    SET_COUNT = 5
+    v_list_A = MultipleChoiceQuestion.objects.filter(
+        level='A').order_by('?', 'origin_text__id')[:SET_COUNT]
+    v_list_B = MultipleChoiceQuestion.objects.filter(
+        level='B').order_by('?', 'origin_text__id')[:SET_COUNT]
+    v_list_C = MultipleChoiceQuestion.objects.filter(
+        level='C').order_by('?', 'origin_text__id')[:SET_COUNT]
+    v_set = MCQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for v_list in [v_list_A, v_list_B, v_list_C]:
+        for v in v_list:
+            v_obj = SelectedMCQuestion.objects.create(
+                question=v, order=order_counter)
+            v_set.questions.add(v_obj)
+            order_counter += 1
+    l = LevelDetectionQuestion.objects.get(user=user)
+    l.mc = v_set
+    l.save()
+    return v_set
 
 
 class MCQuestionHistoryListTemplate(LoginRequiredMixin, TemplateView):
@@ -540,3 +580,158 @@ def change_password(request, uuid):
         user.set_password(request.POST.get('password','123456'))
         user.save()
         return redirect('/login')
+
+
+class MCLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
+    template_name = 'question/mc-level-question.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer', '')
+        context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().mc
+        if answer:
+            last_question = question_set.questions.filter(
+                order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last', None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/level-detection/mc/' +str(question_select.order+1)+''
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        order = self.kwargs['order']
+        question_set = LevelDetectionQuestion.objects.filter(
+            user=request.user).last().mc
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            return redirect('/question/level-check')
+        return super(MCLevelQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
+    template_name = 'question/v-level-question.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
+        ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer', '')
+        context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
+        question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().blank
+        if answer:
+            last_question = question_set.questions.filter(
+                order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last', None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/level-detection/b/' + \
+                str(question_select.order+1)+''
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        order = self.kwargs['order']
+        question_set = LevelDetectionQuestion.objects.filter(
+            user=request.user).last().blank
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            return redirect('/question/level-detection/mc/1')
+        return super(BlankLevelQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+def level_check(request):
+    if request.method == 'GET':
+        data = request.GET
+        mc_set = LevelDetectionQuestion.objects.filter(user=request.user).last().mc
+        questions = mc_set.questions.all().order_by('order')
+        answers_count = questions.count()
+        my_data = []
+        true_count = 0
+        user_answers = []
+        answers = []
+        levels = {
+            'A': 0,
+            'B': 0,
+            'C': 0,
+        }
+        for q in questions:
+            answer = q.answer
+            order = q.order
+            user_answers.append(
+                {'order': int(order), 'text': answer})
+            if(answer == q.question.answer):
+                levels[q.question.level] += 1
+                true_count += 1
+        mc_set.right_answers = true_count
+        mc_set.question_count = answers_count
+        mc_set.answer_percentage = true_count/answers_count if answers_count else 0
+        mc_set.save()
+
+        v_set = LevelDetectionQuestion.objects.filter(
+            user=request.user).last().blank
+        questions = v_set.questions.all().order_by('order')
+        answers_count = questions.count()
+        my_data = []
+        true_count = 0
+        user_answers = []
+        answers = []
+        for q in questions:
+            answer = q.answer
+            order = q.order
+            user_answers.append(
+                {'order': int(order), 'text': answer})
+            if(answer == q.question.answer):
+                levels[q.question.level] += 1
+                true_count += 1
+        v_set.right_answers = true_count
+        v_set.question_count = answers_count
+        v_set.answer_percentage = true_count/answers_count if answers_count else 0
+        v_set.save()
+        level = calc_level(levels)
+        request.user.qauser.level = level
+        return render(request, template_name='result.html', context={'level':level})
+
+
+def calc_level(levels):
+    level = 'A'
+    value = 11
+    for key, l_value in levels.items():
+        if l_value < value:
+            level = key
+            value = l_value
+    return level

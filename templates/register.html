@@ -21,11 +21,18 @@
                 <label for="username">نام کاربری(آدرس ایمیل)</label>
                 <input type="email" class="form-control" id="username" name="username" placeholder="email@gmail.com"/>
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
                 <label for="password">پسورد</label>
                 <input type="password" pattern="^[a-zA-Z0-9-_\.]{8,}$" class="form-control" id="password" name="password" placeholder="پسورد"/>
-                <small class="text-danger">
+                <small class="text-info">
                     پسورد باید ترکیبی از حروف و اعداد و حداقل ۸ رقم باشد
+                </small>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="newpassword">تکرار پسورد</label>
+                <input type="password" pattern="^[a-zA-Z0-9-_\.]{8,}$" class="form-control" id="newpassword" name="newpassword" placeholder="تکرار پسورد"/>
+                <small id="rep-password" class="text-danger d-none">
+                    رمز و تکرار آن مطابقت ندارد
                 </small>
             </div>
             <div class="form-group col-md-6">
@@ -37,8 +44,18 @@
                 <input type="text" class="form-control" id="lastname" name="lastname" placeholder="محمدی"/>
             </div>
             <div class="form-group col-md-6">
-                <label for="birth-date">تاریخ تولد(میلادی)</label>
-                <input type="date" class="form-control" id="birth-date" name="birth-date" placeholder="2000-02-03" value="2000-12-30" max="2020-01-01"/>
+                <label for="birth-date-year">تاریخ تولد(میلادی)</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" id="birth-date-year" name="birth-date-year" placeholder="سال تولد" value="2000" max="2020"/>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" id="birth-date-month" name="birth-date-month" placeholder="ماه تولد" value="2000" max="12"/>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" id="birth-date-day" name="birth-date-day" placeholder="روز تولد" value="2000" max="31"/>
+                    </div>
+                </div>
             </div>
             <div class="form-group col-md-6">
                 <label for="country">متولد کشور</label>
@@ -49,9 +66,22 @@
                 <input type="text" class="form-control" id="native-language" name="native-language" placeholder="مثال: فارسی"/>
             </div>
             <div class="custom-control custom-switch d-flex align-items-center col-md-12">
-                <div>زبان مادری پدر و مادر فارسی است؟</div>
-                <input type="checkbox" name="" class="custom-control-input" id="parent-lang" dir="ltr"/>
-                <label id="parent-lang-togg" class="custom-control-label" for="parent-lang" dir="ltr">خیر</label>
+                <div>زبان مادری مادر فارسی است؟</div>
+                <input type="checkbox" name="is_mother_persian" class="custom-control-input" id="mother-lang" dir="ltr"/>
+                <label id="mother-lang-togg" class="custom-control-label" for="mother-lang" dir="ltr">خیر</label>
+            </div>
+            <div class="form-group col-md-12" id="mother-container">
+                <label for="mother-native-language">زبان مادری مادر</label>
+                <input type="text" class="form-control" id="mother-native-language" name="mother-native-language" placeholder="مثال: فارسی"/>
+            </div>
+            <div class="custom-control custom-switch d-flex align-items-center col-md-12">
+                <div>زبان مادری پدر فارسی است؟</div>
+                <input type="checkbox" name="is_father_persian" class="custom-control-input" id="father-lang" dir="ltr"/>
+                <label id="father-lang-togg" class="custom-control-label" for="father-lang" dir="ltr">خیر</label>
+            </div>
+            <div class="form-group col-md-12" id="father-container">
+                <label for="father-native-language">زبان مادری پدر</label>
+                <input type="text" class="form-control" id="father-native-language" name="father-native-language" placeholder="مثال: فارسی"/>
             </div>
             <div class="custom-control custom-switch d-flex align-items-center col-md-12">
                 <div>دانشجو هستید؟</div>
@@ -84,7 +114,7 @@
                 <label for="reason">چگونه با زبان فارسی آشنایی دارید؟</label>
                 <textarea class="form-control" id="how-knowing"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary w-100">ثبت‌نام</button>
+            <button type="submit" class="btn btn-primary w-100" id="submit-form">ثبت‌نام</button>
         </form>
     </div>
 </body>
@@ -108,9 +138,32 @@
         }
         $('#knowing-togg').text(checked ? 'بله' : 'خیر');
     })
-    $('#parent-lang').on('change',function(){
+    $('#mother-lang').on('change',function(){
         var checked = this.checked;
-        $('#parent-lang-togg').text(checked ? 'بله' : 'خیر');
+        $('#mother-lang-togg').text(checked ? 'بله' : 'خیر');
+        if(!checked){
+            $('#mother-container').removeClass('d-none');
+        } else {
+            $('#mother-container').addClass('d-none');
+        }
+    })
+    $('#father-lang').on('change',function(){
+        var checked = this.checked;
+        $('#father-lang-togg').text(checked ? 'بله' : 'خیر');
+        if(!checked){
+            $('#father-container').removeClass('d-none');
+        } else {
+            $('#father-container').addClass('d-none');
+        }
+    })
+    $('#newpassword, #password').on('keyup', function(){
+        if($('#password').val() != $('#newpassword').val()){
+            $('#rep-password').removeClass('d-none');
+            $('#submit-form').attr('disabled',true);
+        } else {
+            $('#rep-password').addClass('d-none');
+            $('#submit-form').attr('disabled',false);
+        }
     })
 </script>
 </html>

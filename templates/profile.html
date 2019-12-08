@@ -4,6 +4,16 @@
         
 <!-- Icon Cards-->
 <div class="row">
+    {% if not has_answered_level_detection %}
+    <div class="col-md-12 text-right">
+        <div class="alert alert-success">
+            برای تعیین سطح خود لازم است تا آزمون‌های زیر را انجام دهید:
+            <div>
+                <a href="/question/level-detection/b/1">آزمون تعیین سطح</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="col-xl-3 col-sm-6 mb-3">
     <div class="card text-white bg-success text-right o-hidden h-100">
         <div class="card-body">

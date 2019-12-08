@@ -1,0 +1,93 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load templatetags_custom %}
+{% block 'main-content' %}
+    <form action="{{next}}" method="GET">
+        <div id="question-container" class="text-right p-3 bg-light rounded" >
+            
+        </div>
+        {% if not answer_page %}
+        <div class="text-center p-3">
+            <button class="btn btn-success">
+                ارسال پاسخ
+            </button>
+        </div>
+        {% endif %}
+    </form>
+    {% if answer_page %}
+    <div class="text-right mt-3">
+        <div class="alert alert-info text-center">
+            پاسخ‌ها
+        </div>
+        <div class="text-center">
+            <div dir="ltr" class="btn-group py-3 text-center" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary">{{state.answer_percentage}}</button>
+                <button type="button" class="btn btn-dark">نسبت پاسخ صحیح به کل</button>
+            </div>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for question in questions %}
+            <li class="list-group-item">سوال {{question.order}}: {{question.question.answer}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+
+
+
+{% endblock %}
+{% block 'js-block' %}
+<script>
+    {% comment %} var text = '{{ question.text }}'; {% endcomment %}
+    var text = '';
+    var question_text = '';
+    var reg = /&amp;&amp;__question__&amp;&amp;/g;
+    var result;
+    var counter = 0;
+
+    var answer_status = function(user_answer, answer){
+        return (user_answer === answer ? 'right-answer' : 'wrong-answer');
+    };
+    {% if answer_page %}
+    var questions = [
+        {% for question in questions %}
+        {
+            order:{{question.order}},
+            answer:'{{question.question.answer}}',
+            user_answer:'{{question.answer|default_if_none:''}}',
+            text: '{{question.question.text}}',
+            whole_text: '{{question.question.whole_text}}',
+        },
+        {% endfor %}
+    ];
+    var user_answers = [
+        {% for answer in user_answers %}
+        {
+            order:{{answer.order}},
+            text:'{{answer.text}}',
+        },
+        {% endfor %}
+    ];
+    for(var i=0;i< questions.length; i++){
+        text+= '<div class="p-2">'+questions[i].text+'</div>';
+        var input_text = '<input name="answer'+(questions[i].order)+'" type="text" autocomplete="off" class="v-question-input{% if answer_page %} '+answer_status(questions[i].user_answer, questions[counter].answer)+'{% endif %}" placeholder="'+(questions[i].order)+'" {% if answer_page %}disabled value="('+(questions[i].order)+') '+questions[i].user_answer+'"{% endif %}/>';
+        text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
+        counter++;
+    }
+    {% else %}
+    {% if whole_text %}
+    text = '{{question.whole_text}}';
+    {% else %}
+    text = '{{question.text}}';
+    {% endif %}
+    var input_text = '<input name="answer" type="text" class="v-question-input" autocomplete="off" {% if answer_required %} required {% endif %}placeholder="'+({{order}})+'" />';
+    text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
+    {% endif %}
+    
+        
+
+    
+    $('#question-container').html(text);
+</script>
+{% endblock %}

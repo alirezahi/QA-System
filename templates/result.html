@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block 'main-content' %}
+        
+<!-- Icon Cards-->
+<div class="row text-center">
+    <div class="text-center">
+        سطح شما {{ level }} است.
+    </div>
+    <div class="text-center">
+    <a class="btn btn-success" href="/accounts/profile"> بازگشت به صفحه اصلی</a>
+    </div>
+</div>
+
+{% comment %} {% include 'dashboard/chart.html' %} {% endcomment %}
+
+{% include 'dashboard/data-table.html' %}
+
+{% endblock %}

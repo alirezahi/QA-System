@@ -32,10 +32,16 @@ class RandomManager(models.Manager):
 
 class QAUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    level = models.CharField(max_length=10, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     birth_country = models.CharField(max_length=200, null=True, blank=True)
     native_lang = models.CharField(max_length=200, null=True, blank=True)
-    is_parent_persian = models.BooleanField(default=False)
+    is_mother_persian = models.BooleanField(default=False)
+    is_father_persian = models.BooleanField(default=False)
+    mother_native_language = models.CharField(
+        max_length=200, null=True, blank=True)
+    father_native_language = models.CharField(
+        max_length=200, null=True, blank=True)
     is_student = models.BooleanField(default=False)
     university = models.CharField(max_length=200, null=True, blank=True)
     major = models.CharField(max_length=200, null=True, blank=True)
@@ -191,13 +197,26 @@ class Config(models.Model):
         return self.name + ' - ' + self.value
 
 
+class LevelDetectionQuestion(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    blank = models.ForeignKey(BlankQuestionSet,
+                              null=True, blank=True, on_delete=models.CASCADE)
+    mc = models.ForeignKey(
+        MCQuestionSet, null=True, blank=True, on_delete=models.CASCADE)
+    has_answered_blank = models.BooleanField(default=False)
+    has_answered_mc = models.BooleanField(default=False)
+
+
 # ==================
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+    from language_skills.views import generate_leveled_vquestion_set, generate_leveled_mcquestion_set
     if created:
         QAUser.objects.create(user=instance)
+        generate_leveled_vquestion_set(instance)
+        generate_leveled_mcquestion_set(instance)
 
 
 @receiver(post_save, sender=User)

@@ -36,4 +36,8 @@ urlpatterns = [
     path('mc/mcc', MCQuestionHistoryListTemplate1.as_view()),
     path('mc/check-answers/<question_id>', check_answer_mc),
     path('mc/<set_id>/<order>', MCQuestionTemplate.as_view()),
+    # level-detection
+    path('level-detection/b/<order>', BlankLevelQuestionTemplate.as_view()),
+    path('level-detection/mc/<order>', MCLevelQuestionTemplate.as_view()),
+    path('level-check', level_check),
 ]
