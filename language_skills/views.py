@@ -13,7 +13,10 @@ from django.views import View
 from django.shortcuts import redirect
 from .utilities import Analyser
 from django.http import HttpResponse
+from threading import Thread
+from scipy import spatial
 import os
+import math
 
 class StaffRequiredMixin(object):
     """
@@ -77,8 +80,67 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
+            level_blank, is_verb_blank, is_prep_blank = calc_total_level_blank(
+                request.user)
+            p1 = Thread(target=update_blank_userquestion_relation, args=(
+                request.user, level_blank, is_verb_blank, is_prep_blank,))
+            p1.start()
             return redirect('/question/v/check-answers/'+str(set_id)+'')
         return super(BlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
+    template_name = 'question/offer-v-question.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
+        ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer', '')
+        context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
+        question_set = BlankQuestionSet.objects.get(id=set_id)
+        if answer:
+            last_question = question_set.questions.filter(
+                order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last', None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/v/offer/' + \
+                str(set_id)+'/'+str(question_select.order+1)+''
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        question_set = BlankQuestionSet.objects.get(id=set_id)
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            level_blank, is_verb_blank, is_prep_blank = calc_total_level_blank(
+                request.user)
+            p1 = Thread(target=update_blank_userquestion_relation, args=(
+                request.user, level_blank, is_verb_blank, is_prep_blank,))
+            p1.start()
+            return redirect('/question/v/check-answers/'+str(set_id)+'')
+        return super(OfferBlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
 
 
 class VQuestionNewTemplate(LoginRequiredMixin, RedirectView):
@@ -92,6 +154,19 @@ class VQuestionNewTemplate(LoginRequiredMixin, RedirectView):
         super().get_redirect_url(*args, **kwargs)
         question_set = generate_vquestion_set(self.request.user)
         return '/question/v/'+str(question_set.id)+'/1'
+
+
+class OfferVQuestionNewTemplate(LoginRequiredMixin, RedirectView):
+    template_name = 'question/offer-v-question.html'
+    login_url = '/login/'
+
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        question_set = generate_offer_vquestion_set(self.request.user)
+        return '/question/v/offer/'+str(question_set.id)+'/1'
 
 
 class HistoryChoiceTemplate(LoginRequiredMixin, TemplateView):
@@ -144,6 +219,20 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
 def generate_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
+    v_list = BlankQuestion.objects.get_random(
+        order=['origin_text__id'], items=SET_COUNT)
+    v_set = BlankQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for v in v_list:
+        v_obj = SelectedBlankQuestion.objects.create(question=v, order=order_counter)
+        v_set.questions.add(v_obj)
+        order_counter += 1
+    return v_set
+
+
+def generate_offer_vquestion_set(user):
+    SET_COUNT = int(Config.objects.filter(name='question_offer_set_count', active=True).last(
+    ).value) if Config.objects.filter(name='question_offer_set_count', active=True) else 10
     v_list = BlankQuestion.objects.get_random(
         order=['origin_text__id'], items=SET_COUNT)
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
@@ -217,6 +306,19 @@ class MCQuestionNewTemplate(LoginRequiredMixin, RedirectView):
         return '/question/mc/'+str(question_set.id)+'/1'
 
 
+class OfferMCQuestionNewTemplate(LoginRequiredMixin, RedirectView):
+    template_name = 'question/offer-mc-question.html'
+    login_url = '/login/'
+    
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        question_set = generate_offer_mcquestion_set(self.request.user)
+        return '/question/mc/offer/'+str(question_set.id)+'/1'
+
+
 class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'question/mc-question.html'
     login_url = '/login/'
@@ -257,13 +359,83 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
+            level_mc, is_verb_mc, is_prep_mc = calc_total_level_mc(
+                request.user)
+            p2 = Thread(target=update_mc_userquestion_relation, args=(
+                request.user, level_mc, is_verb_mc, is_prep_mc,))
+            p2.start()
             return redirect('/question/mc/check-answers/'+str(set_id)+'')
         return super(MCQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
+    template_name = 'question/offer-mc-question.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer', '')
+        context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        question_set = MCQuestionSet.objects.get(id=set_id)
+        if answer:
+            last_question = question_set.questions.filter(
+                order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last', None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/mc/offer/' + \
+                str(set_id)+'/'+str(question_select.order+1)+''
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        question_set = MCQuestionSet.objects.get(id=set_id)
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            level_mc, is_verb_mc, is_prep_mc = calc_total_level_mc(
+                request.user)
+            p2 = Thread(target=update_mc_userquestion_relation, args=(
+                request.user, level_mc, is_verb_mc, is_prep_mc,))
+            p2.start()
+            return redirect('/question/mc/check-answers/'+str(set_id)+'')
+        return super(OfferMCQuestionTemplate, self).dispatch(request, *args, **kwargs)
 
 
 def generate_mcquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
+    mc_list = MultipleChoiceQuestion.objects.get_random(
+        order=['origin_text__id'], items=SET_COUNT)
+    mc_set = MCQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for mc in mc_list:
+        mc_obj = SelectedMCQuestion.objects.create(question=mc, order=order_counter)
+        mc_set.questions.add(mc_obj)
+        order_counter += 1
+    return mc_set
+
+
+def generate_offer_mcquestion_set(user):
+    SET_COUNT = int(Config.objects.filter(name='question_offer_set_count', active=True).last(
+    ).value) if Config.objects.filter(name='question_offer_set_count', active=True) else 30
     mc_list = MultipleChoiceQuestion.objects.get_random(
         order=['origin_text__id'], items=SET_COUNT)
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
@@ -490,6 +662,7 @@ class CreateMCQuestions(View):
                         is_preposition=is_preposition,
                     )
                     o, is_created = OptionAnswer.objects.get_or_create(text=q['answer'])
+                    options = [o]
                     mc.options.add(o)
                     if is_verb:
                         # TODO: make more options
@@ -500,13 +673,17 @@ class CreateMCQuestions(View):
                             for v in v_forms:
                                 o, is_created = OptionAnswer.objects.get_or_create(
                                     text=v.form)
-                                mc.options.add(o)
+                                options.append(o)
                         else:
                             v_forms = VerbForm.objects.exclude(
                                 form=q['answer']).order_by('?')[:3]
                             for v in v_forms:
                                 o, is_created = OptionAnswer.objects.get_or_create(text=v.form)
-                                mc.options.add(o)
+                                options.append(o)
+                    import random
+                    random.shuffle(options)
+                    for option in options:
+                        mc.options.add(option)
                     if is_preposition:
                         pres = PrePosition.objects.exclude(
                             text=q['answer']).order_by('?')[:3]
@@ -541,25 +718,6 @@ def check_answer_mc(request, question_id):
             mc_set.answer_percentage = true_count/answers_count if answers_count else 0
             mc_set.save()
             return render(request, template_name='question/mc-question.html', context={'questions': questions, 'user_answers': user_answers, 'answer_page': True, 'state':mc_set})
-        # data = request.GET
-        # if question_id and MultipleChoiceQuestion.objects.filter(id=question_id).exists():
-        #     question = MultipleChoiceQuestion.objects.get(id=question_id)
-        #     answers = question.answers.all().order_by('order')
-        #     answers_count = len(answers)
-        #     my_data = []
-        #     true_count = 0
-        #     user_answers = []
-        #     for q, v in data.items():
-        #         if q.isdigit():
-        #             answer = answers.get(order=int(q))
-        #             user_answers.append({'order':int(q), 'text': v})
-        #             if(answer.text == v):
-        #                 true_count += 1
-        #     mch = MCQuestionHistory(question=question, right_answers=true_count, answers_count=answers_count,answer_percentage = true_count/answers_count)
-        #     mch.save()
-        #     user = request.user.qauser
-        #     user.mc_questions.add(mch)
-        #     return render(request, template_name='question/mc-question.html', context={'question': question,'answers': answers, 'user_answers': user_answers, 'answer_page': True})
     return redirect('/accounts/dashboard/')
 
 
@@ -736,6 +894,10 @@ def level_check(request):
         v_set.answer_percentage = true_count/answers_count if answers_count else 0
         v_set.save()
         level = calc_level(levels)
+        p1 = Thread(target=update_blank_userquestion_relation, args=(request.user,level,1,1,))
+        p1.start()
+        p2 = Thread(target=update_mc_userquestion_relation, args=(request.user,level,1,1,))
+        p2.start()
         request.user.qauser.level = level
         l_detect.has_answered_blank = True
         l_detect.has_answered_mc = True
@@ -750,3 +912,101 @@ def calc_level(levels):
             level = key
             value = l_value
     return level
+
+
+SCORE_POINT = {
+    'A': 1,
+    'B': 2,
+    'C': 3,
+}
+
+def update_blank_userquestion_relation(user, level, is_verb, is_prep):
+    UserBlankQuestionRelation.objects.filter(user=user.qauser).delete()
+    for q in BlankQuestion.objects.all():
+        first_set = [q.level == 'A', q.level == 'B',q.level == 'C', q.is_verb, q.is_preposition]
+        second_set = [level == 'A', level == 'B',level == 'C', is_verb, is_prep]
+        cosine_similarity = spatial.distance.cosine(first_set, second_set)
+        c = 1 if math.isnan(cosine_similarity) else 1-cosine_similarity
+        UserBlankQuestionRelation.objects.create(user=user.qauser, question=q, cosine_similarity=c)
+
+
+def update_mc_userquestion_relation(user, level, is_verb, is_prep):
+    UserMCQuestionRelation.objects.filter(user=user.qauser).delete()
+    for q in MultipleChoiceQuestion.objects.all():
+        first_set = [q.level == 'A', q.level == 'B',q.level == 'C', q.is_verb, q.is_preposition]
+        second_set = [level == 'A', level == 'B',level == 'C', is_verb, is_prep]
+        cosine_similarity = spatial.distance.cosine(first_set, second_set)
+        c = 1 if math.isnan(cosine_similarity) else 1-cosine_similarity
+        UserMCQuestionRelation.objects.create(user=user.qauser, question=q, cosine_similarity=c)
+
+
+def calc_total_level_mc(user):
+    mc_questions = MultipleChoiceQuestion.objects.filter(
+        selectedmcquestion__mcquestionset__user=user.qauser).values('level', 'selectedmcquestion__answer', 'answer', 'is_verb', 'is_preposition')
+    sum_num = 0
+    point = 0
+    question_count = 0
+    is_verb_count = 0
+    is_verb = 0
+    is_preposition_count = 0
+    is_preposition  = 0
+    for q in mc_questions:
+        question_count += 1
+        sum_num += SCORE_POINT[q['level']]
+        if q['is_verb']:
+            is_verb_count += 1
+            if not q['selectedmcquestion__answer'] or q['selectedmcquestion__answer'] != q['answer']:
+                is_verb += 1
+        if q['is_preposition']:
+            is_preposition_count += 1
+            if not q['selectedmcquestion__answer'] or q['selectedmcquestion__answer'] != q['answer']:
+                is_preposition += 1
+        if q['selectedmcquestion__answer'] and q['selectedmcquestion__answer'] == q['answer']:
+            point += SCORE_POINT[q['level']]
+    result = point/sum_num
+    level = ''
+    if result < 0.33:
+        level = 'A'
+    elif result < 0.67:
+        level = 'B'
+    else:
+        level = 'C'
+    is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
+    is_preposition_prob = 0 if is_preposition/is_preposition_count < 0.5 else 1
+    return level, is_verb_prob, is_preposition_prob
+    
+
+def calc_total_level_blank(user):
+    mc_questions = BlankQuestion.objects.filter(
+        selectedblankquestion__blankquestionset__user=user.qauser).values('level', 'selectedblankquestion__answer', 'answer', 'is_verb','is_preposition')
+    sum_num = 0
+    point = 0
+    question_count = 0
+    is_verb_count = 0
+    is_verb = 0
+    is_preposition_count = 0
+    is_preposition = 0
+    for q in mc_questions:
+        question_count += 1
+        sum_num += SCORE_POINT[q['level']]
+        if q['is_verb']:
+            is_verb_count += 1
+            if not q['selectedblankquestion__answer'] or q['selectedblankquestion__answer'] != q['answer']:
+                is_verb += 1
+        if q['is_preposition']:
+            is_preposition_count += 1
+            if not q['selectedblankquestion__answer'] or q['selectedblankquestion__answer'] != q['answer']:
+                is_preposition += 1
+        if q['selectedblankquestion__answer'] and q['selectedblankquestion__answer'] == q['answer']:
+            point += SCORE_POINT[q['level']]
+    result = point/sum_num
+    level = ''
+    if result < 0.33:
+        level = 'A'
+    elif result < 0.67:
+        level = 'B'
+    else:
+        level = 'C'
+    is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
+    is_preposition_prob = 0 if is_preposition/is_preposition_count < 0.5 else 1
+    return level, is_verb_prob, is_preposition_prob

@@ -113,12 +113,12 @@ class MultipleChoiceQuestion(AbstractAnswer, AbstractActive):
 
 class SelectedMCQuestion(AbstractOrder):
     question = models.ForeignKey(
-        MultipleChoiceQuestion, on_delete=models.CASCADE)
+        MultipleChoiceQuestion, on_delete=models.CASCADE, related_name='selectedmcquestion')
     answer = models.CharField(max_length=200, blank=True, null=True)
 
 
 class MCQuestionSet(models.Model):
-    questions = models.ManyToManyField(SelectedMCQuestion, blank=True)
+    questions = models.ManyToManyField(SelectedMCQuestion, blank=True, related_name='mcquestionset')
     right_answers = models.IntegerField(blank=True, null=True)
     question_count = models.IntegerField(blank=True, null=True)
     answer_percentage = models.FloatField(blank=True, null=True)
@@ -139,24 +139,17 @@ class BlankQuestion(AbstractAnswer, AbstractActive):
 
 
 class SelectedBlankQuestion(AbstractOrder):
-    question = models.ForeignKey(BlankQuestion, on_delete=models.CASCADE)
+    question = models.ForeignKey(BlankQuestion, on_delete=models.CASCADE, related_name='selectedblankquestion')
     answer = models.CharField(max_length=200, blank=True, null=True)
 
 
 class BlankQuestionSet(models.Model):
-    questions = models.ManyToManyField(SelectedBlankQuestion, blank=True)
+    questions = models.ManyToManyField(SelectedBlankQuestion, blank=True,related_name='blankquestionset')
     right_answers = models.IntegerField(blank=True, null=True)
     question_count = models.IntegerField(blank=True, null=True)
     answer_percentage = models.FloatField(blank=True, null=True)
     user = models.ForeignKey(
         QAUser, null=True, blank=True, on_delete=models.CASCADE)
-
-
-class UserQuestionRelation(models.Model):
-    question = models.ManyToManyField(BlankQuestion)
-    user = models.ForeignKey(
-        QAUser, null=True, blank=True, on_delete=models.CASCADE)
-    similarity = models.FloatField(default=0)
 
 
 class PrePosition(models.Model):
@@ -205,6 +198,19 @@ class LevelDetectionQuestion(models.Model):
         MCQuestionSet, null=True, blank=True, on_delete=models.CASCADE)
     has_answered_blank = models.BooleanField(default=False)
     has_answered_mc = models.BooleanField(default=False)
+
+
+class UserMCQuestionRelation(models.Model):
+    user = models.ForeignKey(QAUser, on_delete=models.CASCADE, related_name='usermcquestionrelation')
+    question = models.ForeignKey(
+        MultipleChoiceQuestion, on_delete=models.CASCADE, related_name='usermcquestionrelation')
+    cosine_similarity = models.FloatField(default=1)
+
+
+class UserBlankQuestionRelation(models.Model):
+    user = models.ForeignKey(QAUser, on_delete=models.CASCADE, related_name='userblankquestionrelation')
+    question = models.ForeignKey(BlankQuestion, on_delete=models.CASCADE, related_name='userblankquestionrelation')
+    cosine_similarity = models.FloatField(default=1)
 
 
 # ==================

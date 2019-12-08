@@ -25,17 +25,21 @@ urlpatterns = [
     path('create-mc', CreateMCQuestions.as_view()),
     # v-questions
     path('v/new', VQuestionNewTemplate.as_view()),
+    path('v/offer/new', OfferVQuestionNewTemplate.as_view()),
     path('v/list', VQuestionListTemplate.as_view()),
     path('v/history-list', VQuestionHistoryListTemplate.as_view()),
     path('v/check-answers/<question_id>', check_answer),
     path('v/<set_id>/<order>', BlankQuestionTemplate.as_view()),
+    path('v/offer/<set_id>/<order>', OfferBlankQuestionTemplate.as_view()),
     # mc-questions
     path('mc/new', MCQuestionNewTemplate.as_view()),
+    path('mc/offer/new', OfferMCQuestionNewTemplate.as_view()),
     path('mc/list', MCQuestionListTemplate.as_view()),
     path('mc/history-list', MCQuestionHistoryListTemplate.as_view()),
     path('mc/mcc', MCQuestionHistoryListTemplate1.as_view()),
     path('mc/check-answers/<question_id>', check_answer_mc),
     path('mc/<set_id>/<order>', MCQuestionTemplate.as_view()),
+    path('mc/offer/<set_id>/<order>', OfferMCQuestionTemplate.as_view()),
     # level-detection
     path('level-detection/b/<order>', BlankLevelQuestionTemplate.as_view()),
     path('level-detection/mc/<order>', MCLevelQuestionTemplate.as_view()),
