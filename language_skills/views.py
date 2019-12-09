@@ -191,6 +191,34 @@ class ProgressTemplate(LoginRequiredMixin, TemplateView):
         return context
 
 
+class ProgressBlankTemplate(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
+    template_name = 'question/progress-blank.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        from django.core import serializers
+        qs = BlankQuestionSet.objects.all().order_by('created')
+        qs_json = serializers.serialize('json', qs)
+        context['data'] = qs_json
+        return context
+
+
+class ProgressBlankTemplate(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
+    template_name = 'question/progress-mc.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        from django.core import serializers
+        qs = MCQuestionSet.objects.all().order_by('created')
+        qs_json = serializers.serialize('json', qs)
+        context['data'] = qs_json
+        return context
+
+
 class NewQuestionTemplate(StaffRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'question/new.html'

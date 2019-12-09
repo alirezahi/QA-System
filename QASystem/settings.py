@@ -83,6 +83,17 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+      		'NAME': 'qadb',
+      		'USER': 'qadb_user',
+      		'PASSWORD': 'thi3ha3tobeap@ssword',
+      		'HOST': 'localhost',
+      		'PORT': '5432',
+    },
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

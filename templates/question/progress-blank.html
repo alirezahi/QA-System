@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load templatetags_custom %}
+{% block 'main-content' %}
+{{ data | json_script:"county-data" }}
+<div class="card mb-3 text-right">
+    <div class="card mb-3">
+    <div class="card-header">
+    <i class="fas fa-chart-area"></i>
+    نمودار پیشرفت کلی </div>
+    <div class="card-body">
+    <canvas id="myAreaChart" width="100%" height="30"></canvas>
+    </div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+</div>
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'js/demo/chart-area-demo-1.js' %}"></script>
+
+{% endblock %}
