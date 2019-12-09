@@ -14,10 +14,22 @@
         <span>تاریخچه سوالات</span>
     </a>
     </li>
-    <li class="nav-item dropdown">
+    {% comment %} <li class="nav-item dropdown">
     <a class="nav-link text-right" href="/progress" id="pagesDropdown" role="button">
         <i class="fas fa-fw fa-folder"></i>
-        <span>نمودار پیشرفت</span>
+        <span>نمودار پیشرفت کلی</span>
+    </a>
+    </li> {% endcomment %}
+    <li class="nav-item dropdown">
+    <a class="nav-link text-right" href="/progress-blank" id="pagesDropdown" role="button">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>نمودار پیشرفت جای‌خالی</span>
+    </a>
+    </li>
+    <li class="nav-item dropdown">
+    <a class="nav-link text-right" href="/progress-mc" id="pagesDropdown" role="button">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>نمودار پیشرفت چندگزینه‌ای</span>
     </a>
     </li>
     {% if request.user.is_staff %}

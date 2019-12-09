@@ -205,7 +205,7 @@ class ProgressBlankTemplate(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ProgressBlankTemplate(LoginRequiredMixin, TemplateView):
+class ProgressMCTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'question/progress-mc.html'
 

@@ -22,7 +22,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "rgba(2,117,216,1)",
       pointHitRadius: 50,
       pointBorderWidth: 2,
-      data: countyData.map(item => item.fields.answer_percentage),
+      data: countyData.map(item => item.fields.answer_percentage*100),
     }],
   },
   options: {
@@ -36,13 +36,22 @@ var myLineChart = new Chart(ctx, {
         },
         ticks: {
           maxTicksLimit: 7
-        }
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'شماره آزمون سوال',
+        },
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 40000,
+          // max: countyData.reduce((max, item) => max < item.fields.answer_percentage ? item.fields.answer_percentage : max, 0),
+          max: 100,
           maxTicksLimit: 5
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'درصد پاسخگویی',
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
