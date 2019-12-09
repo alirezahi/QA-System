@@ -122,6 +122,7 @@ class MCQuestionSet(models.Model):
     right_answers = models.IntegerField(blank=True, null=True)
     question_count = models.IntegerField(blank=True, null=True)
     answer_percentage = models.FloatField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     user = models.ForeignKey(
         QAUser, null=True, blank=True, on_delete=models.CASCADE)
 
@@ -148,6 +149,7 @@ class BlankQuestionSet(models.Model):
     right_answers = models.IntegerField(blank=True, null=True)
     question_count = models.IntegerField(blank=True, null=True)
     answer_percentage = models.FloatField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     user = models.ForeignKey(
         QAUser, null=True, blank=True, on_delete=models.CASCADE)
 

@@ -176,6 +176,21 @@ class HistoryChoiceTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'question/history-choice.html'
 
 
+
+class ProgressTemplate(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
+    template_name = 'question/progress.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        from django.core import serializers
+        qs = BlankQuestionSet.objects.all().order_by('created')
+        qs_json = serializers.serialize('json', qs)
+        context['data'] = qs_json
+        return context
+
+
 class NewQuestionTemplate(StaffRequiredMixin, TemplateView):
     login_url = '/login/'
     template_name = 'question/new.html'
@@ -236,7 +251,7 @@ def generate_offer_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_offer_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_offer_set_count', active=True) else 10
     v_list = BlankQuestion.objects.filter(userblankquestionrelation__user=user.qauser).order_by(
-        '-userblankquestionrelation__cosine_similarity')[:SET_COUNT]
+        '-userblankquestionrelation__cosine_similarity','?')[:SET_COUNT]
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
@@ -905,6 +920,7 @@ def level_check(request):
         request.user.qauser.level = level
         l_detect.has_answered_blank = True
         l_detect.has_answered_mc = True
+        l_detect.save()
         return render(request, template_name='result.html', context={'level':level})
 
 

@@ -19,7 +19,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.base import RedirectView
 from account.views import TestView
-from language_skills.views import reset_password, change_password, ChangePasswordTemplate, FinalChangePasswordTemplate, SuccessMailTemplate
+from language_skills.views import reset_password, change_password, ChangePasswordTemplate, FinalChangePasswordTemplate, SuccessMailTemplate, ProgressTemplate
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     #      RedirectView.as_view(permanent=False, url='/accounts/login')),
     path('accounts/', include('account.urls')),
     path('question/', include('language_skills.urls')),
+    path('progress/', ProgressTemplate.as_view()),
     path('test/', TestView.as_view()),
     path('login/', TemplateView.as_view(template_name='login.html')),
     path('signup/', TemplateView.as_view(template_name='register.html')),
