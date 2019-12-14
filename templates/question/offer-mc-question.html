@@ -107,7 +107,7 @@
     {% else %}
 
     var question_choices = [
-        {% for option in question.options.all %}
+        {% for option in question.options_random.all %}
             '{{option.text}}',
         {% endfor %}
     ];

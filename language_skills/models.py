@@ -107,6 +107,10 @@ class MultipleChoiceQuestion(AbstractAnswer, AbstractActive):
 
     objects = RandomManager()
 
+    @property
+    def options_random(self):
+        return self.options.order_by('?')
+    
     def __str__(self):
         return self.text[:20] or ''
 
@@ -125,6 +129,8 @@ class MCQuestionSet(models.Model):
     created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     user = models.ForeignKey(
         QAUser, null=True, blank=True, on_delete=models.CASCADE)
+
+
 
 
 class BlankQuestion(AbstractAnswer, AbstractActive):

@@ -185,7 +185,7 @@ class ProgressTemplate(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         from django.core import serializers
-        qs = BlankQuestionSet.objects.all().order_by('created')
+        qs = BlankQuestionSet.objects.filter(user=self.request.user.qauser).order_by('created')
         qs_json = serializers.serialize('json', qs)
         context['data'] = qs_json
         return context
@@ -199,7 +199,7 @@ class ProgressBlankTemplate(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         from django.core import serializers
-        qs = BlankQuestionSet.objects.all().order_by('created')
+        qs = BlankQuestionSet.objects.filter(user=self.request.user.qauser).order_by('created')
         qs_json = serializers.serialize('json', qs)
         context['data'] = qs_json
         return context
@@ -213,7 +213,7 @@ class ProgressMCTemplate(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         from django.core import serializers
-        qs = MCQuestionSet.objects.all().order_by('created')
+        qs = MCQuestionSet.objects.filter(user=self.request.user.qauser).order_by('created')
         qs_json = serializers.serialize('json', qs)
         context['data'] = qs_json
         return context
