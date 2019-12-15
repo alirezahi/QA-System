@@ -726,7 +726,7 @@ class CreateMCQuestions(View):
                                 options.append(o)
                         else:
                             v_forms = VerbForm.objects.exclude(
-                                form=q['answer'], ten).order_by('-freq')[:100]
+                                form=q['answer']).order_by('-freq')[:100]
                             for v in v_forms:
                                 o, is_created = OptionAnswer.objects.get_or_create(text=v.form)
                                 options.append(o)
