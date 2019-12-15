@@ -37,6 +37,7 @@ def register(request):
         lastname = request.POST.get('lastname', '')
         birth_date = str(request.POST.get('birth-date-year', '2000')) +'-'+ str(request.POST.get('birth-date-month', '01')) +'-'+ str(request.POST.get('birth-date-day', '01'))
         country = request.POST.get('country', '')
+        gender = request.POST.get('gender', '')
         native_language = request.POST.get('native-language', '')
         is_mother_persian = request.POST.get('is_mother_persian', '')
         mother_native_language = request.POST.get(
@@ -57,7 +58,7 @@ def register(request):
         user.save()
         qauser = user.qauser
         qauser.birth_date = birth_date
-        qauser.birth_country = country
+        qauser.gender = gender
         qauser.native_lang = native_language
         qauser.is_mother_persian = is_mother_persian == 'on'
         qauser.mother_native_language = mother_native_language
