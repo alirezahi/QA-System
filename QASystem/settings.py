@@ -25,7 +25,8 @@ SECRET_KEY = 'q!)$_x!ny!5x16a^ndnat--!_@r_$#bigz^bra+2u(qolnd%jw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','localhost:8000','46.209.4.197','46.209.4.197:8000']
+ALLOWED_HOSTS = ['localhost', 'localhost:8000',
+                 '46.209.4.197', '46.209.4.197:8000', 'localhost:80', '46.209.4.197:80']
 
 
 
@@ -76,23 +77,23 @@ WSGI_APPLICATION = 'QASystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#       		'NAME': 'qadb',
-#       		'USER': 'qadb_user',
-#       		'PASSWORD': 'thi3ha3tobeap@ssword',
-#       		'HOST': 'localhost',
-#       		'PORT': '5432',
-#     },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+      		'NAME': 'qadb',
+      		'USER': 'qadb_user',
+      		'PASSWORD': 'thi3ha3tobeap@ssword',
+      		'HOST': 'localhost',
+      		'PORT': '5432',
+    },
+}
 
 
 # Password validation
