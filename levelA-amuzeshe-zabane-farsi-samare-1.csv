@@ -1,0 +1,69 @@
+1,1,هادی,هادی,Nasp---,5,NSUBJ,CVCVC,2,4,c,(ROOT (S (NPA (Nasp------ *),4,0,1,1
+1,2,کارمند,کارمند,Ncsp--z,1,NN,CVCCVCCV,3,6,c,(NPA (Ncsp----z- *),2,0,2,1
+1,3,اداره,اداره,Ncspk-z,5,COPCOMP,CVCVCVV,4,5,c,(MN (Ncspk---z- *),2,0,0,2
+1,4,پست,پست,Ncsp---,3,NN,CVCC,1,3,c,(Ncsp------ *))),1,1,0,0
+1,5,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+1,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,2,مردی,مرد,Ncsp--y,6,COPCOMP,CVCCV,2,4,c,(VPC (PPC (Ncsp----y- *),3,0,1,1
+2,3,آرام,آرام,Aps-,4,AdjCOOR,CVCVC,2,4,c,(NPC (As--- *),2,0,1,1
+2,4,و,و,Jr-,2,NMOD,CV,1,1,f,(Jr------- *))),1,0,0,1
+2,5,دقیق,دقیق,Aps-,4,AdjCOOR,CVCVC,2,4,c,(MV (As--- *),2,0,1,1
+2,6,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+2,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,هادی,هادی,Nasp---,8,NSUBJ,CVCVC,2,4,c,(ROOT (S (VPS (NPC (NPC (Nasp------ *),6,0,1,1
+3,2,شوهری,شوهر,Ncsp--y,1,NN,CVCVCC,3,5,c,(NPA (Ncsp----y- *),2,1,0,1
+3,3,وفادار,وفادار,Aps-,2,NMOD,CVCVCVC,3,6,c,(As--- *))),1,0,1,2
+3,4,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+3,5,و,و,Jr-,8,COPCOMP,CV,1,1,f,(VPC (PPC (Jr------- *),3,0,0,1
+3,6,پدری,پدر,Ncsp--y,5,NounCOOR,CVCVCC,3,4,c,(Ncsp----y- *)),1,1,0,1
+3,7,فداکار,فداکار,Aps-,6,NMOD,CVCVCVC,3,6,c,(MV (As--- *),2,0,1,2
+3,8,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+3,9,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,نام,نام,Ncsp--z,4,NSUBJ,CVCV,2,3,c,(ROOT (S (VPS (Ncsp----z- *),4,0,0,2
+4,2,همسرش,همسر,Ncsp----3-,1,NN,CVCCVCVC,3,5,c,(VPC (NPC (NPC (Ncsp------ *),4,0,2,1
+4,3,مریم,مریم,Nasp---,4,MWE,CVCCVC,2,4,c,(Cez--nshc *)),1,0,2,0
+4,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Nasp------ *)),1,1,0,0
+4,5,.,.,Oe,4,PUNC,.,1,1,f,(Vpyk-shs------ *))),1,0,0,1
+5,1,مریم,مریم,Nasp---,6,NSUBJ,CVCCVC,2,4,c,(ROOT (S (NPA (Nasp------ *),4,0,2,0
+5,2,معلم,معلم,Ncsp--z,1,NN,CVCVCCVCV,4,4,c,(NPA (Ncsp----z- *),2,0,1,3
+5,3,کلاس,کلاس,Ncspk-z,2,NN,CVCVCV,3,4,c,(CPC-adj (Ncspk---z- *),2,0,0,3
+5,5,دبستان,دبستان,Ncspk--,6,MWE,CVCVCCVC,3,6,c,(Ncspk----- *)))),1,0,2,1
+5,6,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+5,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+6,2,مادری,مادر,Ncsp--y,4,NounCOOR,CVCVCV,3,5,c,(VPC (NPA-nid-DiscA (NPA-nid (NUM-nid (Ncsp----y- *)),5,0,0,3
+6,3,دلسوز,دلسوز,Aps-,2,NMOD,CVCCVC,2,5,c,(As--- *)),1,0,2,0
+6,4,و,و,Jr-,7,COPCOMP,CV,1,1,f,(DiscA (NUM (Jr------- *),3,0,0,1
+6,5,همسری,همسر,Ncsp--y,4,NounCOOR,CVCCVCV,3,5,c,(Ncsp----y- *)))),1,0,1,2
+6,6,مهربان,مهربان,Aps-,5,NMOD,CVCCVCVC,3,6,c,(MV (As--- *),2,0,2,1
+6,7,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+6,8,.,.,Oe,7,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,مریم,مریم,Nasp---,2,NounCOOR,CVCCVC,2,4,c,(ROOT (S (NPA (Nasp------ *),4,0,2,0
+7,2,و,و,Jr-,6,NSUBJ,CV,1,1,f,(NPA (Jr------- *),2,0,0,1
+7,3,هادی,هادی,Nasp---,2,NounCOOR,CVCVC,2,4,c,(CPC-adj (Nasp------ *),2,0,1,1
+7,4,یک,یک,Urns---,5,NUM,CVC,1,2,f,(CPC-adj (Urns----- *),2,0,1,0
+7,5,پسر,پسر,Ncsp---,6,MWE,CVCVC,2,3,c,(Ncsp------ *)))),1,0,1,1
+7,6,دارند,داشتن,Vpyslhs----,0,ROOT,CVCVCC,2,5,c,(Vpys-lhs------ *)),1,1,0,1
+7,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+8,1,نام,نام,Ncsp--z,4,NSUBJ,CVCV,2,3,c,(ROOT (S (VPS (Ncsp----z- *),4,0,0,2
+8,3,رامین,رامین,Nasp---,4,MWE,CVCVC,2,5,c,(Nasp------ *)),1,0,1,1
+8,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+8,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+9,1,رامین,رامین,Nasp---,6,NSUBJ,CVCVC,2,5,c,(ROOT (S (NPA (Nasp------ *),4,0,1,1
+9,2,پسری,پسر,Ncsp--y,1,NN,CVCVCC,3,4,c,(NPA (Ncsp----y- *),2,1,0,1
+9,3,باهوش,باهوش,Aps-,4,AdjCOOR,CVCVC,2,5,c,(CPC-adj (As--- *),2,0,1,1
+9,4,و,و,Jr-,2,NMOD,CV,1,1,f,(CPC-adj (Jr------- *),2,0,0,1
+9,5,کنجکاو,کنجکاو,Aps-,4,AdjCOOR,CVCCCVC,2,6,c,(As--- *)))),1,1,1,0
+9,6,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+9,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+10,2,شش,شش,Urns---,3,NUM,CVC,1,2,f,(VPA (MADV (NUM (Urns----- *),4,0,1,0
+10,3,سال,سال,Ncspt--,4,MWE,CVC,1,3,c,(Ncspt----- *),1,0,1,0
+10,4,دارد,داشتن,Vpysshs----,5,VerbCOOR,CVCVC,2,4,c,(NUM (Vpys-shs------ *),2,0,1,1
+10,5,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *),1,0,0,1
+10,6,شاگرد,شاگرد,Ncsp--z,10,NSUBJ,CVCVCCV,3,5,c,(Ncsp----z- *),1,0,1,2
+10,7,کلاس,کلاس,Ncspk-z,6,NN,CVCVCV,3,4,c,(Ncspk---z- *))),1,0,0,3
+10,9,دبستان,دبستان,Ncspk--,10,MWE,CVCVCCVC,3,6,c,(MV (Ncspk----- *),2,0,2,1
+10,10,است,بودن,Vpykshs----,5,VerbCOOR,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+10,11,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+11,3,خوشبخت,خوشبخت,Aps-,2,NMOD,CVCCVCC,2,6,c,(As--- *)),1,1,1,0
+11,4,هستند,بودن,Vpyklhs----,0,ROOT,CVCCVCC,2,5,c,(Vpyk-lhs------ *))),1,1,1,0
+11,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1

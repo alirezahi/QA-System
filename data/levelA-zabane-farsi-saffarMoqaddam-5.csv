@@ -1,0 +1,77 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,دانشگاه,دانشگاه,Ncspk-z,5,NSUBJ,CVCVCCVCV,4,7,c,(ROOT (S (NPA (Ncspk---z- *),4,0,1,3
+1,2,تهران,تهران,Naspk--,1,POSSESSIVE,CVCCVC,2,5,c,(NPA (Naspk----- *),2,0,2,0
+1,3,کتابخانه-های,***not found***کتابخانه-های***Nclp--z
+1,4,زیادی,زیاد,Apsy,3,NMOD,CVCVCV,3,5,c,(As-y- *))),1,0,0,3
+1,5,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *)),1,0,1,1
+1,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,این,***not found***این***Tm-------
+2,2,کتابخانه-ها,***not found***کتابخانه-ها***Nclp---
+2,3,از,از,E-,8,VMOD,CVC,1,2,f,(VPC (NPA-nid-DiscA (NPA-nid (NUM-nid (E------- *)),5,0,1,0
+2,4,صبح,صبح,Ncspt--,3,POBJ,CVCC,1,3,c,(Ncspt----- *)),1,1,0,0
+2,5,تا,تا,E-,3,POBJ,CV,1,2,f,(DiscA (NUM (E------- *),3,0,0,1
+2,6,شب,***not found***شب***Ncspt--
+2,7,باز,باز,Aps-,8,MWE,CVC,1,3,c,(MV (As--- *),2,0,1,0
+2,8,هستند,بودن,Vpyklhs----,0,ROOT,CVCCVCC,2,5,c,(Vpyk-lhs------ *)))),1,1,1,0
+2,9,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,دانشجویان,دانشجو,Nclp---,8,NSUBJ,CVCVCCVC,4,9,c,(ROOT (S (CL (Nclp------ *),4,0,2,1
+3,2,هر,***not found***هر***Tf-------
+3,3,روز,روز,Ncspt--,2,DETCOMP,CVC,1,3,c,(PPC (Ncspt----- *),2,0,1,0
+3,4,چند,چند,Tf-------,8,DETCOMP,CVCC,1,3,f,(DPC (Tf------- *),2,1,0,0
+3,5,ساعت,ساعت,Ncspt--,4,DETCOMP,CVCVC,2,4,c,(PPC (Ncspt----- *),2,0,1,1
+3,6,به,به,E-,8,MWE,CV,1,2,f,(NPA (E------- *),2,0,0,1
+3,7,کتابخانه,کتابخانه,Ncspk--,6,POBJ,CVCVCCVCV,4,8,c,(CPC-adj (Ncspk----- *),2,0,1,3
+3,8,می-روند,***not found***می-روند***Vpyslhsi---
+3,9,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *)))))))),1,0,0,1
+3,10,در,در,E-,13,VMOD,CVC,1,2,f,(VPA (PPC (E------- *),3,0,1,0
+3,11,آنجا,آنجا,Dgp-k--,10,POBJ,CVCCV,2,4,c,(Dgp-k-- *)),1,0,1,1
+3,12,درس,درس,Ncsp---,13,MWE,CVCC,1,3,c,(MV (Ncsp------ *),2,1,0,0
+3,13,می-خوانند,***not found***می-خوانند***Vpyslhsi---
+3,14,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,بعضی,***not found***بعضی***Tf-------
+4,2,دانشجویان,دانشجو,Nclp---,1,DETCOMP,CVCVCCVC,4,9,c,(PPC (Nclp------ *),2,0,2,1
+4,3,هم,هم,J--,1,DETMOD,CVC,1,2,f,(J-------- *))),1,0,1,0
+4,4,گاهی,گاهی,Dgp-t--,6,VMOD,CVCV,2,4,c,(VPC (ADJPA (Dgp-t-- *),3,0,0,2
+4,5,کمی,کمی,Aps-,6,MWE,CVCCV,2,3,c,(As--- *)),1,0,1,1
+4,6,می-خوابند,***not found***می-خوابند***Vpyslhsi---
+4,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,خانم,خانم,Naspf-z,8,NSUBJ,CVCVCV,3,4,c,(ROOT (S (VPS (NPA (Naspf---z- *),5,0,0,3
+5,2,الینا,***not found***الینا***Nasp---
+5,3,تکلیفش,تکلیف,Ncsp----3-,2,NN,CVCCVCVC,3,6,c,(VPC (NPC (NPC (Ncsp------ *),4,0,2,1
+5,4,را,را,P,2,ACC,CV,1,2,f,(Cez--nshc *)),1,0,0,1
+5,5,در,در,E-,8,VMOD,CVC,1,2,f,(P *)),1,0,1,0
+5,6,کتابخانه,کتابخانه,Ncspk--,5,POBJ,CVCVCCVCV,4,8,c,(MV (MV (PPC (E------- *),4,0,1,3
+5,7,انجام,انجام,Ncsp---,8,MWE,CVCCVC,2,5,c,(Ncspk----- *)),1,0,2,0
+5,8,می-دهد,***not found***می-دهد***Vpysshsi---
+5,9,.,.,Oe,8,PUNC,.,1,1,f,(Vpys-shsi----- *)))),1,0,0,1
+6,1,او,***not found***او***Zrsh----
+6,2,دیروز,دیروز,Dgp-t--,6,VMOD,CVCVC,2,5,c,(VPA (Dgp-t-- *),2,0,1,1
+6,3,هم,هم,J--,2,ADVMOD,CVC,1,2,f,(VPA (MADV (NUM (J-------- *),4,0,1,0
+6,4,به,به,E-,6,MWE,CV,1,2,f,(E------- *),1,0,0,1
+6,5,کتابخانه,کتابخانه,Ncspk--,4,POBJ,CVCVCCVCV,4,8,c,(NUM (Ncspk----- *),2,0,1,3
+6,6,رفت,رفتن,Vpyssht----,7,VerbCOOR,CVCC,1,3,c,(Vpys-sht------ *),1,1,0,0
+6,7,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *),1,0,0,1
+6,8,دو,دو,Urns---,9,NUM,CV,1,2,f,(Urns----- *))),1,0,0,1
+6,9,ساعت,ساعت,Ncspt--,11,NSUBJ,CVCVC,2,4,c,(Ncspt----- *)),1,0,1,1
+6,10,کار,کار,Ncsp---,11,MWE,CVC,1,3,c,(MV (Ncsp------ *),2,0,1,0
+6,11,کرد,کردن,Vpyssht----,7,VerbCOOR,CVCC,1,3,c,(Vpys-sht------ *))))),1,1,0,0
+6,12,.,.,Oe,7,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,اول,***not found***اول***Dgp-o--
+7,2,دستور,دستور,Ncsp--z,5,NSUBJ,CVCCVCV,3,5,c,(NPA (Ncsp----z- *),2,0,1,2
+7,3,زبان,زبان,Ncsp---,4,MWE,CVCVC,2,4,c,(ADJPA (NUM (Ncsp------ *),3,0,1,1
+7,4,خواند,خواندن,Vpyssht----,5,VerbCOOR,CVCC,1,5,c,(Vpys-sht------ *),1,1,0,0
+7,5,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *),1,0,0,1
+7,6,به,به,E-,9,IDOBJ,CV,1,2,f,(E------- *),1,0,0,1
+7,7,تمرین-ها,تمرین-,Nclp---,6,POBJ,CVCCVCC,3,8,c,(Nclp------ *)),1,1,1,0
+7,8,جواب,جواب,Ncsp---,9,MWE,CVCVC,2,4,c,(Ncsp------ *))),1,0,1,1
+7,9,داد,دادن,Vpyssht----,5,VerbCOOR,CVC,1,3,c,(Vpys-sht------ *)),1,0,1,0
+7,10,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+8,1,بعد,***not found***بعد***J--
+8,2,انشایی,انشا,Ncsp--y,7,NSUBJ,CVCCVC,3,6,c,(NPA (N (Ncsp----y- *),3,0,2,0
+8,3,درباره,درباره,Ez,7,VMOD,CVCCVCVCVV,4,6,f,(E------z *),1,0,1,2
+8,4,دانشجویان,دانشجو,Nclp---,5,NounCOOR,CVCVCCVC,4,9,c,(Nclp------ *)),1,0,2,1
+8,5,و,و,Jr-,3,POBJ,CV,1,1,f,(NUM (Jr------- *),2,0,0,1
+8,6,خوابگاه,خوابگاه,Ncspk--,5,NounCOOR,CVCCVC,2,7,c,(Ncspk----- *))),1,0,2,0
+8,7,نوشت,نوشتن,Vpyssht----,0,ROOT,CVCVCC,2,4,c,(Vpys-sht------ *)),1,1,0,1
+8,8,.,.,Oe,7,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+9,1,ا,ا,Sa-f-,0,NN,CVCVC,1,1,f,(ROOT (S (VPSD (VPCompD (Sa-f- *))))) ),5,0,1,1
