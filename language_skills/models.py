@@ -35,6 +35,7 @@ class QAUser(models.Model):
     level = models.CharField(max_length=10, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     birth_country = models.CharField(max_length=200, null=True, blank=True)
+    gender = models.CharField(max_length=20, null=True, blank=True)
     native_lang = models.CharField(max_length=200, null=True, blank=True)
     is_mother_persian = models.BooleanField(default=False)
     is_father_persian = models.BooleanField(default=False)
@@ -182,6 +183,7 @@ class VerbForm(models.Model):
     tense = models.CharField(max_length=100)
     form = models.CharField(max_length=100)
     verb = models.ForeignKey(VerbInfo, on_delete=models.CASCADE)
+    freq = models.IntegerField(default=0)
 
     objects = RandomManager()
 

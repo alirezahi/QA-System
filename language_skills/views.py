@@ -199,7 +199,7 @@ class ProgressBlankTemplate(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         from django.core import serializers
-        qs = BlankQuestionSet.objects.filter(user=self.request.user.qauser).order_by('created')
+        qs = BlankQuestionSet.objects.filter(user=self.request.user.qauser, leveldetectionquestion__isnull=True).order_by('created')
         qs_json = serializers.serialize('json', qs)
         context['data'] = qs_json
         return context
@@ -213,7 +213,7 @@ class ProgressMCTemplate(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         from django.core import serializers
-        qs = MCQuestionSet.objects.filter(user=self.request.user.qauser).order_by('created')
+        qs = MCQuestionSet.objects.filter(user=self.request.user.qauser, leveldetectionquestion__isnull=True).order_by('created')
         qs_json = serializers.serialize('json', qs)
         context['data'] = qs_json
         return context
@@ -716,14 +716,17 @@ class CreateMCQuestions(View):
                         if VerbForm.objects.filter(form=q['answer']).exists():
                             verb_form = VerbForm.objects.filter(
                                 form=q['answer']).last()
-                            v_forms = verb_form.verb.verbform_set.exclude(form=q['answer']).order_by('?')[:3]
+                            v_forms = list(verb_form.verb.verbform_set.exclude(form=q['answer']).order_by('-freq'))[:12]
+                            import random
+                            random.shuffle(v_forms)
+                            v_forms = v_forms[:3]
                             for v in v_forms:
                                 o, is_created = OptionAnswer.objects.get_or_create(
                                     text=v.form)
                                 options.append(o)
                         else:
                             v_forms = VerbForm.objects.exclude(
-                                form=q['answer']).order_by('?')[:3]
+                                form=q['answer'], ten).order_by('-freq')[:100]
                             for v in v_forms:
                                 o, is_created = OptionAnswer.objects.get_or_create(text=v.form)
                                 options.append(o)

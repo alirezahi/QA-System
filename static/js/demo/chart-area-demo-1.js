@@ -9,7 +9,7 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: countyData.map((item, index) => index),
+    labels: countyData.map((item, index) => index+1),
     datasets: [{
       label: "Sessions",
       lineTension: 0.3,
