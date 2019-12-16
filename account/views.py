@@ -23,7 +23,15 @@ class ProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
-        context['has_answered_level_detection'] = not(LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_blank=False).exists() or LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_mc=False).exists())
+        show_level_detection = Config.objects.filter(name='show_level_detection', active=True).last(
+        ).value if Config.objects.filter(name='show_level_detection', active=True) else ''
+        show_level_detection = ''
+        if show_level_detection == 'true':
+            show_level_detection = True
+        if show_level_detection == 'false':
+            show_level_detection = False
+        context['has_answered_level_detection'] = show_level_detection || not(LevelDetectionQuestion.objects.filter(
+            user=self.request.user, has_answered_blank=False).exists() or LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_mc=False).exists())
         context['has_answered_blank'] = not(LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_blank=False).exists())
         context['has_answered_mc'] = not(LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_mc=False).exists())
         return context

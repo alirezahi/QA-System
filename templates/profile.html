@@ -4,6 +4,7 @@
         
 <!-- Icon Cards-->
 <div class="row">
+    {% if not has_answered_level_detection %}
     <div class="col-md-12 text-right">
         <div class="alert alert-success">
             برای تعیین سطح خود لازم است تا آزمون‌های زیر را انجام دهید:
@@ -12,6 +13,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="col-md-12 text-right mb-2">
         لطفا نوع سوال خود را انتخاب نمایید تا به صورت خودکار تولید گردد:
     </div>
