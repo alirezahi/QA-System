@@ -979,11 +979,23 @@ def level_check(request):
 def calc_level(levels):
     level = 'A'
     value = 11
+    rate = 0
     for key, l_value in levels.items():
-        if l_value < value:
-            level = key
-            value = l_value
-    return level
+        rate += l_value
+    options = []
+    a_level =abs( ['A', levels['A']*10 - rate*100/30])
+    b_level = abs(['B', levels['B']*10 - rate*100/30])
+    c_level = abs(['C', levels['C']*10 - rate*100/30])
+    if levels['C'] != 0:
+        options.append(c_level)
+    if levels['B'] != 0:
+        options.append(b_level)
+    if levels['A'] != 0:
+        options.append(a_level)
+    
+    if len(options) > 0:
+        return min([c_level, b_level, a_level], lambda x: x[1])[0]
+    return 'A'
 
 
 SCORE_POINT = {
