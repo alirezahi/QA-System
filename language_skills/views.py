@@ -725,8 +725,8 @@ class CreateMCQuestions(View):
                                     text=v.form)
                                 options.append(opt)
                         else:
-                            v_forms = VerbForm.objects.exclude(
-                                form=q['answer']).order_by('-freq')[:50]
+                            v_forms = list(VerbForm.objects.exclude(
+                                form=q['answer']).order_by('-freq')[:50])
                             import random
                             random.shuffle(v_forms)
                             v_forms = v_forms[:3]
