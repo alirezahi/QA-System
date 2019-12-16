@@ -143,8 +143,64 @@
 </body>
 <script  type="text/javascript" src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script>
-$(document).ready(fucntion(){
-    $('#is-student').on('change',function(){
+(function(){
+        $('#is-student').on('change',function(){
+        var checked = this.checked;
+        if(checked){
+            $('.is-student-yes').removeClass('d-none');
+        } else {
+            $('.is-student-yes').addClass('d-none');
+        }
+        $('#is-student-label').text(checked ? 'بله' : 'خیر');
+    });
+    $('#knowing').on('change',function(){
+        var checked = this.checked;
+        if(checked){
+            $('#how-knowing-select').removeClass('d-none');
+        } else {
+            $('#how-knowing-select').addClass('d-none');
+        }
+        $('#knowing-togg').text(checked ? 'بله' : 'خیر');
+    });
+    $('#how-reason').on('change',function(){
+        debugger;
+        if(this.value === 'سایر'){
+            $('.knowing-how').removeClass('d-none');
+            $('#how-knowing').val('');
+        } else {
+            $('.knowing-how').addClass('d-none');
+            $('#how-knowing').val($('#how-reason').val());
+        }
+    })
+    $('#mother-lang').on('change',function(){
+        var checked = this.checked;
+        $('#mother-lang-togg').text(checked ? 'بله' : 'خیر');
+        if(!checked){
+            $('#mother-container').removeClass('d-none');
+        } else {
+            $('#mother-container').addClass('d-none');
+        }
+    })
+    $('#father-lang').on('change',function(){
+        var checked = this.checked;
+        $('#father-lang-togg').text(checked ? 'بله' : 'خیر');
+        if(!checked){
+            $('#father-container').removeClass('d-none');
+        } else {
+            $('#father-container').addClass('d-none');
+        }
+    })
+    $('#newpassword, #password').on('keyup', function(){
+        if($('#password').val() != $('#newpassword').val()){
+            $('#rep-password').removeClass('d-none');
+            $('#submit-form').attr('disabled',true);
+        } else {
+            $('#rep-password').addClass('d-none');
+            $('#submit-form').attr('disabled',false);
+        }
+    })
+})();
+    {% comment %} $('#is-student').on('change',function(){
         var checked = this.checked;
         if(checked){
             $('.is-student-yes').removeClass('d-none');
@@ -198,62 +254,6 @@ $(document).ready(fucntion(){
             $('#rep-password').addClass('d-none');
             $('#submit-form').attr('disabled',false);
         }
-    })
-})
-    $('#is-student').on('change',function(){
-        var checked = this.checked;
-        if(checked){
-            $('.is-student-yes').removeClass('d-none');
-        } else {
-            $('.is-student-yes').addClass('d-none');
-        }
-        $('#is-student-label').text(checked ? 'بله' : 'خیر');
-    })
-    $('#knowing').on('change',function(){
-        var checked = this.checked;
-        if(checked){
-            $('#how-knowing-select').removeClass('d-none');
-        } else {
-            $('#how-knowing-select').addClass('d-none');
-        }
-        $('#knowing-togg').text(checked ? 'بله' : 'خیر');
-    })
-    $('#how-reason').on('change',function(){
-        debugger;
-        if(this.value === 'سایر'){
-            $('.knowing-how').removeClass('d-none');
-            $('#how-knowing').val('');
-        } else {
-            $('.knowing-how').addClass('d-none');
-            $('#how-knowing').val($('#how-reason').val());
-        }
-    })
-    $('#mother-lang').on('change',function(){
-        var checked = this.checked;
-        $('#mother-lang-togg').text(checked ? 'بله' : 'خیر');
-        if(!checked){
-            $('#mother-container').removeClass('d-none');
-        } else {
-            $('#mother-container').addClass('d-none');
-        }
-    })
-    $('#father-lang').on('change',function(){
-        var checked = this.checked;
-        $('#father-lang-togg').text(checked ? 'بله' : 'خیر');
-        if(!checked){
-            $('#father-container').removeClass('d-none');
-        } else {
-            $('#father-container').addClass('d-none');
-        }
-    })
-    $('#newpassword, #password').on('keyup', function(){
-        if($('#password').val() != $('#newpassword').val()){
-            $('#rep-password').removeClass('d-none');
-            $('#submit-form').attr('disabled',true);
-        } else {
-            $('#rep-password').addClass('d-none');
-            $('#submit-form').attr('disabled',false);
-        }
-    })
+    }) {% endcomment %}
 </script>
 </html>
