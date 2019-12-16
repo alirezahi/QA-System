@@ -21,6 +21,7 @@ from django.views.generic.base import RedirectView
 from account.views import TestView
 from language_skills.views import reset_password, change_password, ChangePasswordTemplate, FinalChangePasswordTemplate, SuccessMailTemplate, ProgressTemplate, ProgressBlankTemplate, ProgressMCTemplate
 from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -48,3 +49,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/login')),
     path('', RedirectView.as_view(permanent=False, url='/login')),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
