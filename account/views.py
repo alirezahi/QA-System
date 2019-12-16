@@ -30,7 +30,7 @@ class ProfileView(TemplateView):
             show_level_detection = False
         if show_level_detection == 'false':
             show_level_detection = True
-        context['has_answered_level_detection'] = show_level_detection || not(LevelDetectionQuestion.objects.filter(
+        context['has_answered_level_detection'] = show_level_detection or not(LevelDetectionQuestion.objects.filter(
             user=self.request.user, has_answered_blank=False).exists() or LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_mc=False).exists())
         context['has_answered_blank'] = not(LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_blank=False).exists())
         context['has_answered_mc'] = not(LevelDetectionQuestion.objects.filter(user=self.request.user, has_answered_mc=False).exists())
