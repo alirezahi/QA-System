@@ -983,9 +983,9 @@ def calc_level(levels):
     for key, l_value in levels.items():
         rate += l_value
     options = []
-    a_level =abs( ['A', levels['A']*10 - rate*100/30])
-    b_level = abs(['B', levels['B']*10 - rate*100/30])
-    c_level = abs(['C', levels['C']*10 - rate*100/30])
+    a_level = ['A', abs(levels['A']*10 - rate*100/30])
+    b_level = ['B', abs(levels['B']*10 - rate*100/30])
+    c_level = ['C', abs(levels['C']*10 - rate*100/30])
     if levels['C'] != 0:
         options.append(c_level)
     if levels['B'] != 0:
