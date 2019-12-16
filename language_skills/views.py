@@ -992,9 +992,12 @@ def calc_level(levels):
         options.append(b_level)
     if levels['A'] != 0:
         options.append(a_level)
-    
+    import pdb;pdb.set_trace()
     if len(options) > 0:
-        return min([c_level, b_level, a_level], lambda x: x[1])[0]
+        import pdb;pdb.set_trace()
+        a = min(options, lambda x: x[1])
+        import pdb;pdb.set_trace()
+        return a[0]
     return 'A'
 
 
