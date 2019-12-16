@@ -20,10 +20,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.base import RedirectView
 from account.views import TestView
 from language_skills.views import reset_password, change_password, ChangePasswordTemplate, FinalChangePasswordTemplate, SuccessMailTemplate, ProgressTemplate, ProgressBlankTemplate, ProgressMCTemplate
+from django.conf import settings
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('static/', settings.STATIC_ROOT),
     # path('registration/login/',
     #      RedirectView.as_view(permanent=False, url='/accounts/login')),
     path('accounts/', include('account.urls')),
