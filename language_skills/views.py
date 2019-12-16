@@ -710,7 +710,7 @@ class CreateMCQuestions(View):
                     )
                     o, is_created = OptionAnswer.objects.get_or_create(text=q['answer'])
                     options = [o]
-                    mc.options.add(o)
+                    
                     if is_verb:
                         # TODO: make more options
                         if VerbForm.objects.filter(form=q['answer']).exists():
@@ -721,19 +721,35 @@ class CreateMCQuestions(View):
                             random.shuffle(v_forms)
                             v_forms = v_forms[:3]
                             for v in v_forms:
-                                o, is_created = OptionAnswer.objects.get_or_create(
+                                opt, is_created = OptionAnswer.objects.get_or_create(
                                     text=v.form)
-                                options.append(o)
+                                options.append(opt)
                         else:
                             v_forms = VerbForm.objects.exclude(
                                 form=q['answer']).order_by('-freq')[:100]
                             for v in v_forms:
-                                o, is_created = OptionAnswer.objects.get_or_create(text=v.form)
-                                options.append(o)
-                    import random
-                    random.shuffle(options)
-                    for option in options:
-                        mc.options.add(option)
+                                opt, is_created = OptionAnswer.objects.get_or_create(text=v.form)
+                                options.append(opt)
+                        import random
+                        random.shuffle(options)
+                        for option in options:
+                            mc.options.add(option)
+                        if VerbForm.objects.filter(form=q['answer']).exists():
+                            mc.id = None
+                            mc.save()
+                            mc.options.add(o)
+                            verb_form = VerbForm.objects.filter(
+                                form=q['answer']).last()
+                            v_forms = list(VerbForm.objects.filter(tense=verb_form.tense).exclude(
+                                form=q['answer']).order_by('-freq'))[:40]
+                            import random
+                            random.shuffle(v_forms)
+                            v_forms = v_forms[:3]
+                            for v in v_forms:
+                                opt, is_created = OptionAnswer.objects.get_or_create(
+                                    text=v.form)
+                                mc.options.add(opt)
+
                     if is_preposition:
                         pres = PrePosition.objects.exclude(
                             text=q['answer']).order_by('?')[:3]
