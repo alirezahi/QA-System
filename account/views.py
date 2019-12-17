@@ -43,7 +43,7 @@ def register(request):
         password = request.POST.get('password', '')
         name = request.POST.get('name', '')
         lastname = request.POST.get('lastname', '')
-        birth_date = str(request.POST.get('birth-date-year', '2000')) +'-'+ str(request.POST.get('birth-date-month', '01')) +'-'+ str(request.POST.get('birth-date-day', '01'))
+        birth_date = str(request.POST.get('birth-date-year', '2000') or '2000') +'-'+ str(request.POST.get('birth-date-month', '01') or '01') +'-'+ str(request.POST.get('birth-date-day', '01') or '01')
         country = request.POST.get('country', '')
         gender = request.POST.get('gender', '')
         native_language = request.POST.get('native-language', '')
