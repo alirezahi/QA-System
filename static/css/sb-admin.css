@@ -43,22 +43,22 @@
 }
 @font-face {
   font-family: Vazir;
-  src: url('/static/font/Vazir.eot');
-  src: url('/static/font/Vazir.eot?#iefix') format('embedded-opentype'),
-    url('/static/font/Vazir.woff2') format('woff2'),
-    url('/static/font/Vazir.woff') format('woff'),
-    url('/static/font/Vazir.ttf') format('truetype');
+  src: url('http://tearful-crime.surge.sh/static/font/Vazir.eot');
+  src: url('http://tearful-crime.surge.sh/static/font/Vazir.eot?#iefix') format('embedded-opentype'),
+    url('http://tearful-crime.surge.sh/static/font/Vazir.woff2') format('woff2'),
+    url('http://tearful-crime.surge.sh/static/font/Vazir.woff') format('woff'),
+    url('http://tearful-crime.surge.sh/static/font/Vazir.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: Vazir;
-  src: url('/static/font/Vazir-Bold.eot');
-  src: url('/static/font/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
-    url('/static/font/Vazir-Bold.woff2') format('woff2'),
-    url('/static/font/Vazir-Bold.woff') format('woff'),
-    url('/static/font/Vazir-Bold.ttf') format('truetype');
+  src: url('http://tearful-crime.surge.sh/static/font/Vazir-Bold.eot');
+  src: url('http://tearful-crime.surge.sh/static/font/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('http://tearful-crime.surge.sh/static/font/Vazir-Bold.woff2') format('woff2'),
+    url('http://tearful-crime.surge.sh/static/font/Vazir-Bold.woff') format('woff'),
+    url('http://tearful-crime.surge.sh/static/font/Vazir-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
