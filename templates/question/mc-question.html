@@ -63,6 +63,7 @@
             answer:'{{question.question.answer}}',
             user_answer:'{{question.answer|default_if_none:''}}',
             text: '{{question.question.text}}',
+            whole_text: '{{question.question.whole_text}}',
         },
         {% endfor %}
     ];
@@ -94,7 +95,11 @@
             '{{option.text}}',
         {% endfor %}
     ];
+    {% if whole_text %}
+    text = '{{question.whole_text}}';
+    {% else %}
     text = '{{question.text}}';
+    {% endif %}
     var input_text_questions = '<input name="'+({{order}})+'" type="text" class="v-question-input" placeholder="'+({{order}})+'" disabled/>';
     text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text_questions);
     var input_text_answers = '<div>\

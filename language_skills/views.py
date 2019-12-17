@@ -725,8 +725,11 @@ class CreateMCQuestions(View):
                                     text=v.form)
                                 options.append(opt)
                         else:
-                            v_forms = VerbForm.objects.exclude(
-                                form=q['answer']).order_by('-freq')[:100]
+                            v_forms = list(VerbForm.objects.exclude(
+                                form=q['answer']).order_by('-freq')[:50])
+                            import random
+                            random.shuffle(v_forms)
+                            v_forms = v_forms[:3]
                             for v in v_forms:
                                 opt, is_created = OptionAnswer.objects.get_or_create(text=v.form)
                                 options.append(opt)
@@ -753,10 +756,12 @@ class CreateMCQuestions(View):
                     if is_preposition:
                         pres = PrePosition.objects.exclude(
                             text=q['answer']).order_by('?')[:3]
+                        
+                        mc.options.add(o)
                         for p in pres:
-                            o, is_created = OptionAnswer.objects.get_or_create(
+                            opt, is_created = OptionAnswer.objects.get_or_create(
                                 text=p.text)
-                            mc.options.add(o)
+                            mc.options.add(opt)
 
         return HttpResponse('Done')
     
@@ -974,11 +979,23 @@ def level_check(request):
 def calc_level(levels):
     level = 'A'
     value = 11
+    rate = 0
     for key, l_value in levels.items():
-        if l_value < value:
-            level = key
-            value = l_value
-    return level
+        rate += l_value
+    options = []
+    a_level = ['A', abs(levels['A']*10 - rate*100/30)]
+    b_level = ['B', abs(levels['B']*10 - rate*100/30)]
+    c_level = ['C', abs(levels['C']*10 - rate*100/30)]
+    if levels['C'] != 0:
+        options.append(c_level)
+    if levels['B'] != 0:
+        options.append(b_level)
+    if levels['A'] != 0:
+        options.append(a_level)
+    if len(options) > 0:
+        a = min(options, key=lambda x: x[1])
+        return a[0]
+    return 'A'
 
 
 SCORE_POINT = {
