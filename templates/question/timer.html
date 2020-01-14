@@ -1,0 +1,18 @@
+{% if not answer_page %}
+<script>
+    let timer = {{ timer_limit }};
+    let timeInterval = setInterval(function(){
+        if(timer === 0){
+            clearInterval(timeInterval);
+            let inputElement = document.getElementById('main-question');
+            if(inputElement){
+                inputElement.value = '';
+            }
+            document.getElementById('submit-response').click();
+        }else{
+            timer-=1;
+            document.getElementById('timer').innerHTML = timer;
+        }
+    },1000)
+</script>
+{% endif %}

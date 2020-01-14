@@ -9,11 +9,16 @@
         <div id="item-answer" class="bg-light text-right px-3 text-success font-weight-bold pb-2">
         </div>
         {% if not answer_page %}
+        <div class="text-center mb-0">
+            <div class="alert alert-success d-inline-block p-1 mt-2">
+                زمان باقیمانده: <span id="timer">{{ timer_limit }}</span> ثانیه
+            </div>
+        </div>
         <div class="text-center p-3">
             <button id="response" class="btn btn-info">
                 ارسال پاسخ
             </button>
-            <button id="next" class="btn btn-success d-none">
+            <button id="submit-response" class="btn btn-success d-none">
                 سوال بعدی
             </button>
         </div>
@@ -43,6 +48,7 @@
 
 {% endblock %}
 {% block 'js-block' %}
+{% include 'question/timer.html' %}
 <script>
     function sth(e){
         e.preventDefault();
@@ -53,7 +59,7 @@
         $('#response').addClass('d-none');
         $('#offer-blank-form').attr('action','{{next}}');
         $('#offer-blank-form').removeAttr('onsubmit');
-        $('#next').removeClass('d-none');
+        $('#submit-response').removeClass('d-none');
         return false;
     })
     {% comment %} var text = '{{ question.text }}'; {% endcomment %}

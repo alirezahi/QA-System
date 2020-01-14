@@ -10,8 +10,13 @@
             
         </div>
         {% if not answer_page %}
+        <div class="text-center mb-0">
+            <div class="alert alert-success d-inline-block p-1 mt-2">
+                زمان باقیمانده: <span id="timer">{{ timer_limit }}</span> ثانیه
+            </div>
+        </div>
         <div class="text-center p-3">
-            <button class="btn btn-success">
+            <button id="submit-response" class="btn btn-success">
                 ارسال پاسخ
             </button>
         </div>
@@ -41,6 +46,7 @@
 
 {% endblock %}
 {% block 'js-block' %}
+{% include 'question/timer.html' %}
 <script>
     var text = '{{ question.text }}';
     
