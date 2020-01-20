@@ -28,7 +28,7 @@
         {% for text in texts %}
             <tr>
                 <td>{{forloop.counter}}</td>
-                <td>{{text.text|truncatechars:10}} ...</td>
+                <td>{{text.text|truncatechars:20}}</td>
                 <td>
                 {% if text.modified_text %}
                     <span class="text-success">تصحیح شده</span>
