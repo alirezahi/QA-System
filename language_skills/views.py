@@ -1137,7 +1137,7 @@ def text_writing(request):
         text = request.POST.get('text', '')
         TextWriting.objects.create(text=text)
         texts = TextWriting.objects.all()
-        return render(request, template_name='text_list.html', context={'add': True, 'texts': texts})
+        return redirect('/text_list?add=true')
     return redirect('/')
 
 class TextList(TemplateView):
@@ -1146,7 +1146,11 @@ class TextList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         texts = TextWriting.objects.all()
+        add = self.request.GET.get('add', False)
+        if add == 'true':
+            add = True
         context['texts'] = texts
+        context['add'] = add
         return context
 
 
