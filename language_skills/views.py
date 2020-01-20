@@ -59,7 +59,7 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
-        context['question_progress'] = (index+1) / question_set.questions.count() * 100
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
             last_question.answer = answer
@@ -116,7 +116,7 @@ class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
-        context['question_progress'] = (index+1) / question_set.questions.count() * 100
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -395,7 +395,7 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
-        context['question_progress'] = (index+1) / question_set.questions.count() * 100
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
             last_question.answer = answer
@@ -449,7 +449,7 @@ class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
-        context['question_progress'] = (index+1) / question_set.questions.count() * 100
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -860,7 +860,7 @@ class MCLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['timer_limit'] = TIMER_LIMIT
         question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().mc
         index = question_set.questions.filter(order__lt=order).count()
-        context['question_progress'] = (index+1) / question_set.questions.count() * 100
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -912,7 +912,7 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['timer_limit'] = TIMER_LIMIT
         question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().blank
         index = question_set.questions.filter(order__lt=order).count()
-        context['question_progress'] = (index+1) / question_set.questions.count() * 100
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
