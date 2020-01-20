@@ -223,6 +223,12 @@ class UserBlankQuestionRelation(models.Model):
     cosine_similarity = models.FloatField(default=1)
 
 
+class TextWriting(models.Model):
+    text = models.TextField()
+    modified_text = models.TextField()
+    is_done = models.BooleanField(default=False)
+
+
 # ==================
 
 

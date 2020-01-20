@@ -58,6 +58,8 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = (index+1) / question_set.questions.count() * 100
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
             last_question.answer = answer
@@ -113,6 +115,8 @@ class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = (index+1) / question_set.questions.count() * 100
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -390,6 +394,8 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = (index+1) / question_set.questions.count() * 100
         if answer:
             last_question = question_set.questions.filter(order__lt=order).order_by('order').last()
             last_question.answer = answer
@@ -442,6 +448,8 @@ class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = (index+1) / question_set.questions.count() * 100
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -851,6 +859,8 @@ class MCLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().mc
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = (index+1) / question_set.questions.count() * 100
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -901,6 +911,8 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().blank
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = (index+1) / question_set.questions.count() * 100
         if answer:
             last_question = question_set.questions.filter(
                 order__lt=order).order_by('order').last()
@@ -988,6 +1000,11 @@ def level_check(request):
         p2 = Thread(target=update_mc_userquestion_relation, args=(request.user,level,1,1,))
         p2.start()
         request.user.qauser.level = level
+        l_list = LevelDetectionQuestion.objects.all().exclude(id=l_detect.id)
+        for l in l_list:
+            l.blank.delete()
+            l.mc.delete()
+            l.delete()
         l_detect.has_answered_blank = True
         l_detect.has_answered_mc = True
         l_detect.save()
@@ -1112,3 +1129,33 @@ def calc_total_level_blank(user):
     is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
     is_preposition_prob = 0 if is_preposition_count ==0 or is_preposition/is_preposition_count < 0.5 else 1
     return level, is_verb_prob, is_preposition_prob
+
+
+
+def text_writing(request):
+    if request.method == 'POST':
+        text = request.POST.get('text', '')
+        TextWriting.objects.create(text=text)
+        texts = TextWriting.objects.all()
+        return render(request, template_name='text_list.html', context={'add': True, 'texts': texts})
+    return redirect('/')
+
+class TextList(TemplateView):
+    template_name = 'text_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        texts = TextWriting.objects.all()
+        context['texts'] = texts
+        return context
+
+
+class TextDetail(TemplateView):
+    template_name = 'text_detail.html'
+
+    def get_context_data(self, **kwargs):
+        text_id = kwargs['id']
+        context = super().get_context_data(**kwargs)
+        text_writing = TextWriting.objects.get(id=text_id)
+        context['text_writing'] = text_writing
+        return context

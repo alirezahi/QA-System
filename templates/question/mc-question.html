@@ -2,6 +2,13 @@
 {% load static %}
 {% load templatetags_custom %}
 {% block 'main-content' %}
+    {% if not answer_page %}
+        <div class="pt-2 pb-4">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{question_progress}}%;" aria-valuenow="{{question_progress}}" aria-valuemin="0" aria-valuemax="100">{{question_progress}}%</div>
+            </div>
+        </div>
+    {% endif %}
     <form action="{{next}}" method="GET">
         <div id="question-container" class="text-right p-3 bg-light rounded" >
             

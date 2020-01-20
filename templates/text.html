@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block 'main-content' %}
+<div class="text-right" dir="rtl">
+    <form action="/send_text/" method="POST">
+        {% csrf_token %}
+        <div class="alert alert-info">
+        در این قسمت می‌توانید متن خود را بنویسید تا اشکالات نگارشی آن تصحیح شود
+        </div>
+        <div class="py-3">
+            <label for="text">متن شما:</label>
+            <textarea class="form-control" name="text" id="text" rows="10"></textarea>
+        </div>
+        <div class="text-left">
+            <button class="btn btn-success">
+                ثبت متن
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

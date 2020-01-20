@@ -32,6 +32,16 @@
         <span>نمودار پیشرفت چندگزینه‌ای</span>
     </a>
     </li>
+    <li class="nav-item dropdown">
+    <a class="nav-link text-right" href="/text" id="pagesDropdown" role="button">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>نگارش متن</span>
+    </a>
+    <a class="nav-link text-right" href="/text_list" id="pagesDropdown" role="button">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>لیست نگارش‌ها</span>
+    </a>
+    </li>
     {% if request.user.is_staff %}
     <li class="nav-item dropdown">
     <a class="nav-link text-right" href="/question/new" id="pagesDropdown" role="button">
