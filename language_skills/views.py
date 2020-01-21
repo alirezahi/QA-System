@@ -1002,8 +1002,10 @@ def level_check(request):
         request.user.qauser.level = level
         l_list = LevelDetectionQuestion.objects.all().exclude(id=l_detect.id)
         for l in l_list:
-            l.blank.delete()
-            l.mc.delete()
+            if l.blank:
+                l.blank.delete()
+            if l.mc:
+                l.mc.delete()
             l.delete()
         l_detect.has_answered_blank = True
         l_detect.has_answered_mc = True
