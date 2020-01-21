@@ -961,13 +961,18 @@ def level_check(request):
             'B': 0,
             'C': 0,
         }
+        WEIGHTS = {
+            'A': 0.8,
+            'B': 1,
+            'C': 1.2,
+        }
         for q in questions:
             answer = q.answer
             order = q.order
             user_answers.append(
                 {'order': int(order), 'text': answer})
             if(answer == q.question.answer):
-                levels[q.question.level] += 1
+                levels[q.question.level] += 1 * WEIGHTS[q.question.level]
                 true_count += 1
         mc_set.right_answers = true_count
         mc_set.question_count = answers_count
@@ -1014,25 +1019,12 @@ def level_check(request):
 
 
 def calc_level(levels):
-    level = 'A'
-    value = 11
-    rate = 0
-    for key, l_value in levels.items():
-        rate += l_value
-    options = []
-    a_level = ['A', abs(levels['A']*10 - rate*100/30)]
-    b_level = ['B', abs(levels['B']*10 - rate*100/30)]
-    c_level = ['C', abs(levels['C']*10 - rate*100/30)]
-    if levels['C'] != 0:
-        options.append(c_level)
-    if levels['B'] != 0:
-        options.append(b_level)
-    if levels['A'] != 0:
-        options.append(a_level)
-    if len(options) > 0:
-        a = min(options, key=lambda x: x[1])
-        return a[0]
-    return 'A'
+    score = levels['A'] + levels['B'] + levels['C']
+    if score < 9:
+        return 'A'
+    if score < 19:
+        return 'B'
+    return 'C'
 
 
 SCORE_POINT = {
