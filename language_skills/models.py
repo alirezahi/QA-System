@@ -224,6 +224,7 @@ class UserBlankQuestionRelation(models.Model):
 
 
 class TextWriting(models.Model):
+    user = models.ForeignKey(QAUser, on_delete=models.CASCADE, related_name='user_text_writing', null=True, blank=True)
     text = models.TextField()
     modified_text = models.TextField()
     is_done = models.BooleanField(default=False)

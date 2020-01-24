@@ -1129,8 +1129,9 @@ def calc_total_level_blank(user):
 def text_writing(request):
     if request.method == 'POST':
         text = request.POST.get('text', '')
-        TextWriting.objects.create(text=text)
-        texts = TextWriting.objects.all()
+        user = self.request.user.qauser
+        TextWriting.objects.create(user=user ,text=text)
+        texts = TextWriting.objects.filter(user=user)
         return redirect('/text_list?add=true')
     return redirect('/')
 
@@ -1139,7 +1140,8 @@ class TextList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        texts = TextWriting.objects.all()
+        user = self.request.user.qauser
+        texts = TextWriting.objects.filter(user=user)
         add = self.request.GET.get('add', False)
         if add == 'true':
             add = True
