@@ -1129,7 +1129,7 @@ def calc_total_level_blank(user):
 def text_writing(request):
     if request.method == 'POST':
         text = request.POST.get('text', '')
-        user = self.request.user.qauser
+        user = request.user.qauser
         TextWriting.objects.create(user=user ,text=text)
         texts = TextWriting.objects.filter(user=user)
         return redirect('/text_list?add=true')
