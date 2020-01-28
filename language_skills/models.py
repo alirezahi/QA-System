@@ -52,6 +52,19 @@ class QAUser(models.Model):
     persian_knowing_reason = models.TextField(null=True, blank=True)
     uuid = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
+    
+
+    def __str__(self):
+        return self.user.username
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=100)
+    users = models.ManyToManyField(QAUser, blank=True,related_name='qagroup_users')
+    admins = models.ManyToManyField(QAUser, blank=True,related_name='qagroup_admins')
+
+    def __str__(self):
+        return self.name
 
 
 class MCQuestionHistory(models.Model):

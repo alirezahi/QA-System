@@ -1135,6 +1135,47 @@ def text_writing(request):
         return redirect('/text_list?add=true')
     return redirect('/')
 
+
+def text_correct_api(request, id):
+    if request.method == 'POST':
+        modified_text = request.POST.get('modified_text', '')
+        is_done = request.POST.get('is_done', 'off')
+        if is_done == 'on':
+            is_done = True
+        else:
+            is_done = False
+        user = request.user.qauser
+        TextWriting.objects.filter(id=id).update(modified_text=modified_text, is_done=is_done)
+        texts = TextWriting.objects.filter(user__qagroup_users__admins=user)
+        return redirect('/text_correct_list?add=true')
+    return redirect('/')
+
+
+class TextCorrectList(TemplateView):
+    template_name = 'text_correct_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user.qauser
+        texts = TextWriting.objects.filter(user__qagroup_users__admins=user)
+        add = self.request.GET.get('add', False)
+        if add == 'true':
+            add = True
+        context['texts'] = texts
+        context['add'] = add
+        return context
+
+class TextCorrect(TemplateView):
+    template_name = 'text_correct.html'
+
+    def get_context_data(self, **kwargs):
+        text_id = kwargs['id']
+        context = super().get_context_data(**kwargs)
+        text_writing = TextWriting.objects.get(id=text_id)
+        context['text_writing'] = text_writing
+        return context
+
+
 class TextList(TemplateView):
     template_name = 'text_list.html'
 

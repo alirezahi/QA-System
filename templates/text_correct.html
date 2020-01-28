@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block 'main-content' %}
+<div class="text-right" dir="rtl">
+    <form method="POST" action="/text_correct_api/{{text_writing.id}}">
+        {% csrf_token %}
+        <div class="py-3">
+            <label for="text">متن :</label>
+            <textarea class="form-control" name="text" id="text" rows="10" disabled>
+                {{text_writing.text}}
+            </textarea>
+        </div>
+        <label for="text">متن نگارش شده :</label>
+        <textarea class="form-control" name="modified_text" id="modified_text" rows="10">
+            {{text_writing.modified_text}}
+        </textarea>
+        <div>
+            <input  type="checkbox" name="id_done"/>
+            <label>
+            نگارش اتمام یافته
+            </label>
+        </div>
+        <div class="mb-3 text-left">
+            <button class="btn btn-success">
+                ویرایش
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

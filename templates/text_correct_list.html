@@ -1,0 +1,54 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block 'main-content' %}
+<div class="text-right" dir="rtl">
+    {% if add %}
+    <div class="alert alert-success">
+    متن ویرایش شده اضافه شد
+    </div>
+    {% endif %}
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+            <th>شماره</th>
+            <th>متن</th>
+            <th>وضعیت</th>
+            <th>کاربر</th>
+            <th>تصحیح</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+            <th>شماره</th>
+            <th>متن</th>
+            <th>وضعیت</th>
+            <th>کاربر</th>
+            <th>تصحیح</th>
+            </tr>
+        </tfoot>
+        <tbody>
+        {% for text in texts %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{text.text|truncatechars:20}}</td>
+                <td>
+                {% if text.modified_text %}
+                    <span class="text-success">تصحیح شده</span>
+                {% else %}
+                    <span class="text-info">آماده تصحیح</span>
+                {% endif %}
+                </td>
+                <td>
+                    {{text.user.user.username}}
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="/text_correct/{{text.id}}">
+                        تصحیح
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+</div>
+{% endblock %}
