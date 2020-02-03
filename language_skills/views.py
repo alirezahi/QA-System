@@ -12,7 +12,7 @@ from .models import *
 from django.views import View
 from django.shortcuts import redirect
 from .utilities import Analyser
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from threading import Thread
 from scipy import spatial
 import os
@@ -1200,3 +1200,30 @@ class TextDetail(TemplateView):
         text_writing = TextWriting.objects.get(id=text_id)
         context['text_writing'] = text_writing
         return context
+
+
+def export_to_xml(request):
+    if request.method == 'GET':
+        from django.core import serializers
+        from django.core.files import File
+        text_id = request.GET.get('id', None)
+        list_type = request.GET.get('type', None)
+        user = request.user.qauser
+        params = {
+            'user': user
+        }
+        if text_id:
+            params = {
+                'id': text_id
+            }
+        if list_type == 'correct':
+            params = {
+                'user__qagroup_users__admins': user
+            }
+        texts = TextWriting.objects.filter(**params)
+        data = serializers.serialize("xml", texts)
+        f = open('./static/texts-'+request.user.username+'.xml', 'w+')
+        myfile = File(f)
+        myfile.write(data)
+        myfile.close()
+        return FileResponse(open('./static/texts-'+request.user.username+'.xml', 'rb'))

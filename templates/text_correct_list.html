@@ -15,6 +15,7 @@
             <th>وضعیت</th>
             <th>کاربر</th>
             <th>تصحیح</th>
+            <th>xml</th>
             </tr>
         </thead>
         <tfoot>
@@ -23,7 +24,7 @@
             <th>متن</th>
             <th>وضعیت</th>
             <th>کاربر</th>
-            <th>تصحیح</th>
+            <th>xml</th>
             </tr>
         </tfoot>
         <tbody>
@@ -46,9 +47,19 @@
                         تصحیح
                     </a>
                 </td>
+                <td>
+                    <a class="btn btn-info" href="/question/export_to_xml?id={{text.id}}">
+                        دانلود
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
         </table>
+         <div>
+            <a class="btn btn-secondary" href="/question/export_to_xml?type=correct">
+                دانلود همه
+            </a>
+        </div>
 </div>
 {% endblock %}

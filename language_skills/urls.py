@@ -45,4 +45,6 @@ urlpatterns = [
     path('level-detection/b/<order>', BlankLevelQuestionTemplate.as_view()),
     path('level-detection/mc/<order>', MCLevelQuestionTemplate.as_view()),
     path('level-check', level_check),
+    #text
+    path('export_to_xml', export_to_xml),
 ]
