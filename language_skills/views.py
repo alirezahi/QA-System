@@ -591,6 +591,10 @@ class CreateQuestions(View):
                             answer_type = 'verb'
                         if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
                             answer_type = 'preposition'
+                        # if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
+                        #     answer_type = 'verb'
+                        # if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
+                        #     answer_type = 'preposition'
                 vacancy_text = ' '.join(vacancy_arr)
                 origin = origin.replace('-', '‌').replace('&quot;','\"')
                 vacancy_text = vacancy_text.replace(
@@ -618,7 +622,8 @@ class CreateQuestions(View):
                     '-', '‌').replace('&quot;', '\"')
                 sentence['origin-text'] = res
                 sentence['whole_vacancy'] = whole_vacancy
-
+            if len(res.split(' ')) < 3:
+                continue
             text = Text.objects.create(
                 text=res,
                 level=''
@@ -710,7 +715,8 @@ class CreateMCQuestions(View):
                     '-', '‌').replace('&quot;', '\"')
                 sentence['origin-text'] = res
                 sentence['whole_vacancy'] = whole_vacancy
-
+            if len(res.split(' ')) < 3:
+                continue
             text = Text.objects.create(
                 text=res,
                 level=''
