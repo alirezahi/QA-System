@@ -378,7 +378,7 @@ def generate_offer_vquestion_set(user):
 def generate_common_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_common_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_common_set_count', active=True) else 10
-    q = SelectedBlankQuestion.objects.filter(blankquestionset__user=user.qauser).values('question__id').distinct()
+    q = SelectedBlankQuestion.objects.filter(blankquestionset__user=user.qauser).values_list('question__id', flat=True).distinct()
     v_ids = SelectedBlankQuestion.objects.exclude(answer=F('question__answer')).annotate(c=Count('question__id')).annotate(has_answered=Case(When(question_id__in=q,then=True), default=0, output_field=models.BooleanField())).values('has_answered','c').order_by('has_answered').values_list('question__id', flat=True)
     v_list = BlankQuestion.objects.filter(id__in=v_ids)[:SET_COUNT]
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
@@ -678,7 +678,7 @@ def generate_offer_mcquestion_set(user):
 def generate_common_mcquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_common_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_common_set_count', active=True) else 30
-    q = SelectedMCQuestion.objects.filter(mcquestionset__user=user.qauser).values('question__id').distinct()
+    q = SelectedMCQuestion.objects.filter(mcquestionset__user=user.qauser).values_list('question__id', flat=True).distinct()
     mc_ids = SelectedMCQuestion.objects.exclude(answer=F('question__answer')).annotate(c=Count('question__id')).annotate(has_answered=Case(When(question_id__in=q,then=True), default=0, output_field=models.BooleanField())).values('has_answered','c').order_by('has_answered').values_list('question__id', flat=True)
     mc_list = MultipleChoiceQuestion.objects.filter(id__in=mc_ids)[:SET_COUNT]
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
