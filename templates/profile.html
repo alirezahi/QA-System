@@ -14,6 +14,19 @@
         </div>
     </div>
     {% endif %}
+
+    {% if not request.user.qauser.is_activate %}
+    <div class="col-md-12 text-right">
+        <div class="alert alert-success">
+            <div>
+            حساب کاربری خود را از طریق ایمیلی که برای شما ارسال شده است فعال کنید
+            <a class="btn btn-warning small"href="/accounts/send-mail-confirm">
+                ارسال مجدد ایمیل
+            </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="col-md-12 text-right mb-2">
         لطفا نوع سوال خود را انتخاب نمایید تا به صورت خودکار تولید گردد:
     </div>

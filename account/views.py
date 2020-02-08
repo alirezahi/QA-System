@@ -4,10 +4,18 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login
 from language_skills.models import *
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils import six
+from language_skills.views import email
 # from language_skills.utilities import a
 
 # Create your views here.
-
+class TokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        return (
+            six.text_type(user.pk) + six.text_type(timestamp) +
+            six.text_type(user.is_active)
+        )
 
 class TestView(TemplateView):
     template_name = 'test.html'
@@ -76,9 +84,47 @@ def register(request):
         qauser.lang_reason = reason
         qauser.is_knowing_persian = is_knowing_persian == 'on'
         qauser.persian_knowing_reason = how_knowing
-        qauser.save()
         new_user = authenticate(username=username,
                                 password=password,
                                 )
+            
+        subject = 'فعال‌سازی حساب کاربری'
+        account_activation_token = TokenGenerator().make_token(user)
+        qauser.activation_token = account_activation_token
+        qauser.save()
+        message = 'جهت فعال‌سازی حساب کاربری خود وارد لینک زیر شوید:\nhttp://'+request.get_host()+'/accounts/confirmation-mail?username='+username+'&token='+account_activation_token
+        dest = username
+        email(subject, message, dest)
         login(request, new_user)
         return HttpResponseRedirect("/accounts/dashboard")
+
+
+def send_mail_confirm(request):
+    user = request.user
+    username = user.username
+    qauser = user.qauser
+    account_activation_token = ''
+    if not qauser.activation_token:
+        account_activation_token = TokenGenerator().make_token(user)
+        qauser.activation_token = account_activation_token
+        qauser.save()
+    else:
+        account_activation_token = qauser.activation_token
+    subject = 'فعال‌سازی حساب کاربری'
+    message = 'جهت فعال‌سازی حساب کاربری خود وارد لینک زیر شوید:\nhttp://'+request.get_host()+'/accounts/confirmation-mail?username='+username+'&token='+account_activation_token
+    dest = username
+    email(subject, message, dest)
+    return HttpResponseRedirect("/accounts/dashboard")
+
+
+def confirmation_mail(request):
+    if request.method == 'GET':
+        username = request.GET.get('username', '')
+        token = request.GET.get('token', '')
+        user = User.objects.filter(username=username).first()
+        qauser = user.qauser
+        if qauser.activation_token == token:
+            qauser.is_activate = True
+            qauser.save()
+            return HttpResponseRedirect("/accounts/confirmation-success")
+    return HttpResponseRedirect("/accounts/dashboard")

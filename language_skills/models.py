@@ -32,6 +32,8 @@ class RandomManager(models.Manager):
 
 class QAUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    activation_token = models.CharField(max_length=100, null=True, blank=True)
+    is_activate = models.BooleanField(default=False)
     level = models.CharField(max_length=10, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     birth_country = models.CharField(max_length=200, null=True, blank=True)

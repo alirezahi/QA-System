@@ -18,12 +18,15 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView
 from django.views.generic.base import RedirectView
 from django.contrib.auth.decorators import login_required
-from account.views import register, ProfileView
+from account.views import register, ProfileView, confirmation_mail, send_mail_confirm
 
 
 urlpatterns = [
     path('dashboard/', login_required(ProfileView.as_view()), name='dashboard'),
-    path('login/', LoginView.as_view(template_name='login.html', redirect_authenticated_user=True), name='login'),
+    path('login/', LoginView.as_view(template_name="login.html", redirect_authenticated_user=True), name='login'),
     path('register/', register, name='register'),
+    path('send-mail-confirm/', send_mail_confirm, name='send_mail_confirm'),
+    path('confirmation-mail/', confirmation_mail, name='confirmation_mail'),
+    path('confirmation-success/', TemplateView.as_view(template_name='registration/confirmation-success.html'), name='confirmation_success'),
     path('profile/', RedirectView.as_view(permanent=False, url='/accounts/dashboard')),
 ]

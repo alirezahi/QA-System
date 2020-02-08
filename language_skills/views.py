@@ -7,6 +7,7 @@ from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import F, Count, Case, When
 import pandas as pd
 from .models import *
 from django.views import View
@@ -153,6 +154,66 @@ class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         return super(OfferBlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
 
 
+class CommonBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
+    template_name = 'question/offer-v-question.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
+        ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
+        TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
+            ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer', '')
+        context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
+        context['timer_limit'] = TIMER_LIMIT
+        question_set = BlankQuestionSet.objects.get(id=set_id)
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
+        if answer:
+            last_question = question_set.questions.filter(
+                order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last', None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/v/common/' + \
+                str(set_id)+'/'+str(question_select.order+1)+''
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        question_set = BlankQuestionSet.objects.get(id=set_id)
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            level_blank, is_verb_blank, is_prep_blank = calc_total_level_blank(
+                request.user)
+            p1 = Thread(target=update_blank_userquestion_relation, args=(
+                request.user, level_blank, is_verb_blank, is_prep_blank,))
+            p1.start()
+            return redirect('/question/v/check-answers/'+str(set_id)+'')
+        return super(CommonBlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+
 class VQuestionNewTemplate(LoginRequiredMixin, RedirectView):
     template_name = 'question/v-question.html'
     login_url = '/login/'
@@ -179,6 +240,21 @@ class OfferVQuestionNewTemplate(LoginRequiredMixin, RedirectView):
         if question_set.questions.all().count() == 0:
             return '/accounts/dashboard'
         return '/question/v/offer/'+str(question_set.id)+'/1'
+
+
+class CommonVQuestionNewTemplate(LoginRequiredMixin, RedirectView):
+    template_name = 'question/offer-v-question.html'
+    login_url = '/login/'
+
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        question_set = generate_common_vquestion_set(self.request.user)
+        if question_set.questions.all().count() == 0:
+            return '/accounts/dashboard'
+        return '/question/v/common/'+str(question_set.id)+'/1'
 
 
 class HistoryChoiceTemplate(LoginRequiredMixin, TemplateView):
@@ -299,6 +375,21 @@ def generate_offer_vquestion_set(user):
     return v_set
 
 
+def generate_common_vquestion_set(user):
+    SET_COUNT = int(Config.objects.filter(name='question_common_set_count', active=True).last(
+    ).value) if Config.objects.filter(name='question_common_set_count', active=True) else 10
+    q = SelectedBlankQuestion.objects.filter(blankquestionset__user=user.qauser).values('question__id').distinct()
+    v_ids = SelectedBlankQuestion.objects.exclude(answer=F('question__answer')).annotate(c=Count('question__id')).annotate(has_answered=Case(When(question_id__in=q,then=True), default=0, output_field=models.BooleanField())).values('has_answered','c').order_by('has_answered').values_list('question__id', flat=True)
+    v_list = BlankQuestion.objects.filter(id__in=v_ids)[:SET_COUNT]
+    v_set = BlankQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for v in v_list:
+        v_obj = SelectedBlankQuestion.objects.create(question=v, order=order_counter)
+        v_set.questions.add(v_obj)
+        order_counter += 1
+    return v_set
+
+
 def generate_leveled_vquestion_set(user):
     SET_COUNT = 5
     v_list_A = BlankQuestion.objects.filter(
@@ -375,6 +466,19 @@ class OfferMCQuestionNewTemplate(LoginRequiredMixin, RedirectView):
             return '/accounts/dashboard'
         return '/question/mc/offer/'+str(question_set.id)+'/1'
 
+class CommonMCQuestionNewTemplate(LoginRequiredMixin, RedirectView):
+    template_name = 'question/offer-mc-question.html'
+    login_url = '/login/'
+    
+    permanent = False
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        question_set = generate_common_mcquestion_set(self.request.user)
+        if question_set.questions.all().count() == 0:
+            return '/accounts/dashboard'
+        return '/question/mc/common/'+str(question_set.id)+'/1'
 
 class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
     template_name = 'question/mc-question.html'
@@ -486,6 +590,63 @@ class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
         return super(OfferMCQuestionTemplate, self).dispatch(request, *args, **kwargs)
 
 
+class CommonMCQuestionTemplate(LoginRequiredMixin, TemplateView):
+    template_name = 'question/offer-mc-question.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
+        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
+            ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        if self.request.method == 'GET':
+            data = self.request.GET
+            answer = data.get('answer', '')
+        context = super().get_context_data(**kwargs)
+        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['timer_limit'] = TIMER_LIMIT
+        question_set = MCQuestionSet.objects.get(id=set_id)
+        index = question_set.questions.filter(order__lt=order).count()
+        context['question_progress'] = int((index+1) / question_set.questions.count() * 100)
+        if answer:
+            last_question = question_set.questions.filter(
+                order__lt=order).order_by('order').last()
+            last_question.answer = answer
+            last_question.save()
+        if not self.kwargs.get('last', None):
+            question_select = question_set.questions.filter(
+                order=order).last()
+            context['question'] = question_select.question
+            context['order'] = order
+            context['next'] = '/question/mc/common/' + \
+                str(set_id)+'/'+str(question_select.order+1)+''
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        kwargs['last'] = True
+        set_id = self.kwargs['set_id']
+        order = self.kwargs['order']
+        question_set = MCQuestionSet.objects.get(id=set_id)
+        question_select = question_set.questions.filter(
+            order=order).last()
+        last_question = question_set.questions.order_by('order').last()
+        if not last_question:
+            return redirect('/')
+        if last_question.order < int(order):
+            self.kwargs['last'] = True
+            self.get_context_data(**kwargs)
+            level_mc, is_verb_mc, is_prep_mc = calc_total_level_mc(
+                request.user)
+            p2 = Thread(target=update_mc_userquestion_relation, args=(
+                request.user, level_mc, is_verb_mc, is_prep_mc,))
+            p2.start()
+            return redirect('/question/mc/check-answers/'+str(set_id)+'')
+        return super(CommonMCQuestionTemplate, self).dispatch(request, *args, **kwargs)
+
+
+
 def generate_mcquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
@@ -505,6 +666,21 @@ def generate_offer_mcquestion_set(user):
     ).value) if Config.objects.filter(name='question_offer_set_count', active=True) else 30
     mc_list = MultipleChoiceQuestion.objects.filter(usermcquestionrelation__user=user.qauser).order_by(
         '-usermcquestionrelation__cosine_similarity')[:SET_COUNT]
+    mc_set = MCQuestionSet.objects.create(user=user.qauser)
+    order_counter = 1
+    for mc in mc_list:
+        mc_obj = SelectedMCQuestion.objects.create(question=mc, order=order_counter)
+        mc_set.questions.add(mc_obj)
+        order_counter += 1
+    return mc_set
+
+
+def generate_common_mcquestion_set(user):
+    SET_COUNT = int(Config.objects.filter(name='question_common_set_count', active=True).last(
+    ).value) if Config.objects.filter(name='question_common_set_count', active=True) else 30
+    q = SelectedMCQuestion.objects.filter(mcquestionset__user=user.qauser).values('question__id').distinct()
+    mc_ids = SelectedMCQuestion.objects.exclude(answer=F('question__answer')).annotate(c=Count('question__id')).annotate(has_answered=Case(When(question_id__in=q,then=True), default=0, output_field=models.BooleanField())).values('has_answered','c').order_by('has_answered').values_list('question__id', flat=True)
+    mc_list = MultipleChoiceQuestion.objects.filter(id__in=mc_ids)[:SET_COUNT]
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for mc in mc_list:
@@ -1232,4 +1408,6 @@ def export_to_xml(request):
         myfile = File(f)
         myfile.write(data)
         myfile.close()
-        return FileResponse(open('./static/texts-'+request.user.username+'.xml', 'rb'))
+        response = FileResponse(open('./static/texts-'+request.user.username+'.xml', 'rb'))
+        response['Content-Disposition'] = 'attachment; filename=' + 'texts-'+request.user.username+'.xml'
+        return response
