@@ -1126,6 +1126,8 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
+        generate_leveled_vquestion_set(self.request.user)
+        generate_leveled_mcquestion_set(self.request.user)
         SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
         ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
         ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
