@@ -720,12 +720,30 @@ def generate_common_mcquestion_set(user):
 
 def generate_leveled_mcquestion_set(user):
     SET_COUNT = 5
-    v_list_A = MultipleChoiceQuestion.active.filter(
-        level='A').order_by('?', 'origin_text__id')[:SET_COUNT]
-    v_list_B = MultipleChoiceQuestion.active.filter(
-        level='B').order_by('?', 'origin_text__id')[:SET_COUNT]
-    v_list_C = MultipleChoiceQuestion.active.filter(
-        level='C').order_by('?', 'origin_text__id')[:SET_COUNT]
+    answers = []
+    v_list_A = []
+    for i in range(SET_COUNT):
+        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).filter(
+        level='A').get_random().first()
+        v_list_A.append(q)
+        answers.append(q.answer)
+    v_list_A = sorted(v_list, key=lambda x: x.origin_text.id)
+    answers = []
+    v_list_B = []
+    for i in range(SET_COUNT):
+        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).filter(
+        level='B').get_random().first()
+        v_list_B.append(q)
+        answers.append(q.answer)
+    v_list_B = sorted(v_list, key=lambda x: x.origin_text.id)
+    answers = []
+    v_list_C = []
+    for i in range(SET_COUNT):
+        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).filter(
+        level='C').get_random().first()
+        v_list_C.append(q)
+        answers.append(q.answer)
+    v_list_C = sorted(v_list, key=lambda x: x.origin_text.id)
     v_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v_list in [v_list_A, v_list_B, v_list_C]:
