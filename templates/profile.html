@@ -4,18 +4,8 @@
         
 <!-- Icon Cards-->
 <div class="row">
-    {% if not has_answered_level_detection %}
-    <div class="col-md-12 text-right">
-        <div class="alert alert-success">
-            برای تعیین سطح خود لازم است تا آزمون‌های زیر را انجام دهید:
-            <div>
-                <a href="/question/level-detection/b/1">آزمون تعیین سطح</a>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     {% if not request.user.qauser.is_activate %}
+
     <div class="col-md-12 text-right">
         <div class="alert alert-success">
             <div>
@@ -26,58 +16,71 @@
             </div>
         </div>
     </div>
+    {% else %}
+        {% if not has_answered_level_detection %}
+        <div class="col-md-12 text-right">
+            <div class="alert alert-success">
+                برای تعیین سطح خود لازم است تا آزمون‌های زیر را انجام دهید:
+                <div>
+                    <a href="/question/level-detection/b/1">آزمون تعیین سطح</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        
+        <div class="col-md-12 text-right mb-2">
+            لطفا نوع سوال خود را انتخاب نمایید تا به صورت خودکار تولید گردد:
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+        <div class="card text-white bg-success text-right o-hidden h-100">
+            <div class="card-body">
+            <div class="card-body-icon">
+                <i class="fas fa-fw fa-life-ring"></i>
+            </div>
+            <div class="">سوالات جای‌خالی</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="/question/v/new">
+            <span class="float-right">مشاهده سوالات</span>
+            <span class="float-left">
+                <i class="fas fa-angle-left"></i>
+            </span>
+            </a>
+        </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+        <div class="card text-white bg-warning text-right o-hidden h-100">
+            <div class="card-body">
+            <div class="card-body-icon">
+                <i class="fas fa-fw fa-list"></i>
+            </div>
+            <div class="">سوالات چندگزینه‌ای</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="/question/mc/new">
+            <span class="float-right">مشاهده سوالات</span>
+            <span class="float-left">
+                <i class="fas fa-angle-left"></i>
+            </span>
+            </a>
+        </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-3">
+        <div class="card text-white bg-primary text-right o-hidden h-100">
+            <div class="card-body">
+            <div class="card-body-icon">
+                <i class="fas fa-fw fa-comments"></i>
+            </div>
+            <div class="">سوالات پیشنهادی</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="/question/offer-options">
+            <span class="float-right">مشاهده سوالات</span>
+            <span class="float-left">
+                <i class="fas fa-angle-left"></i>
+            </span>
+            </a>
+        </div>
+        </div>
     {% endif %}
-    <div class="col-md-12 text-right mb-2">
-        لطفا نوع سوال خود را انتخاب نمایید تا به صورت خودکار تولید گردد:
-    </div>
-    <div class="col-xl-3 col-sm-6 mb-3">
-    <div class="card text-white bg-success text-right o-hidden h-100">
-        <div class="card-body">
-        <div class="card-body-icon">
-            <i class="fas fa-fw fa-life-ring"></i>
-        </div>
-        <div class="">سوالات جای‌خالی</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="/question/v/new">
-        <span class="float-right">مشاهده سوالات</span>
-        <span class="float-left">
-            <i class="fas fa-angle-left"></i>
-        </span>
-        </a>
-    </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 mb-3">
-    <div class="card text-white bg-warning text-right o-hidden h-100">
-        <div class="card-body">
-        <div class="card-body-icon">
-            <i class="fas fa-fw fa-list"></i>
-        </div>
-        <div class="">سوالات چندگزینه‌ای</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="/question/mc/new">
-        <span class="float-right">مشاهده سوالات</span>
-        <span class="float-left">
-            <i class="fas fa-angle-left"></i>
-        </span>
-        </a>
-    </div>
-    </div>
-    <div class="col-xl-3 col-sm-6 mb-3">
-    <div class="card text-white bg-primary text-right o-hidden h-100">
-        <div class="card-body">
-        <div class="card-body-icon">
-            <i class="fas fa-fw fa-comments"></i>
-        </div>
-        <div class="">سوالات پیشنهادی</div>
-        </div>
-        <a class="card-footer text-white clearfix small z-1" href="/question/offer-options">
-        <span class="float-right">مشاهده سوالات</span>
-        <span class="float-left">
-            <i class="fas fa-angle-left"></i>
-        </span>
-        </a>
-    </div>
-    </div>
 </div>
 
 {% comment %} {% include 'dashboard/chart.html' %} {% endcomment %}

@@ -111,7 +111,7 @@
     {% else %}
     text = '{{question.text}}';
     {% endif %}
-    var input_text = '<input name="answer" type="text" class="v-question-input" autocomplete="off" {% if answer_required %} required {% endif %}placeholder="'+({{order}})+'" />';
+    var input_text = '<input id="main-question" name="answer" type="text" class="v-question-input" autocomplete="off" {% if answer_required %} required {% endif %}placeholder="'+({{order}})+'" />';
     text = text.replace('/&amp;&amp;__question__&amp;&amp;/',input_text);
     {% endif %}
     

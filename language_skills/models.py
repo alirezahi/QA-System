@@ -27,6 +27,10 @@ class RandomManager(models.Manager):
             return self.model.objects.order_by('?',*order)[:items]
         return self.all()
 
+
+class IsActiveManager(models.Manager):
+    def get_queryset(self):
+        return super(IsActiveManager, self).get_queryset().filter(is_active=True)
 # ===============
 
 
@@ -122,6 +126,7 @@ class MultipleChoiceQuestion(AbstractAnswer, AbstractActive):
     origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
 
     objects = RandomManager()
+    active = IsActiveManager()
 
     @property
     def options_random(self):
@@ -156,6 +161,7 @@ class BlankQuestion(AbstractAnswer, AbstractActive):
     origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
 
     objects = RandomManager()
+    active = IsActiveManager()
 
     def __str__(self):
         return self.text[:20] or ''
@@ -175,6 +181,9 @@ class BlankQuestionSet(models.Model):
     user = models.ForeignKey(
         QAUser, null=True, blank=True, on_delete=models.CASCADE)
 
+
+class Blocked(models.Model):
+    text = models.CharField(max_length=200)
 
 class PrePosition(models.Model):
     text = models.CharField(max_length=100)

@@ -350,8 +350,13 @@ class VQuestionListTemplate(LoginRequiredMixin, TemplateView):
 def generate_vquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
-    v_list = BlankQuestion.objects.get_random(
-        order=['origin_text__id'], items=SET_COUNT)
+    answers = []
+    v_list = []
+    for i in range(SET_COUNT):
+        q = BlankQuestion.active.exclude(answer__in=[answers]).get_random().first()
+        v_list.append(q)
+        answers.append(q.answer)
+    v_list = sorted(v_list, key=lambda x: x.origin_text.id)
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
@@ -380,7 +385,7 @@ def generate_common_vquestion_set(user):
     ).value) if Config.objects.filter(name='question_common_set_count', active=True) else 10
     q = SelectedBlankQuestion.objects.filter(blankquestionset__user=user.qauser).values_list('question__id', flat=True).distinct()
     v_ids = SelectedBlankQuestion.objects.exclude(answer=F('question__answer')).annotate(c=Count('question__id')).annotate(has_answered=Case(When(question_id__in=q,then=True), default=False, output_field=models.BooleanField())).values('has_answered','c').order_by('has_answered').values_list('question__id', flat=True)
-    v_list = BlankQuestion.objects.filter(id__in=v_ids)[:SET_COUNT]
+    v_list = BlankQuestion.active.filter(id__in=v_ids)[:SET_COUNT]
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v in v_list:
@@ -392,11 +397,11 @@ def generate_common_vquestion_set(user):
 
 def generate_leveled_vquestion_set(user):
     SET_COUNT = 5
-    v_list_A = BlankQuestion.objects.filter(
+    v_list_A = BlankQuestion.active.filter(
         level='A').order_by('?', 'origin_text__id')[:SET_COUNT]
-    v_list_B = BlankQuestion.objects.filter(
+    v_list_B = BlankQuestion.active.filter(
         level='B').order_by('?', 'origin_text__id')[:SET_COUNT]
-    v_list_C = BlankQuestion.objects.filter(
+    v_list_C = BlankQuestion.active.filter(
         level='C').order_by('?', 'origin_text__id')[:SET_COUNT]
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
@@ -650,8 +655,13 @@ class CommonMCQuestionTemplate(LoginRequiredMixin, TemplateView):
 def generate_mcquestion_set(user):
     SET_COUNT = int(Config.objects.filter(name='question_set_count', active=True).last(
     ).value) if Config.objects.filter(name='question_set_count', active=True) else 30
-    mc_list = MultipleChoiceQuestion.objects.get_random(
-        order=['origin_text__id'], items=SET_COUNT)
+    answers = []
+    mc_list = []
+    for i in range(SET_COUNT):
+        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).get_random().first()
+        mc_list.append(q)
+        answers.append(q.answer)
+    mc_list = sorted(mc_list, key=lambda x: x.origin_text.id)
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for mc in mc_list:
@@ -680,7 +690,7 @@ def generate_common_mcquestion_set(user):
     ).value) if Config.objects.filter(name='question_common_set_count', active=True) else 30
     q = SelectedMCQuestion.objects.filter(mcquestionset__user=user.qauser).values_list('question__id', flat=True).distinct()
     mc_ids = SelectedMCQuestion.objects.exclude(answer=F('question__answer')).annotate(c=Count('question__id')).annotate(has_answered=Case(When(question_id__in=q,then=True), default=False, output_field=models.BooleanField())).values('has_answered','c').order_by('has_answered').values_list('question__id', flat=True)
-    mc_list = MultipleChoiceQuestion.objects.filter(id__in=mc_ids)[:SET_COUNT]
+    mc_list = MultipleChoiceQuestion.active.filter(id__in=mc_ids)[:SET_COUNT]
     mc_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for mc in mc_list:
@@ -692,11 +702,11 @@ def generate_common_mcquestion_set(user):
 
 def generate_leveled_mcquestion_set(user):
     SET_COUNT = 5
-    v_list_A = MultipleChoiceQuestion.objects.filter(
+    v_list_A = MultipleChoiceQuestion.active.filter(
         level='A').order_by('?', 'origin_text__id')[:SET_COUNT]
-    v_list_B = MultipleChoiceQuestion.objects.filter(
+    v_list_B = MultipleChoiceQuestion.active.filter(
         level='B').order_by('?', 'origin_text__id')[:SET_COUNT]
-    v_list_C = MultipleChoiceQuestion.objects.filter(
+    v_list_C = MultipleChoiceQuestion.active.filter(
         level='C').order_by('?', 'origin_text__id')[:SET_COUNT]
     v_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
@@ -767,6 +777,8 @@ class CreateQuestions(View):
                             answer_type = 'verb'
                         if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
                             answer_type = 'preposition'
+                        if word['word'] in Blocked.objects.all().values_tolist('text', flat=True):
+                            answer_type = ''
                         # if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
                         #     answer_type = 'verb'
                         # if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):

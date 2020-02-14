@@ -1,5 +1,5 @@
 {% block 'sidebar' %}
-
+{% if request.user.qauser.is_activate %}
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav text-right p-0">
     <li class="nav-item active">
@@ -14,12 +14,6 @@
         <span class="small">تاریخچه سوالات</span>
     </a>
     </li>
-    {% comment %} <li class="nav-item dropdown">
-    <a class="nav-link text-right" href="/progress" id="pagesDropdown" role="button">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>نمودار پیشرفت کلی</span>
-    </a>
-    </li> {% endcomment %}
     <li class="nav-item dropdown">
     <a class="nav-link text-right" href="/progress-blank" id="pagesDropdown" role="button">
         <i class="fas fa-fw fa-folder"></i>
@@ -65,5 +59,14 @@
     </a>
     </li>
 </ul>
-
+{% else %}
+<ul class="sidebar navbar-nav text-right p-0">
+    <li class="nav-item dropdown">
+    <a class="nav-link text-right" href="mailto:zabanamooz@ihcs.ac.ir" id="pagesDropdown" href="/logout">
+        <i class="fa fa-power-off"></i>
+        <span>خروج</span>
+    </a>
+    </li>
+</ul>
+{% endif %}
 {% endblock %}

@@ -7,6 +7,7 @@ from language_skills.models import *
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
 from language_skills.views import email
+import threading
 # from language_skills.utilities import a
 
 # Create your views here.
@@ -94,7 +95,8 @@ def register(request):
         qauser.save()
         message = 'جهت فعال‌سازی حساب کاربری خود وارد لینک زیر شوید:\nhttp://'+request.get_host()+'/accounts/confirmation-mail?username='+username+'&token='+account_activation_token
         dest = username
-        email(subject, message, dest)
+        t1 = threading.Thread(target=email, args=(message,dest,))
+        t1.start()
         login(request, new_user)
         return HttpResponseRedirect("/accounts/dashboard")
 
@@ -113,7 +115,8 @@ def send_mail_confirm(request):
     subject = 'فعال‌سازی حساب کاربری'
     message = 'جهت فعال‌سازی حساب کاربری خود وارد لینک زیر شوید:\nhttp://'+request.get_host()+'/accounts/confirmation-mail?username='+username+'&token='+account_activation_token
     dest = username
-    email(subject, message, dest)
+    t1 = threading.Thread(target=email, args=(message,dest,))
+    t1.start()
     return HttpResponseRedirect("/accounts/dashboard")
 
 
