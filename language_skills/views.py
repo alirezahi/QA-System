@@ -353,7 +353,7 @@ def generate_vquestion_set(user):
     answers = []
     v_list = []
     for i in range(SET_COUNT):
-        q = BlankQuestion.active.exclude(answer__in=[answers]).order_by('?').first()
+        q = BlankQuestion.active.exclude(answer__in=answers).order_by('?').first()
         v_list.append(q)
         answers.append(q.answer)
     v_list = sorted(v_list, key=lambda x: x.origin_text.id)
@@ -400,7 +400,7 @@ def generate_leveled_vquestion_set(user):
     answers = []
     v_list_A = []
     for i in range(SET_COUNT):
-        q = BlankQuestion.active.exclude(answer__in=[answers]).filter(
+        q = BlankQuestion.active.exclude(answer__in=answers).filter(
         level='A').order_by('?').first()
         v_list_A.append(q)
         answers.append(q.answer)
@@ -408,15 +408,15 @@ def generate_leveled_vquestion_set(user):
     answers = []
     v_list_B = []
     for i in range(SET_COUNT):
-        q = BlankQuestion.active.exclude(answer__in=[answers]).filter(
+        q = BlankQuestion.active.exclude(answer__in=answers).filter(
         level='B').order_by('?').first()
         v_list_B.append(q)
         answers.append(q.answer)
-    v_list_B = sorted(v_list_A, key=lambda x: x.origin_text.id)
+    v_list_B = sorted(v_list_B, key=lambda x: x.origin_text.id)
     answers = []
     v_list_C = []
     for i in range(SET_COUNT):
-        q = BlankQuestion.active.exclude(answer__in=[answers]).filter(
+        q = BlankQuestion.active.exclude(answer__in=answers).filter(
         level='C').order_by('?').first()
         v_list_C.append(q)
         answers.append(q.answer)
@@ -676,7 +676,7 @@ def generate_mcquestion_set(user):
     answers = []
     mc_list = []
     for i in range(SET_COUNT):
-        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).order_by('?').first()
+        q = MultipleChoiceQuestion.active.exclude(answer__in=answers).order_by('?').first()
         mc_list.append(q)
         answers.append(q.answer)
     mc_list = sorted(mc_list, key=lambda x: x.origin_text.id)
@@ -723,7 +723,7 @@ def generate_leveled_mcquestion_set(user):
     answers = []
     v_list_A = []
     for i in range(SET_COUNT):
-        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).filter(
+        q = MultipleChoiceQuestion.active.exclude(answer__in=answers).filter(
         level='A').order_by('?').first()
         v_list_A.append(q)
         answers.append(q.answer)
@@ -731,7 +731,7 @@ def generate_leveled_mcquestion_set(user):
     answers = []
     v_list_B = []
     for i in range(SET_COUNT):
-        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).filter(
+        q = MultipleChoiceQuestion.active.exclude(answer__in=answers).filter(
         level='B').order_by('?').first()
         v_list_B.append(q)
         answers.append(q.answer)
@@ -739,7 +739,7 @@ def generate_leveled_mcquestion_set(user):
     answers = []
     v_list_C = []
     for i in range(SET_COUNT):
-        q = MultipleChoiceQuestion.active.exclude(answer__in=[answers]).filter(
+        q = MultipleChoiceQuestion.active.exclude(answer__in=answers).filter(
         level='C').order_by('?').first()
         v_list_C.append(q)
         answers.append(q.answer)
