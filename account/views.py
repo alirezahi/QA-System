@@ -95,7 +95,7 @@ def register(request):
         qauser.save()
         message = 'جهت فعال‌سازی حساب کاربری خود وارد لینک زیر شوید:\nhttp://'+request.get_host()+'/accounts/confirmation-mail?username='+username+'&token='+account_activation_token
         dest = username
-        t1 = threading.Thread(target=email, args=(message,dest,))
+        t1 = threading.Thread(target=email, args=(subject, message,dest,))
         t1.start()
         login(request, new_user)
         return HttpResponseRedirect("/accounts/dashboard")
@@ -115,7 +115,7 @@ def send_mail_confirm(request):
     subject = 'فعال‌سازی حساب کاربری'
     message = 'جهت فعال‌سازی حساب کاربری خود وارد لینک زیر شوید:\nhttp://'+request.get_host()+'/accounts/confirmation-mail?username='+username+'&token='+account_activation_token
     dest = username
-    t1 = threading.Thread(target=email, args=(message,dest,))
+    t1 = threading.Thread(target=email, args=(subject, message,dest,))
     t1.start()
     return HttpResponseRedirect("/accounts/dashboard")
 
