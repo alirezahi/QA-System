@@ -752,7 +752,7 @@ def generate_leveled_mcquestion_set(user):
                 question=v, order=order_counter)
             v_set.questions.add(v_obj)
             order_counter += 1
-    l = LevelDetectionQuestion.objects.get(user=user)
+    l = LevelDetectionQuestion.objects.filter(user=user).last()
     l.mc = v_set
     l.save()
     return v_set
