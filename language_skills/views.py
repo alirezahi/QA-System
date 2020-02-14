@@ -404,7 +404,7 @@ def generate_leveled_vquestion_set(user):
         level='A').get_random().first()
         v_list_A.append(q)
         answers.append(q.answer)
-    v_list_A = sorted(v_list, key=lambda x: x.origin_text.id)
+    v_list_A = sorted(v_list_A, key=lambda x: x.origin_text.id)
     answers = []
     v_list_B = []
     for i in range(SET_COUNT):
@@ -412,7 +412,7 @@ def generate_leveled_vquestion_set(user):
         level='B').get_random().first()
         v_list_B.append(q)
         answers.append(q.answer)
-    v_list_B = sorted(v_list, key=lambda x: x.origin_text.id)
+    v_list_B = sorted(v_list_A, key=lambda x: x.origin_text.id)
     answers = []
     v_list_C = []
     for i in range(SET_COUNT):
@@ -420,7 +420,7 @@ def generate_leveled_vquestion_set(user):
         level='C').get_random().first()
         v_list_C.append(q)
         answers.append(q.answer)
-    v_list_C = sorted(v_list, key=lambda x: x.origin_text.id)
+    v_list_C = sorted(v_list_C, key=lambda x: x.origin_text.id)
     v_set = BlankQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v_list in [v_list_A, v_list_B, v_list_C]:
@@ -727,7 +727,7 @@ def generate_leveled_mcquestion_set(user):
         level='A').get_random().first()
         v_list_A.append(q)
         answers.append(q.answer)
-    v_list_A = sorted(v_list, key=lambda x: x.origin_text.id)
+    v_list_A = sorted(v_list_A, key=lambda x: x.origin_text.id)
     answers = []
     v_list_B = []
     for i in range(SET_COUNT):
@@ -735,7 +735,7 @@ def generate_leveled_mcquestion_set(user):
         level='B').get_random().first()
         v_list_B.append(q)
         answers.append(q.answer)
-    v_list_B = sorted(v_list, key=lambda x: x.origin_text.id)
+    v_list_B = sorted(v_list_B, key=lambda x: x.origin_text.id)
     answers = []
     v_list_C = []
     for i in range(SET_COUNT):
@@ -743,7 +743,7 @@ def generate_leveled_mcquestion_set(user):
         level='C').get_random().first()
         v_list_C.append(q)
         answers.append(q.answer)
-    v_list_C = sorted(v_list, key=lambda x: x.origin_text.id)
+    v_list_C = sorted(v_list_C, key=lambda x: x.origin_text.id)
     v_set = MCQuestionSet.objects.create(user=user.qauser)
     order_counter = 1
     for v_list in [v_list_A, v_list_B, v_list_C]:
