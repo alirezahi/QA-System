@@ -152,8 +152,6 @@ class Analyser():
         self.f2_analyse()
         self.f3_analyse()
     
-
-
     def freq_analyse(self):
         freq_dict = {}
         freq_dict_bon = {}
@@ -209,8 +207,7 @@ class Analyser():
 
     def freq_1_count_to_type_count_analyse(self):
         self.freq_1_count_to_type_count = self.freq_1_count / self.type_count
-
-        
+   
     def word_pos_count_analyse(self, posType):
         count = 0
         for index, row in self.words.iterrows():
@@ -236,7 +233,6 @@ class Analyser():
 
     def word_bon_token_count_analyse(self):
         self.word_bon_token_count = sum(self.freq_dict.values())
-
 
     def word_bon_type_count_to_type_count_analyse(self):
         self.word_bon_type_count_to_type_count = self.word_bon_type_count / self.type_count
@@ -277,7 +273,6 @@ class Analyser():
                 result += 1
         self.syllable_1_count = result
 
-
     def syllable_3_more_count_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
@@ -294,7 +289,6 @@ class Analyser():
     def syllable_3_more_count_to_type_count_analyse(self):
         self.syllable_3_more_count_to_type_count = self.syllable_3_more_count / self.type_count
 
-
     def f1_analyse(self):
         self.f1 = 206.835 - (1.015 * self.average_sentence_len) - (84.6 * self.average_syllable_in_text)
 
@@ -303,6 +297,14 @@ class Analyser():
     
     def f3_analyse(self):
         self.f3 = (4.71 * (self.char_count / int(self.type_count))) + (0.5 * (self.type_count / int(self.sentence_count))) - 21.43
+
+    def tolist(self):
+        summary = []
+
+        for field in fields:
+            summary.append(self.__dict__[field])
+            
+        return summary
 
     def tojson(self):
         summary = {}
@@ -336,8 +338,6 @@ class Analyser():
         if result > 0.3: return 'B'
         return 'C'
         
-    
-
     def get_vacancy_questions(self):
         result = []
         for i in range(1, int(self.sentence_count) + 1):
@@ -362,7 +362,6 @@ class Analyser():
                         processed_words.append({'word': row['wordForm'], 'is_vacancy': row['WordIndex']
                                                 == keyword_index, 'DepType': row['DepType'], 'POSType': row['POS']})
                 
-
                 result.append({'level': sentence_analyser.get_difficulty_level(), 'words': processed_words})
         return result
         
