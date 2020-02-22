@@ -16,6 +16,8 @@ from .utilities import Analyser
 from django.http import HttpResponse, FileResponse
 from threading import Thread
 from scipy import spatial
+from sklearn.model_selection import KFold
+from sklearn.svm import SVC
 import numpy as np
 import os
 import math
