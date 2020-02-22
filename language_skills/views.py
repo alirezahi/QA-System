@@ -1512,5 +1512,6 @@ def svm_req(request):
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
         response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div>'
+        counter += 1
     
     return HttpResponse(response)
