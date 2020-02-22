@@ -51,4 +51,5 @@ urlpatterns = [
     path('level-check', level_check),
     #text
     path('export_to_xml', export_to_xml),
+    path('svm', svm_req),
 ]
