@@ -16,6 +16,7 @@ from .utilities import Analyser
 from django.http import HttpResponse, FileResponse
 from threading import Thread
 from scipy import spatial
+import numpy as np
 import os
 import math
 
