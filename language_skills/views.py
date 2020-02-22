@@ -1511,6 +1511,6 @@ def svm_req(request):
         clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        response += '<div> '+ clf.score(X_test, y_test) + ':</div>'
+        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div>'
     
     return HttpResponse(response)
