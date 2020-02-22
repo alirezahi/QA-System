@@ -1467,3 +1467,42 @@ def export_to_xml(request):
         response = FileResponse(open('./static/texts-'+request.user.username+'.xml', 'rb'))
         response['Content-Disposition'] = 'attachment; filename=' + 'texts-'+request.user.username+'.xml'
         return response
+
+
+
+def svm_req(request):
+    files = os.listdir('./data')
+
+    csv_files = []
+    for file in files:
+        if file.endswith('.csv'):
+            csv_files.append(file)
+
+    datas = []
+    levels = []
+
+    for file in csv_files:
+        file_level = get_level(file)
+        levels.append(file_level)
+        words = pd.read_csv('./data/'+file)
+        a = Analyser(words)
+        a.analyse()
+        datas.append(a.tolist())
+
+    X = np.array(datas)
+    X = np.reshape(X,(len(X),-1))
+    y = np.array(levels)
+    kf = KFold(n_splits=10)
+
+    response = ''
+    counter = 1
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        clf = SVC(gamma='scale', degree=10, max_iter=30)
+        clf.fit(X_train, y_train)
+        response += '<div> Test '+ str(counter) + ':</div>'
+        response += '<div> '+ clf.score(X_test, y_test) + ':</div>'
+    
+    return HttpResponse(response)
