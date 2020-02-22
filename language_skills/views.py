@@ -1471,6 +1471,11 @@ def export_to_xml(request):
 
 
 def svm_req(request):
+
+    SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
+    SVM_DEGREE = int(Config.objects.filter(name='svm_degree', active=True).last().value) if Config.objects.filter(name='svm_degree', active=True) else 10
+    MAX_ITER = int(Config.objects.filter(name='max_iter', active=True).last().value) if Config.objects.filter(name='max_iter', active=True) else 30
+    SVM_GAMMA = Config.objects.filter(name='svm_gamma', active=True).last().value if Config.objects.filter(name='split_count', active=True) else 'scale'
     files = os.listdir('./data')
 
     csv_files = []
@@ -1492,7 +1497,7 @@ def svm_req(request):
     X = np.array(datas)
     X = np.reshape(X,(len(X),-1))
     y = np.array(levels)
-    kf = KFold(n_splits=10)
+    kf = KFold(n_splits=SPLIT_COUNT)
 
     response = ''
     counter = 1
@@ -1500,7 +1505,7 @@ def svm_req(request):
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
-        clf = SVC(gamma='scale', degree=10, max_iter=30)
+        clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
         response += '<div> '+ clf.score(X_test, y_test) + ':</div>'
