@@ -1505,14 +1505,21 @@ def svm_req(request):
     response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
 
+    mean = 0
+
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div><hr />'
+        score = clf.score(X_test, y_test)
+        mean += score
+        response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
+    mean /= SPLIT_COUNT
+    response += '<div> Mean '+ str(counter) + ':</div>'
+    response += '<div> '+ str(mean) + ':</div>'
     
     return HttpResponse(response)
 
@@ -1555,8 +1562,13 @@ def rf_req(request):
         clf = RandomForestClassifier(max_depth=MAX_DEPTH, random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div><hr />'
+        score = clf.score(X_test, y_test)
+        mean += score
+        response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
+    mean /= SPLIT_COUNT
+    response += '<div> Mean '+ str(counter) + ':</div>'
+    response += '<div> '+ str(mean) + ':</div>'
     
     return HttpResponse(response)
 
@@ -1597,7 +1609,12 @@ def logistic_req(request):
         clf = LogisticRegression(random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div><hr />'
+        score = clf.score(X_test, y_test)
+        mean += score
+        response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
+    mean /= SPLIT_COUNT
+    response += '<div> Mean '+ str(counter) + ':</div>'
+    response += '<div> '+ str(mean) + ':</div>'
     
     return HttpResponse(response)
