@@ -1518,7 +1518,7 @@ def svm_req(request):
         response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
     mean /= SPLIT_COUNT
-    response += '<div> Mean '+ str(counter) + ':</div>'
+    response += '<div> Mean:</div>'
     response += '<div> '+ str(mean) + ':</div>'
     
     return HttpResponse(response)
@@ -1540,6 +1540,7 @@ def rf_req(request):
     datas = []
     levels = []
 
+    mean = 0
     for file in csv_files:
         file_level = get_level(file)
         levels.append(file_level)
@@ -1567,7 +1568,7 @@ def rf_req(request):
         response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
     mean /= SPLIT_COUNT
-    response += '<div> Mean '+ str(counter) + ':</div>'
+    response += '<div> Mean:</div>'
     response += '<div> '+ str(mean) + ':</div>'
     
     return HttpResponse(response)
@@ -1587,6 +1588,7 @@ def logistic_req(request):
     datas = []
     levels = []
 
+    mean = 0
     for file in csv_files:
         file_level = get_level(file)
         levels.append(file_level)
@@ -1614,7 +1616,7 @@ def logistic_req(request):
         response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
     mean /= SPLIT_COUNT
-    response += '<div> Mean '+ str(counter) + ':</div>'
+    response += '<div> Mean:</div>'
     response += '<div> '+ str(mean) + ':</div>'
     
     return HttpResponse(response)
