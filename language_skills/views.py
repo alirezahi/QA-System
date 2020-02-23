@@ -1502,7 +1502,7 @@ def svm_req(request):
     y = np.array(levels)
     kf = KFold(n_splits=SPLIT_COUNT)
 
-    response = ''
+    response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
 
     for train_index, test_index in kf.split(X):
@@ -1511,7 +1511,50 @@ def svm_req(request):
         clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div>'
+        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div><hr />'
+        counter += 1
+    
+    return HttpResponse(response)
+
+
+def rf_req(request):
+    from sklearn.ensemble import RandomForestClassifier
+    
+    MAX_DEPTH = int(Config.objects.filter(name='max_depth', active=True).last().value) if Config.objects.filter(name='max_depth', active=True) else 2
+    RANDOM_STATE = int(Config.objects.filter(name='random_state', active=True).last().value) if Config.objects.filter(name='random_state', active=True) else 0
+    files = os.listdir('./data')
+
+    csv_files = []
+    for file in files:
+        if file.endswith('.csv'):
+            csv_files.append(file)
+
+    datas = []
+    levels = []
+
+    for file in csv_files:
+        file_level = get_level(file)
+        levels.append(file_level)
+        words = pd.read_csv('./data/'+file)
+        a = Analyser(words)
+        a.analyse()
+        datas.append(a.tolist())
+
+    X = np.array(datas)
+    X = np.reshape(X,(len(X),-1))
+    y = np.array(levels)
+    kf = KFold(n_splits=SPLIT_COUNT)
+
+    response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
+    counter = 1
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        clf = RandomForestClassifier(max_depth=MAX_DEPTH, random_state=RANDOM_STATE)
+        clf.fit(X_train, y_train)
+        response += '<div> Test '+ str(counter) + ':</div>'
+        response += '<div> '+ str(clf.score(X_test, y_test)) + ':</div><hr />'
         counter += 1
     
     return HttpResponse(response)

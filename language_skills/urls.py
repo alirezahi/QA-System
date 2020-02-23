@@ -52,4 +52,5 @@ urlpatterns = [
     #text
     path('export_to_xml', export_to_xml),
     path('svm', svm_req),
+    path('rf', rf_req),
 ]
