@@ -53,4 +53,5 @@ urlpatterns = [
     path('export_to_xml', export_to_xml),
     path('svm', svm_req),
     path('rf', rf_req),
+    path('logistic', logistic_req),
 ]
