@@ -1523,17 +1523,17 @@ def svm_req(request):
         score = clf.score(X_test, y_test)
         mean_accuracy += score
         response += '<div> Accuracy:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
         score = f1_score(y_test, y_pred, average=AVERAGE)
         mean_f1 += score
         response += '<div> F1:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
         score = recall_score(y_test, y_pred, average=AVERAGE)
         mean_recall += score
         response += '<div> Recall:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
 
         score = precision_score(y_test, y_pred, average=AVERAGE)
@@ -1610,17 +1610,17 @@ def rf_req(request):
         score = clf.score(X_test, y_test)
         mean_accuracy += score
         response += '<div> Accuracy:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
         score = f1_score(y_test, y_pred, average=AVERAGE)
         mean_f1 += score
         response += '<div> F1:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
         score = recall_score(y_test, y_pred, average=AVERAGE)
         mean_recall += score
         response += '<div> Recall:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
 
         score = precision_score(y_test, y_pred, average=AVERAGE)
@@ -1695,17 +1695,17 @@ def logistic_req(request):
         score = clf.score(X_test, y_test)
         mean_accuracy += score
         response += '<div> Accuracy:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
         score = f1_score(y_test, y_pred, average=AVERAGE)
         mean_f1 += score
         response += '<div> F1:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
         score = recall_score(y_test, y_pred, average=AVERAGE)
         mean_recall += score
         response += '<div> Recall:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        response += '<div> '+ str(score) + ':</div>'
 
 
         score = precision_score(y_test, y_pred, average=AVERAGE)
