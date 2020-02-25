@@ -1481,7 +1481,6 @@ def svm_req(request):
     MAX_ITER = int(Config.objects.filter(name='max_iter', active=True).last().value) if Config.objects.filter(name='max_iter', active=True) else 30
     SVM_GAMMA = Config.objects.filter(name='svm_gamma', active=True).last().value if Config.objects.filter(name='svm_gamma', active=True) else 'scale'
     AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'micro'
-    SCORE = Config.objects.filter(name='SCORE', active=True).last().value if Config.objects.filter(name='SCORE', active=True) else 'f1'
     files = os.listdir('./data')
 
     csv_files = []
@@ -1508,7 +1507,10 @@ def svm_req(request):
     response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
 
-    mean = 0
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
 
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
@@ -1516,13 +1518,29 @@ def svm_req(request):
         clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        if SCORE == 'f1':
-            y_pred = clf.predict(X_test)
-            score = f1_score(y_test, y_pred, average=AVERAGE)
-        else:
-            score = clf.score(X_test, y_test)
-        mean += score
+        y_pred = clf.predict(X_test)
+
+        score = clf.score(X_test, y_test)
+        mean_accuracy += score
+        response += '<div> Accuracy:</div>'
         response += '<div> '+ str(score) + ':</div><hr />'
+
+        score = f1_score(y_test, y_pred, average=AVERAGE)
+        mean_f1 += score
+        response += '<div> F1:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+        score = recall_score(y_test, y_pred, average=AVERAGE)
+        mean_recall += score
+        response += '<div> Recall:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+
+        score = precision_score(y_test, y_pred, average=AVERAGE)
+        mean_precision += score
+        response += '<div> Precision:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
         counter += 1
     mean /= SPLIT_COUNT
     response += '<div> Mean:</div>'
@@ -1538,7 +1556,6 @@ def rf_req(request):
     MAX_DEPTH = int(Config.objects.filter(name='max_depth_rf', active=True).last().value) if Config.objects.filter(name='max_depth_rf', active=True) else 2
     RANDOM_STATE = int(Config.objects.filter(name='random_state_rf', active=True).last().value) if Config.objects.filter(name='random_state_rf', active=True) else 0
     AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'micro'
-    SCORE = Config.objects.filter(name='SCORE', active=True).last().value if Config.objects.filter(name='SCORE', active=True) else 'f1'
     files = os.listdir('./data')
 
     csv_files = []
@@ -1572,13 +1589,29 @@ def rf_req(request):
         clf = RandomForestClassifier(max_depth=MAX_DEPTH, random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        if SCORE == 'f1':
-            y_pred = clf.predict(X_test)
-            score = f1_score(y_test, y_pred, average=AVERAGE)
-        else:
-            score = clf.score(X_test, y_test)
-        mean += score
+        y_pred = clf.predict(X_test)
+
+        score = clf.score(X_test, y_test)
+        mean_accuracy += score
+        response += '<div> Accuracy:</div>'
         response += '<div> '+ str(score) + ':</div><hr />'
+
+        score = f1_score(y_test, y_pred, average=AVERAGE)
+        mean_f1 += score
+        response += '<div> F1:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+        score = recall_score(y_test, y_pred, average=AVERAGE)
+        mean_recall += score
+        response += '<div> Recall:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+
+        score = precision_score(y_test, y_pred, average=AVERAGE)
+        mean_precision += score
+        response += '<div> Precision:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
         counter += 1
     mean /= SPLIT_COUNT
     response += '<div> Mean:</div>'
@@ -1592,7 +1625,6 @@ def logistic_req(request):
     SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
     RANDOM_STATE = int(Config.objects.filter(name='random_state_logistic', active=True).last().value) if Config.objects.filter(name='random_state_logistic', active=True) else 0
     AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'micro'
-    SCORE = Config.objects.filter(name='SCORE', active=True).last().value if Config.objects.filter(name='SCORE', active=True) else 'f1'
     files = os.listdir('./data')
 
     csv_files = []
@@ -1626,13 +1658,29 @@ def logistic_req(request):
         clf = LogisticRegression(random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        if SCORE == 'f1':
-            y_pred = clf.predict(X_test)
-            score = f1_score(y_test, y_pred, average=AVERAGE)
-        else:
-            score = clf.score(X_test, y_test)
-        mean += score
+        y_pred = clf.predict(X_test)
+
+        score = clf.score(X_test, y_test)
+        mean_accuracy += score
+        response += '<div> Accuracy:</div>'
         response += '<div> '+ str(score) + ':</div><hr />'
+
+        score = f1_score(y_test, y_pred, average=AVERAGE)
+        mean_f1 += score
+        response += '<div> F1:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+        score = recall_score(y_test, y_pred, average=AVERAGE)
+        mean_recall += score
+        response += '<div> Recall:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+
+        score = precision_score(y_test, y_pred, average=AVERAGE)
+        mean_precision += score
+        response += '<div> Precision:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
         counter += 1
     mean /= SPLIT_COUNT
     response += '<div> Mean:</div>'
