@@ -18,6 +18,7 @@ from threading import Thread
 from scipy import spatial
 from sklearn.model_selection import KFold
 from sklearn.svm import SVC
+from sklearn.metrics import f1_score
 import numpy as np
 import os
 import math
@@ -1513,7 +1514,8 @@ def svm_req(request):
         clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        score = clf.score(X_test, y_test)
+        y_pred = clf.predict(X_test)
+        score = f1_score(y_test, y_pred)
         mean += score
         response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
@@ -1563,7 +1565,8 @@ def rf_req(request):
         clf = RandomForestClassifier(max_depth=MAX_DEPTH, random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        score = clf.score(X_test, y_test)
+        y_pred = clf.predict(X_test)
+        score = f1_score(y_test, y_pred)
         mean += score
         response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
@@ -1611,7 +1614,8 @@ def logistic_req(request):
         clf = LogisticRegression(random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
-        score = clf.score(X_test, y_test)
+        y_pred = clf.predict(X_test)
+        score = f1_score(y_test, y_pred)
         mean += score
         response += '<div> '+ str(score) + ':</div><hr />'
         counter += 1
