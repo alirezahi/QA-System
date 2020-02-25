@@ -1547,16 +1547,16 @@ def svm_req(request):
     mean_recall /= SPLIT_COUNT
     mean_precision /= SPLIT_COUNT
     response += '<div> Mean Accuracy:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_accuracy) + ':</div>'
 
     response += '<div> Mean F1:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_f1) + ':</div>'
 
     response += '<div> Mean Recall:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_recall) + ':</div>'
 
     response += '<div> Mean Precision:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_precision) + ':</div>'
     
     return HttpResponse(response)
 
@@ -1634,16 +1634,16 @@ def rf_req(request):
     mean_recall /= SPLIT_COUNT
     mean_precision /= SPLIT_COUNT
     response += '<div> Mean Accuracy:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_accuracy) + ':</div>'
 
     response += '<div> Mean F1:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_f1) + ':</div>'
 
     response += '<div> Mean Recall:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_recall) + ':</div>'
 
     response += '<div> Mean Precision:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_precision) + ':</div>'
     
     return HttpResponse(response)
 
@@ -1667,7 +1667,7 @@ def logistic_req(request):
     mean_f1 = 0
     mean_recall = 0
     mean_precision = 0
-    
+
     for file in csv_files:
         file_level = get_level(file)
         levels.append(file_level)
@@ -1719,15 +1719,15 @@ def logistic_req(request):
     mean_recall /= SPLIT_COUNT
     mean_precision /= SPLIT_COUNT
     response += '<div> Mean Accuracy:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_accuracy) + ':</div>'
 
     response += '<div> Mean F1:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_f1) + ':</div>'
 
     response += '<div> Mean Recall:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_recall) + ':</div>'
 
     response += '<div> Mean Precision:</div>'
-    response += '<div> '+ str(mean) + ':</div>'
+    response += '<div> '+ str(mean_precision) + ':</div>'
     
     return HttpResponse(response)
