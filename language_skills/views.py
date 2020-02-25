@@ -1578,7 +1578,11 @@ def rf_req(request):
     datas = []
     levels = []
 
-    mean = 0
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+
     for file in csv_files:
         file_level = get_level(file)
         levels.append(file_level)
@@ -1659,7 +1663,11 @@ def logistic_req(request):
     datas = []
     levels = []
 
-    mean = 0
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+    
     for file in csv_files:
         file_level = get_level(file)
         levels.append(file_level)
