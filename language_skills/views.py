@@ -18,7 +18,7 @@ from threading import Thread
 from scipy import spatial
 from sklearn.model_selection import KFold
 from sklearn.svm import SVC
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, recall_score, precision_score
 import numpy as np
 import os
 import math
