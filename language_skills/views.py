@@ -1745,6 +1745,8 @@ def rf_csv_req(request):
     y = np.array(levels)
     csv_np = np.array(csv_files)
     kf = KFold(n_splits=SPLIT_COUNT)
+    csv_data = [[],[],[]]
+
 
     counter = 1
 
@@ -1805,6 +1807,8 @@ def logistic_req(request):
     X = np.reshape(X,(len(X),-1))
     y = np.array(levels)
     kf = KFold(n_splits=SPLIT_COUNT)
+
+    csv_data = [[],[],[]]
 
     response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
