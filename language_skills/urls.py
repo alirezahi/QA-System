@@ -51,7 +51,10 @@ urlpatterns = [
     path('level-check', level_check),
     #text
     path('export_to_xml', export_to_xml),
+    path('svm/csv', svm_csv_req),
     path('svm', svm_req),
+    path('rf/csv', rf_csv_req),
     path('rf', rf_req),
+    path('logistic/csv', logistic_csv_req),
     path('logistic', logistic_req),
 ]

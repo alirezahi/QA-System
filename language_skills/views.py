@@ -9,10 +9,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import F, Count, Case, When
 import pandas as pd
-from .models import *
+from language_skills.models import *
 from django.views import View
 from django.shortcuts import redirect
-from .utilities import Analyser
+from language_skills.utilities import Analyser
 from django.http import HttpResponse, FileResponse
 from threading import Thread
 from scipy import spatial
@@ -1480,7 +1480,7 @@ def svm_req(request):
     SVM_DEGREE = int(Config.objects.filter(name='svm_degree', active=True).last().value) if Config.objects.filter(name='svm_degree', active=True) else 10
     MAX_ITER = int(Config.objects.filter(name='max_iter', active=True).last().value) if Config.objects.filter(name='max_iter', active=True) else 30
     SVM_GAMMA = Config.objects.filter(name='svm_gamma', active=True).last().value if Config.objects.filter(name='svm_gamma', active=True) else 'scale'
-    AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'micro'
+    AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'macro'
     files = os.listdir('./data')
 
     csv_files = []
@@ -1512,6 +1512,7 @@ def svm_req(request):
     mean_recall = 0
     mean_precision = 0
 
+
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
@@ -1519,29 +1520,24 @@ def svm_req(request):
         clf.fit(X_train, y_train)
         response += '<div> Test '+ str(counter) + ':</div>'
         y_pred = clf.predict(X_test)
-
         score = clf.score(X_test, y_test)
         mean_accuracy += score
         response += '<div> Accuracy:</div>'
         response += '<div> '+ str(score) + ':</div>'
-
         score = f1_score(y_test, y_pred, average=AVERAGE)
         mean_f1 += score
         response += '<div> F1:</div>'
         response += '<div> '+ str(score) + ':</div>'
-
         score = recall_score(y_test, y_pred, average=AVERAGE)
         mean_recall += score
         response += '<div> Recall:</div>'
         response += '<div> '+ str(score) + ':</div>'
-
-
         score = precision_score(y_test, y_pred, average=AVERAGE)
         mean_precision += score
         response += '<div> Precision:</div>'
         response += '<div> '+ str(score) + ':</div><hr />'
-
         counter += 1
+    
     mean_accuracy /= SPLIT_COUNT
     mean_f1 /= SPLIT_COUNT
     mean_recall /= SPLIT_COUNT
@@ -1557,8 +1553,74 @@ def svm_req(request):
 
     response += '<div> Mean Precision:</div>'
     response += '<div> '+ str(mean_precision) + ':</div>'
+
+    response = FileResponse(open('./static/texts-'+request.user.username+'.xml', 'rb'))
+    response['Content-Disposition'] = 'attachment; filename=' + 'texts-'+request.user.username+'.xml'
     
     return HttpResponse(response)
+
+
+def svm_csv_req(request):
+    
+    SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
+    SVM_DEGREE = int(Config.objects.filter(name='svm_degree', active=True).last().value) if Config.objects.filter(name='svm_degree', active=True) else 10
+    MAX_ITER = int(Config.objects.filter(name='max_iter', active=True).last().value) if Config.objects.filter(name='max_iter', active=True) else 30
+    SVM_GAMMA = Config.objects.filter(name='svm_gamma', active=True).last().value if Config.objects.filter(name='svm_gamma', active=True) else 'scale'
+    AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'macro'
+    files = os.listdir('./data')
+
+    csv_files = []
+    for file in files:
+        if file.endswith('.csv'):
+            csv_files.append(file)
+
+    datas = []
+    levels = []
+
+    for file in csv_files:
+        file_level = get_level(file)
+        levels.append(file_level)
+        words = pd.read_csv('./data/'+file)
+        a = Analyser(words)
+        a.analyse()
+        datas.append(a.tolist())
+
+    X = np.array(datas)
+    X = np.reshape(X,(len(X),-1))
+    y = np.array(levels)
+    csv_np = np.array(csv_files)
+    kf = KFold(n_splits=SPLIT_COUNT)
+
+    counter = 1
+
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+
+    csv_data = [[],[],[]]
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        clf = SVC(gamma=SVM_GAMMA, degree=SVM_DEGREE, max_iter=MAX_ITER)
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
+        csv_data[0].extend(csv_np[test_index])
+        csv_data[1].extend(y_test)
+        csv_data[2].extend(y_pred)
+        csv_data[0].append('')
+        csv_data[1].append('')
+        csv_data[2].append('')
+        counter += 1
+    
+    file = pd.DataFrame(csv_data)
+    file.T.to_csv('./static/file_svm.csv')
+
+    response = FileResponse(open('./static/file_svm.csv', 'rb'))
+    response['Content-Disposition'] = 'attachment; filename=file_svm.csv'
+    
+    return response
 
 
 def rf_req(request):
@@ -1647,6 +1709,69 @@ def rf_req(request):
     
     return HttpResponse(response)
 
+
+def rf_csv_req(request):
+    from sklearn.ensemble import RandomForestClassifier
+    
+    SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
+    MAX_DEPTH = int(Config.objects.filter(name='max_depth_rf', active=True).last().value) if Config.objects.filter(name='max_depth_rf', active=True) else 2
+    RANDOM_STATE = int(Config.objects.filter(name='random_state_rf', active=True).last().value) if Config.objects.filter(name='random_state_rf', active=True) else 0
+    AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'micro'
+    files = os.listdir('./data')
+
+    csv_files = []
+    for file in files:
+        if file.endswith('.csv'):
+            csv_files.append(file)
+
+    datas = []
+    levels = []
+
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+
+    for file in csv_files:
+        file_level = get_level(file)
+        levels.append(file_level)
+        words = pd.read_csv('./data/'+file)
+        a = Analyser(words)
+        a.analyse()
+        datas.append(a.tolist())
+
+    X = np.array(datas)
+    X = np.reshape(X,(len(X),-1))
+    y = np.array(levels)
+    csv_np = np.array(csv_files)
+    kf = KFold(n_splits=SPLIT_COUNT)
+
+    counter = 1
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        clf = RandomForestClassifier(max_depth=MAX_DEPTH, random_state=RANDOM_STATE)
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
+        csv_data[0].extend(csv_np[test_index])
+        csv_data[1].extend(y_test)
+        csv_data[2].extend(y_pred)
+        csv_data[0].append('')
+        csv_data[1].append('')
+        csv_data[2].append('')
+
+        counter += 1
+
+    file = pd.DataFrame(csv_data)
+    file.T.to_csv('./static/file_rf.csv')
+
+    response = FileResponse(open('./static/file_rf.csv', 'rb'))
+    response['Content-Disposition'] = 'attachment; filename=file_rf.csv'
+    
+    return response
+
+
 def logistic_req(request):
     from sklearn.linear_model import LogisticRegression
     
@@ -1731,3 +1856,87 @@ def logistic_req(request):
     response += '<div> '+ str(mean_precision) + ':</div>'
     
     return HttpResponse(response)
+
+
+def logistic_csv_req(request):
+    from sklearn.linear_model import LogisticRegression
+    
+    SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
+    RANDOM_STATE = int(Config.objects.filter(name='random_state_logistic', active=True).last().value) if Config.objects.filter(name='random_state_logistic', active=True) else 0
+    AVERAGE = Config.objects.filter(name='AVERAGE', active=True).last().value if Config.objects.filter(name='AVERAGE', active=True) else 'micro'
+    files = os.listdir('./data')
+
+    csv_files = []
+    for file in files:
+        if file.endswith('.csv'):
+            csv_files.append(file)
+
+    datas = []
+    levels = []
+
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+
+    for file in csv_files:
+        file_level = get_level(file)
+        levels.append(file_level)
+        words = pd.read_csv('./data/'+file)
+        a = Analyser(words)
+        a.analyse()
+        datas.append(a.tolist())
+
+    X = np.array(datas)
+    X = np.reshape(X,(len(X),-1))
+    y = np.array(levels)
+    csv_np = np.array(csv_files)
+    kf = KFold(n_splits=SPLIT_COUNT)
+
+    response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
+    counter = 1
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        clf = LogisticRegression(random_state=RANDOM_STATE)
+        clf.fit(X_train, y_train)
+        response += '<div> Test '+ str(counter) + ':</div>'
+        y_pred = clf.predict(X_test)
+        csv_data[0].extend(csv_np[test_index])
+        csv_data[1].extend(y_test)
+        csv_data[2].extend(y_pred)
+        csv_data[0].append('')
+        csv_data[1].append('')
+        csv_data[2].append('')
+
+        score = clf.score(X_test, y_test)
+        mean_accuracy += score
+        response += '<div> Accuracy:</div>'
+        response += '<div> '+ str(score) + ':</div>'
+
+        score = f1_score(y_test, y_pred, average=AVERAGE)
+        mean_f1 += score
+        response += '<div> F1:</div>'
+        response += '<div> '+ str(score) + ':</div>'
+
+        score = recall_score(y_test, y_pred, average=AVERAGE)
+        mean_recall += score
+        response += '<div> Recall:</div>'
+        response += '<div> '+ str(score) + ':</div>'
+
+
+        score = precision_score(y_test, y_pred, average=AVERAGE)
+        mean_precision += score
+        response += '<div> Precision:</div>'
+        response += '<div> '+ str(score) + ':</div><hr />'
+
+        counter += 1
+
+    file = pd.DataFrame(csv_data)
+    file.T.to_csv('./static/file_logistic.csv')
+
+    response = FileResponse(open('./static/file_logistic.csv', 'rb'))
+    response['Content-Disposition'] = 'attachment; filename=file_logistic.csv'
+    
+    return response
