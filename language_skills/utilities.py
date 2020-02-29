@@ -301,7 +301,12 @@ class Analyser():
     def tolist(self):
         summary = []
 
+        list_fields = []
         for field in fields:
+            if Config.objects.filter(name=field, active=True).exists():
+                list_fields.append(field):
+
+        for field in list_fields:
             summary.append(self.__dict__[field])
             
         return summary
