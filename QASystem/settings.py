@@ -25,7 +25,7 @@ SECRET_KEY = 'q!)$_x!ny!5x16a^ndnat--!_@r_$#bigz^bra+2u(qolnd%jw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'localhost:8000', '46.209.4.197', '46.209.4.197:8000', 'coling.ihcs.ac.ir', '192.168.1.71', 'localhost:80', '46.209.4.197:80', 'coling.ihcs.ac.ir:80', 'coling.ihcs.ac.ir']
+ALLOWED_HOSTS = ['localhost', 'localhost:8000', '46.209.4.216', '46.209.4.216:8000', 'coling.ihcs.ac.ir', '192.168.1.71', 'localhost:80', '46.209.4.216:80', 'coling.ihcs.ac.ir:80', 'coling.ihcs.ac.ir']
 
 
 
