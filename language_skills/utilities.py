@@ -304,7 +304,7 @@ class Analyser():
         list_fields = []
         for field in fields:
             if Config.objects.filter(name='score_'+field, active=True).exists():
-                list_fields.append(field):
+                list_fields.append(field)
 
         for field in list_fields:
             summary.append(self.__dict__[field])
