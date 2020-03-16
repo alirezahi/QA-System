@@ -303,8 +303,23 @@ class Analyser():
 
         list_fields = []
         for field in fields:
-            if Config.objects.filter(name='score_'+field, active=True).exists():
-                list_fields.append(field)
+            category_id = '1'
+            if Config.objects.filter(name='analysis_category_id', active=True).exists():
+                category_id = Config.objects.filter(name='analysis_category_id', active=True).last()
+                # f = {
+                #     '1':[
+                #         'average_sentence_len',
+                #         'sentence_count',
+                #     ],
+                #     '2': [
+                #         'average_syllable_in_text',
+                #         'syllable_1_count',
+                #         'syllable_3_more_count',
+                #         'syllable_1_count_to_type_count',
+                #         'syllable_3_more_count_to_type_count',
+                #     ],
+                #     '3':
+                # }
 
         for field in list_fields:
             summary.append(self.__dict__[field])
