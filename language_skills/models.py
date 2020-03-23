@@ -64,7 +64,7 @@ class QAUser(models.Model):
         return self.user.username
 
 
-class Group(models.Model):
+class QAGroup(models.Model):
     name = models.CharField(max_length=100)
     users = models.ManyToManyField(QAUser, blank=True,related_name='qagroup_users')
     admins = models.ManyToManyField(QAUser, blank=True,related_name='qagroup_admins')

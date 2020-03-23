@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'language_skills',
     'account',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +93,10 @@ DATABASES = {
       		'HOST': 'localhost',
       		'PORT': '5432',
     },
+}
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
 
 
@@ -149,3 +154,8 @@ EMAIL_HOST = 'mail.ihcs.ac.ir'
 EMAIL_HOST_USER = 'zabanamooz@ihcs.ac.ir'
 EMAIL_HOST_PASSWORD = 'Zaban-123'
 EMAIL_PORT = 25
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

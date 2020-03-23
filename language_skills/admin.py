@@ -6,10 +6,10 @@ from language_skills.models import *
 
 
 class GroupUsersInline(admin.TabularInline):
-    model = Group.users.through
+    model = QAGroup.users.through
 
 class GroupAdminsInline(admin.TabularInline):
-    model = Group.admins.through
+    model = QAGroup.admins.through
 
 
 class GroupAdmin(admin.ModelAdmin):
@@ -23,9 +23,9 @@ class QAUserAdmin(admin.ModelAdmin):
 
 app = apps.get_app_config('language_skills')
 for model_name, model in app.models.items():
-    if not(model_name in ['group', 'qauser']):
+    if not(model_name in ['qagroup', 'qauser']):
         admin.site.register(model)
 
 
-admin.site.register(Group, GroupAdmin)
+admin.site.register(QAGroup, GroupAdmin)
 admin.site.register(QAUser, QAUserAdmin)

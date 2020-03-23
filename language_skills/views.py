@@ -1063,7 +1063,7 @@ def reset_password(request):
                 user.qauser.save()
             subject = 'تغییر رمز - سامانه یادگیری زبان فارسی'
             message = 'جهت تغییر رمز کاربری خود وارد لینک زیر شوید:\n' + \
-                'http://46.209.4.197:8000/final-change-password/'+str(user.qauser.uuid)
+                'http://'+request.get_host()+'/final-change-password/'+str(user.qauser.uuid)
             email(subject, message, username)
         return redirect('/send-success-mail')
 
@@ -1945,3 +1945,4 @@ def logistic_csv_req(request):
     response['Content-Disposition'] = 'attachment; filename=file_logistic.csv'
     
     return response
+

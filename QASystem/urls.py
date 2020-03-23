@@ -54,6 +54,7 @@ urlpatterns = [
     path('validate-change-password/<uuid>',
         change_password),
     path('logout/', LogoutView.as_view(next_page='/login')),
+    path('docs/', TemplateView.as_view(template_name='site/docs/index.html')),
     path('', RedirectView.as_view(permanent=False, url='/login')),
 ]
 
