@@ -73,11 +73,6 @@ class QAGroup(models.Model):
         return self.name
 
 
-class MCQuestionHistory(models.Model):
-    question = models.ForeignKey('MCQuestionSet', on_delete=models.CASCADE)
-    right_answers = models.IntegerField()
-    answers_count = models.IntegerField()
-    answer_percentage = models.FloatField()
 
 
 class AbstractAnswer(models.Model):
