@@ -2,6 +2,34 @@
 
 The Question Answer Project Documentation
 
+## Installation
+
+For this project you need to have a vritualenv. If you don't ahve follow this link: [Installing-and-using-virtualenv-with-Python-3](https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3)
+
+Then in the root of the project:
+
+`pip3 install -r requirements.txt`
+
+You also need to install `Postgres`: [Installing Postgres on Ubunutu 18.04](https://tecadmin.net/install-postgresql-server-on-ubuntu/)
+
+Install TMUX: [TMUX](https://linuxize.com/post/getting-started-with-tmux/)
+
+## Setup
+
+Run above commands in the root of the project.
+
+Migrate Database:
+`python3 manage.py migrate`
+
+## Run
+
+If it is in DEV mode run the project in a tmux:
+
+```
+tmux new -s server # or if you have creater server before : tmux a -t server
+python3 manage.py runserver 0.0.0.0:8000
+```
+
 ## Models
 
 ### LANGUAGE_SKILLS
