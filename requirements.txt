@@ -2,3 +2,4 @@ django
 pandas
 networkx
 scipy
+django_extensions
