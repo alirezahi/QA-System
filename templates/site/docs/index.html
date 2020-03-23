@@ -54,6 +54,18 @@
             
             <li class="nav-item" data-level="1"><a href="#qa-documentation" class="nav-link">QA Documentation</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#setup" class="nav-link">Setup</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#run" class="nav-link">Run</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#models" class="nav-link">Models</a>
               <ul class="nav flex-column">
               </ul>
@@ -71,6 +83,22 @@
 
 <h1 id="qa-documentation">QA Documentation</h1>
 <p>The Question Answer Project Documentation</p>
+<h2 id="installation">Installation</h2>
+<p>For this project you need to have a vritualenv. If you don't ahve follow this link: <a href="https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3">Installing-and-using-virtualenv-with-Python-3</a></p>
+<p>Then in the root of the project:</p>
+<p><code>pip3 install -r requirements.txt</code></p>
+<p>You also need to install <code>Postgres</code>: <a href="https://tecadmin.net/install-postgresql-server-on-ubuntu/">Installing Postgres on Ubunutu 18.04</a></p>
+<p>Install TMUX: <a href="https://linuxize.com/post/getting-started-with-tmux/">TMUX</a></p>
+<h2 id="setup">Setup</h2>
+<p>Run above commands in the root of the project.</p>
+<p>Migrate Database:
+<code>python3 manage.py migrate</code></p>
+<h2 id="run">Run</h2>
+<p>If it is in DEV mode run the project in a tmux:</p>
+<pre><code>tmux new -s server # or if you have creater server before : tmux a -t server
+python3 manage.py runserver 0.0.0.0:8000
+</code></pre>
+
 <h2 id="models">Models</h2>
 <h3 id="language_skills">LANGUAGE_SKILLS</h3>
 <ul>
@@ -212,7 +240,7 @@
         </footer>
         <script>
             var base_url = "..",
-                shortcuts = {"previous": 80, "search": 83, "help": 191, "next": 78};
+                shortcuts = {"search": 83, "help": 191, "previous": 80, "next": 78};
         </script>
         <script src="../js/base.js" defer></script>
         <script src="../search/main.js" defer></script>
