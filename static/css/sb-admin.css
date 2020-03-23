@@ -11451,11 +11451,15 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .right-answer {
-  border-color: darkseagreen;
+  border-color: darkseagreen !important;
+  background-color: #61a761 !important;
+  color: white;
 }
 
 .wrong-answer {
-  border-color: firebrick;
+  border-color: firebrick !important;
+  background-color: #e08585 !important;
+  color: white;
 }
 
 #main-question {
