@@ -21,27 +21,6 @@
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">QA-Documentation</a>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
         <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
@@ -199,10 +178,22 @@ python3 manage.py runserver 0.0.0.0:8000
 <li>PrePosition</li>
 </ul>
 <p>List of prepositions. This table is used for MultipleChoice options.</p>
+<p>To add prepositions automatically, update the files in <code>/static/file/prep.txt</code> and call <code>/add_prep</code> endpoint.</p>
 <ul>
 <li>VerbInfo, VerbForm</li>
 </ul>
 <p>List of verbs. This table is used for MultipleChoice options.</p>
+<p>VerbInfo is general Info of a verb. VerbForms are tenses of the VerbInfo.</p>
+<p>VerbInfo Sample:</p>
+<p><code>infinitive: یافتن
+  past root: یافت
+  passive: یافته</code></p>
+<p>VerbForm Sample:</p>
+<p><code>tense: ماضی استمراری مجمول ۳ جمع
+  form: یافته‌می‌شدند
+  verb: foreign key to verbInfo
+  freq: 0</code></p>
+<p>To add verbs automatically, update the files in <code>/static/file/verbs.csv</code> and call <code>/add_verbs</code> endpoint.</p>
 <ul>
 <li>Config</li>
 </ul>
@@ -240,7 +231,7 @@ python3 manage.py runserver 0.0.0.0:8000
         </footer>
         <script>
             var base_url = "..",
-                shortcuts = {"search": 83, "help": 191, "previous": 80, "next": 78};
+                shortcuts = {"next": 78, "previous": 80, "help": 191, "search": 83};
         </script>
         <script src="../js/base.js" defer></script>
         <script src="../search/main.js" defer></script>
@@ -308,6 +299,5 @@ python3 manage.py runserver 0.0.0.0:8000
         </div>
     </div>
 </div>
-
     </body>
 </html>
