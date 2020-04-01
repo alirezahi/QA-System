@@ -8,3 +8,4 @@ codes-data-folders
 data
 data-tmp
 static/texts-*
+QASystem/local_settings.py
