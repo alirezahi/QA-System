@@ -126,19 +126,42 @@ python3 manage.py runserver 0.0.0.0:8000
 
   List of prepositions. This table is used for MultipleChoice options.
 
+  To add prepositions automatically, update the files in `/static/file/prep.txt` and call `/add_prep` endpoint.
+
 - VerbInfo, VerbForm
 
   List of verbs. This table is used for MultipleChoice options.
 
-- Config
+  VerbInfo is general Info of a verb. VerbForms are tenses of the VerbInfo.
+
+  VerbInfo Sample:
+
+  ```
+  infinitive: یافتن
+  past root: یافت
+  passive: یافته
+  ```
+
+  VerbForm Sample:
+
+  ```
+  tense: ماضی استمراری مجمول ۳ جمع
+  form: یافته‌می‌شدند
+  verb: foreign key to verbInfo
+  freq: 0
+  ```
+
+  To add verbs automatically, update the files in `/static/file/verbs.csv` and call `/add_verbs` endpoint.
+
+* Config
 
   `Configs` used in the project.
 
-- LevelDetectionQuestion
+* LevelDetectionQuestion
 
   Set of questions that are used for level detection. It includes both multiple choice and blank questions.
 
-- TextWriting
+* TextWriting
 
   This table contains texts are written by users and admins need to correct them.
 

@@ -22,6 +22,7 @@ from account.views import TestView
 from language_skills.views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from utils.views import *
 
 
 urlpatterns = [
@@ -53,6 +54,8 @@ urlpatterns = [
         FinalChangePasswordTemplate.as_view()),
     path('validate-change-password/<uuid>',
         change_password),
+    path('add_prep/', add_preposition),
+    path('add_verb/', add_verb),
     path('logout/', LogoutView.as_view(next_page='/login')),
     path('docs/', TemplateView.as_view(template_name='site/docs/index.html')),
     path('', RedirectView.as_view(permanent=False, url='/login')),

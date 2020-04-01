@@ -42,6 +42,27 @@
         <div class="container">
             <div class="row">
                     <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">QA-Documentation</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
         <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
@@ -54,6 +75,18 @@
             
             <li class="nav-item" data-level="1"><a href="#qa-documentation" class="nav-link">QA Documentation</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#setup" class="nav-link">Setup</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#run" class="nav-link">Run</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#models" class="nav-link">Models</a>
               <ul class="nav flex-column">
               </ul>
@@ -71,6 +104,22 @@
 
 <h1 id="qa-documentation">QA Documentation</h1>
 <p>The Question Answer Project Documentation</p>
+<h2 id="installation">Installation</h2>
+<p>For this project you need to have a vritualenv. If you don't ahve follow this link: <a href="https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3">Installing-and-using-virtualenv-with-Python-3</a></p>
+<p>Then in the root of the project:</p>
+<p><code>pip3 install -r requirements.txt</code></p>
+<p>You also need to install <code>Postgres</code>: <a href="https://tecadmin.net/install-postgresql-server-on-ubuntu/">Installing Postgres on Ubunutu 18.04</a></p>
+<p>Install TMUX: <a href="https://linuxize.com/post/getting-started-with-tmux/">TMUX</a></p>
+<h2 id="setup">Setup</h2>
+<p>Run above commands in the root of the project.</p>
+<p>Migrate Database:
+<code>python3 manage.py migrate</code></p>
+<h2 id="run">Run</h2>
+<p>If it is in DEV mode run the project in a tmux:</p>
+<pre><code>tmux new -s server # or if you have creater server before : tmux a -t server
+python3 manage.py runserver 0.0.0.0:8000
+</code></pre>
+
 <h2 id="models">Models</h2>
 <h3 id="language_skills">LANGUAGE_SKILLS</h3>
 <ul>
@@ -171,10 +220,22 @@
 <li>PrePosition</li>
 </ul>
 <p>List of prepositions. This table is used for MultipleChoice options.</p>
+<p>To add prepositions automatically, update the files in <code>/static/file/prep.txt</code> and call <code>/add_prep</code> endpoint.</p>
 <ul>
 <li>VerbInfo, VerbForm</li>
 </ul>
 <p>List of verbs. This table is used for MultipleChoice options.</p>
+<p>VerbInfo is general Info of a verb. VerbForms are tenses of the VerbInfo.</p>
+<p>VerbInfo Sample:</p>
+<p><code>infinitive: یافتن
+  past root: یافت
+  passive: یافته</code></p>
+<p>VerbForm Sample:</p>
+<p><code>tense: ماضی استمراری مجمول ۳ جمع
+  form: یافته‌می‌شدند
+  verb: foreign key to verbInfo
+  freq: 0</code></p>
+<p>To add verbs automatically, update the files in <code>/static/file/verbs.csv</code> and call <code>/add_verbs</code> endpoint.</p>
 <ul>
 <li>Config</li>
 </ul>
@@ -212,7 +273,7 @@
         </footer>
         <script>
             var base_url = "..",
-                shortcuts = {"previous": 80, "search": 83, "help": 191, "next": 78};
+                shortcuts = {"next": 78, "previous": 80, "help": 191, "search": 83};
         </script>
         <script src="../js/base.js" defer></script>
         <script src="../search/main.js" defer></script>
@@ -280,6 +341,5 @@
         </div>
     </div>
 </div>
-
     </body>
 </html>

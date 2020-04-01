@@ -156,6 +156,6 @@ EMAIL_HOST_PASSWORD = 'Zaban-123'
 EMAIL_PORT = 25
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
