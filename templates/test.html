@@ -45,10 +45,10 @@
             <div># الف( شمارش تعداد حروف متن </div>
             <div>char_count  </div>
             <hr/>
-            <div># ب( شمارش تعداد واژههای با تکرار )type( در هر متن </div>
+            <div># ب( شمارش تعداد واژههای بدون تکرار )type( در هر متن </div>
             <div>type_count  </div>
             <hr/>
-            <div># پ( شمارش تعداد واژههای بدون تکرار )token( در هر متن </div>
+            <div># پ( شمارش تعداد واژههای با تکرار )token( در هر متن </div>
             <div>token_count  </div>
             <hr/>
             <div># ث( شمارش تعداد جملههای در هر متن </div>
@@ -61,10 +61,10 @@
             <div>average_sentence_len  </div>
             <hr/>
             <div># ح( محاسبه نسبت واژههای بدون تکرار به واژههای با تکرار در هر متن </div>
-            <div>token_count_to_type_count  </div>
+            <div>type_count_to_token_count  </div>
             <hr/>
             <div># خ( محاسبه نسبت واژههای با بسامد ١ به واژههای با تکرار در هر متن </div>
-            <div>freq_1_count_to_type_count  </div>
+            <div>freq_1_count_to_token_count  </div>
             <hr/>
             <div># د( شمارش تعداد واژههای نقشی )مثل حرف اضافه و حرف ربط( در هر متن </div>
             <div>word_naghshi_count  </div>
@@ -73,13 +73,13 @@
             <div>word_mohtavai_count  </div>
             <hr/>
             <div># ر( محاسبه نسبت واژههای محتوایی به واژههای با تکرار در هر متن </div>
-            <div>word_mohtavai_count_to_type_count  </div>
+            <div>word_mohtavai_count_to_token_count  </div>
             <hr/>
             <div># ز( محاسبه نسبت واژههای نقشی به واژههای با تکرار در هر متن </div>
             <div>word_naghshi_freq_1_count  </div>
             <hr/>
             <div># ژ( محاسبه نسبت واژههای نقشی با بسامد ١ به واژههای با تکرار در هر متن </div>
-            <div>word_naghshi_freq_1_count_to_type_count  </div>
+            <div>word_naghshi_freq_1_count_to_token_count  </div>
             <hr/>
             <div># س( محاسبه نسبت واژههای محتوایی با بسامد ١ به واژههای با تکرار در هر متن </div>
             <div>word_bon_token_count  </div>
@@ -94,10 +94,10 @@
             <div>syllable_3_more_count  </div>
             <hr/>
             <div># ل( محاسبه نسبت تعداد واژههای با تعداد هجای ١ به تعداد واژههای با تکرار در هر متن </div>
-            <div>syllable_1_count_to_type_count  </div>
+            <div>syllable_1_count_to_token_count  </div>
             <hr/>
             <div># م( محاسبه نسبت تعداد واژههای با تعداد هجای ٣ و بیشتر به تعداد واژههای با تکرار در هر متن </div>
-            <div>syllable_3_more_count_to_type_count  </div>
+            <div>syllable_3_more_count_to_token_count  </div>
 
 
             <div>
@@ -107,32 +107,19 @@
         type_count_to_token_count
             </div>
             
-            <div>
-        # ذ( شمارش تعداد واژههای محتوایی )مثل اسم و صفت و قید و فعل( در هر متن
-            </div>
-            <div>
-        self.word_mohtavai_count = 0
-            </div>
-
-            <div>
-        # ر( محاسبه نسبت واژههای محتوایی به واژههای با تکرار در هر متن
-            </div>
-            <div>
-        self.word_mohtavai_count_to_type_count = 0
-            </div>
 
             <div>
         # ز( محاسبه نسبت واژههای نقشی به واژههای با تکرار در هر متن
             </div>
             <div>
-        self.word_naghshi_count_to_type_count = 0
+            word_naghshi_count_to_token_count
             </div>
             
             <div>
         # س( محاسبه نسبت واژههای محتوایی با بسامد ١ به واژههای با تکرار در هر متن
             </div>
             <div>
-        self.word_mohtavai_freq_1_count_to_type_count = 0
+            word_mohtavai_freq_1_count_to_token_count
             </div>
 
             <div>
@@ -148,19 +135,16 @@
             freq_dict_dep
             </div>
             <div>
-            word_naghshi_freq_1_count
-            </div>
-            <div>
             word_bon_type_count
             </div>
             <div>
             word_bon_token_count
             </div>
             <div>
-            word_bon_type_count_to_type_count
+            word_bon_type_count_to_token_count
             </div>
             <div>
-            word_bon_freq_1_to_type_count
+            word_bon_freq_1_to_token_count
             </div>
             <div>
             ravabet_dastori_dar_tajziye_vabastegi
