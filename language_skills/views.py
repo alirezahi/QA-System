@@ -19,6 +19,7 @@ from scipy import spatial
 from sklearn.model_selection import KFold
 from sklearn.svm import SVC
 from sklearn.metrics import f1_score, recall_score, precision_score
+from django.http import JsonResponse
 import numpy as np
 import os
 import math
@@ -1946,3 +1947,10 @@ def logistic_csv_req(request):
     
     return response
 
+def analyse_request(request):
+    file = request.GET.get('file', 'levelC-farsi-biyamuzim-19')
+    import pandas as pd
+    words = pd.read_csv('data/'+file+'.csv')
+    a = Analyser(words)
+    a.analyse()
+    return JsonResponse(a.tojson())
