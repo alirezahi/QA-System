@@ -24,6 +24,20 @@ import numpy as np
 import os
 import math
 
+TYPE_MAP = {
+    'V':'verb',
+    'E':'prep',
+    'J':'conjuction',
+    'Z':'pronoun',
+    'N':'noun',
+    'T':'determiner',
+    'I':'interjection',
+    'D':'adverb',
+    'L':'classifier',
+    'A':'adjective',
+}
+QUESTION_TYPES = list(TYPE_MAP.values())
+
 class StaffRequiredMixin(object):
     """
     View mixin which requires that the authenticated user is a staff member
@@ -91,10 +105,10 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
-            level_blank, is_verb_blank, is_prep_blank = calc_total_level_blank(
+            level_blank, type_scores = calc_total_level_blank(
                 request.user)
             p1 = Thread(target=update_blank_userquestion_relation, args=(
-                request.user, level_blank, is_verb_blank, is_prep_blank,))
+                request.user, level_blank, type_scores,))
             p1.start()
             return redirect('/question/v/check-answers/'+str(set_id)+'')
         return super(BlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
@@ -150,10 +164,10 @@ class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
-            level_blank, is_verb_blank, is_prep_blank = calc_total_level_blank(
+            level_blank, type_scores = calc_total_level_blank(
                 request.user)
             p1 = Thread(target=update_blank_userquestion_relation, args=(
-                request.user, level_blank, is_verb_blank, is_prep_blank,))
+                request.user, level_blank, type_scores,))
             p1.start()
             return redirect('/question/v/check-answers/'+str(set_id)+'')
         return super(OfferBlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
@@ -209,10 +223,10 @@ class CommonBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
-            level_blank, is_verb_blank, is_prep_blank = calc_total_level_blank(
+            level_blank, type_scores = calc_total_level_blank(
                 request.user)
             p1 = Thread(target=update_blank_userquestion_relation, args=(
-                request.user, level_blank, is_verb_blank, is_prep_blank,))
+                request.user, level_blank, type_scores,))
             p1.start()
             return redirect('/question/v/check-answers/'+str(set_id)+'')
         return super(CommonBlankQuestionTemplate, self).dispatch(request, *args, **kwargs)
@@ -556,10 +570,10 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
-            level_mc, is_verb_mc, is_prep_mc = calc_total_level_mc(
+            level_mc, type_scores = calc_total_level_mc(
                 request.user)
             p2 = Thread(target=update_mc_userquestion_relation, args=(
-                request.user, level_mc, is_verb_mc, is_prep_mc,))
+                request.user, level_mc, type_scores,))
             p2.start()
             return redirect('/question/mc/check-answers/'+str(set_id)+'')
         return super(MCQuestionTemplate, self).dispatch(request, *args, **kwargs)
@@ -612,10 +626,10 @@ class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
-            level_mc, is_verb_mc, is_prep_mc = calc_total_level_mc(
+            level_mc, type_scores = calc_total_level_mc(
                 request.user)
             p2 = Thread(target=update_mc_userquestion_relation, args=(
-                request.user, level_mc, is_verb_mc, is_prep_mc,))
+                request.user, level_mc, type_scores,))
             p2.start()
             return redirect('/question/mc/check-answers/'+str(set_id)+'')
         return super(OfferMCQuestionTemplate, self).dispatch(request, *args, **kwargs)
@@ -668,10 +682,10 @@ class CommonMCQuestionTemplate(LoginRequiredMixin, TemplateView):
         if last_question.order < int(order):
             self.kwargs['last'] = True
             self.get_context_data(**kwargs)
-            level_mc, is_verb_mc, is_prep_mc = calc_total_level_mc(
+            level_mc, type_scores = calc_total_level_mc(
                 request.user)
             p2 = Thread(target=update_mc_userquestion_relation, args=(
-                request.user, level_mc, is_verb_mc, is_prep_mc,))
+                request.user, level_mc, type_scores,))
             p2.start()
             return redirect('/question/mc/check-answers/'+str(set_id)+'')
         return super(CommonMCQuestionTemplate, self).dispatch(request, *args, **kwargs)
@@ -820,11 +834,11 @@ class CreateQuestions(View):
                     else:
                         vacancy_arr.append('/&&__question__&&/')
                         answer = word['word']
-                        if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
-                            answer_type = 'verb'
-                        if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType'].startswith('J') or str(word['POSType']).startswith('E')):
-                            answer_type = 'preposition'
-                        if word['word'] in Blocked.objects.all().values_tolist('text', flat=True):
+                        if word['POSType'] and (not isinstance(word['POSType'],float)):
+                            post_type = str(word['POSType'])
+                            first_letter = post_type[0] if len(post_type) > 0 else ''
+                            answer_type = TYPE_MAP.get(first_letter,'')
+                        if answer in Blocked.objects.all().values_list('text', flat=True):
                             answer_type = ''
                         # if word['POSType'] and (not isinstance(word['POSType'],float)) and str(word['POSType']).startswith('V'):
                         #     answer_type = 'verb'
@@ -864,17 +878,14 @@ class CreateQuestions(View):
                 level=''
             )
             for q in sentences:
-                if q['answer_type'] in ['verb', 'preposition']:
-                    is_verb = q['answer_type'] == 'verb'
-                    is_preposition = q['answer_type'] == 'preposition'
+                if q['answer_type'] in QUESTION_TYPES:
                     BlankQuestion.objects.create(
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
                         origin_text=text,
                         level=file_level,
                         answer=q['answer'],
-                        is_verb=is_verb,
-                        is_preposition=is_preposition,
+                        kind=q['answer_type'],
                     )
         return HttpResponse('Done')
 
@@ -919,10 +930,12 @@ class CreateMCQuestions(View):
                     else:
                         vacancy_arr.append('/&&__question__&&/')
                         answer = word['word']
-                        if word['POSType'] and (not isinstance(word['POSType'], float)) and str(word['POSType']).startswith('V'):
-                            answer_type = 'verb'
-                        if word['POSType'] and (not isinstance(word['POSType'], float)) and (str(word['POSType']).startswith('J') or str(word['POSType']).startswith('E')):
-                            answer_type = 'preposition'
+                        if word['POSType'] and (not isinstance(word['POSType'],float)):
+                            post_type = str(word['POSType'])
+                            first_letter = post_type[0] if len(post_type) > 0 else ''
+                            answer_type = TYPE_MAP.get(first_letter,'')
+                        if answer in Blocked.objects.all().values_list('text', flat=True):
+                            answer_type = ''
                 vacancy_text = ' '.join(vacancy_arr)
                 origin = origin.replace('-', '‌').replace('&quot;', '\"')
                 vacancy_text = vacancy_text.replace(
@@ -957,22 +970,19 @@ class CreateMCQuestions(View):
                 level=''
             )
             for q in sentences:
-                if q['answer_type'] in ['verb', 'preposition']:
-                    is_verb = q['answer_type'] == 'verb'
-                    is_preposition = q['answer_type'] == 'preposition'
+                if q['answer_type'] in QUESTION_TYPES:
                     mc = MultipleChoiceQuestion.objects.create(
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
                         origin_text=text,
                         level=file_level,
                         answer=q['answer'],
-                        is_verb=is_verb,
-                        is_preposition=is_preposition,
+                        kind=q['answer_type'],
                     )
                     o, is_created = OptionAnswer.objects.get_or_create(text=q['answer'])
                     options = [o]
                     
-                    if is_verb:
+                    if q['answer_type'] == 'verb':
                         # TODO: make more options
                         if VerbForm.objects.filter(form=q['answer']).exists():
                             verb_form = VerbForm.objects.filter(
@@ -1014,7 +1024,7 @@ class CreateMCQuestions(View):
                                     text=v.form)
                                 mc.options.add(opt)
 
-                    if is_preposition:
+                    if q['answer_type'] == 'prep':
                         pres = PrePosition.objects.exclude(
                             text=q['answer']).order_by('?')[:3]
                         
@@ -1276,21 +1286,21 @@ SCORE_POINT = {
     'C': 3,
 }
 
-def update_blank_userquestion_relation(user, level, is_verb, is_prep):
+def update_blank_userquestion_relation(user, level, question_scores):
     UserBlankQuestionRelation.objects.filter(user=user.qauser).delete()
     for q in BlankQuestion.objects.all():
-        first_set = [q.level == 'A', q.level == 'B',q.level == 'C', q.is_verb, q.is_preposition]
-        second_set = [level == 'A', level == 'B',level == 'C', is_verb, is_prep]
+        first_set = [q.level == 'A', q.level == 'B',q.level == 'C', *map(lambda x: x == q.kind, QUESTION_TYPES)]
+        second_set = [level == 'A', level == 'B',level == 'C', *map(lambda x: question_scores[x], QUESTION_TYPES)]
         cosine_similarity = spatial.distance.cosine(first_set, second_set)
         c = 1 if math.isnan(cosine_similarity) else 1-cosine_similarity
         UserBlankQuestionRelation.objects.create(user=user.qauser, question=q, cosine_similarity=c)
 
 
-def update_mc_userquestion_relation(user, level, is_verb, is_prep):
+def update_mc_userquestion_relation(user, level, question_scores):
     UserMCQuestionRelation.objects.filter(user=user.qauser).delete()
     for q in MultipleChoiceQuestion.objects.all():
-        first_set = [q.level == 'A', q.level == 'B',q.level == 'C', q.is_verb, q.is_preposition]
-        second_set = [level == 'A', level == 'B',level == 'C', is_verb, is_prep]
+        first_set = [q.level == 'A', q.level == 'B',q.level == 'C', *map(lambda x: x == q.kind, QUESTION_TYPES)]
+        second_set = [level == 'A', level == 'B',level == 'C', *map(lambda x: question_scores[x], QUESTION_TYPES)]
         cosine_similarity = spatial.distance.cosine(first_set, second_set)
         c = 1 if math.isnan(cosine_similarity) else 1-cosine_similarity
         UserMCQuestionRelation.objects.create(user=user.qauser, question=q, cosine_similarity=c)
@@ -1298,25 +1308,21 @@ def update_mc_userquestion_relation(user, level, is_verb, is_prep):
 
 def calc_total_level_mc(user):
     mc_questions = MultipleChoiceQuestion.objects.filter(
-        selectedmcquestion__mcquestionset__user=user.qauser).values('level', 'selectedmcquestion__answer', 'answer', 'is_verb', 'is_preposition')
+        selectedmcquestion__mcquestionset__user=user.qauser).values('level', 'selectedmcquestion__answer', 'answer', 'kind')
     sum_num = 0
     point = 0
     question_count = 0
-    is_verb_count = 0
-    is_verb = 0
-    is_preposition_count = 0
-    is_preposition  = 0
+    type_scores = {}
+    for qt in QUESTION_TYPES:
+        type_scores[str(qt)+'_count'] = 0
+        type_scores[str(qt)+'_mistake_count'] = 0
     for q in mc_questions:
         question_count += 1
         sum_num += SCORE_POINT[q['level']]
-        if q['is_verb']:
-            is_verb_count += 1
+        if q['kind'] in QUESTION_TYPES:
+            type_scores[q['kind']+'_count'] += 1
             if not q['selectedmcquestion__answer'] or q['selectedmcquestion__answer'] != q['answer']:
-                is_verb += 1
-        if q['is_preposition']:
-            is_preposition_count += 1
-            if not q['selectedmcquestion__answer'] or q['selectedmcquestion__answer'] != q['answer']:
-                is_preposition += 1
+                type_scores[q['kind']+'_mistake_count'] += 1
         if q['selectedmcquestion__answer'] and q['selectedmcquestion__answer'] == q['answer']:
             point += SCORE_POINT[q['level']]
     result = point/sum_num
@@ -1327,34 +1333,34 @@ def calc_total_level_mc(user):
         level = 'B'
     else:
         level = 'C'
-    is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
-    is_preposition_prob = 0 if is_preposition_count == 0 or is_preposition/is_preposition_count < 0.5 else 1
-    return level, is_verb_prob, is_preposition_prob
+    result_type_counts = {}
+    for qt in QUESTION_TYPES:
+        result_type_counts[qt] = 0 if type_scores[qt+'_count'] == 0 else type_scores[qt+'_mistake_count']/type_scores[qt+'_count']
+    return level, result_type_counts
     
 
 def calc_total_level_blank(user):
     mc_questions = BlankQuestion.objects.filter(
-        selectedblankquestion__blankquestionset__user=user.qauser).values('level', 'selectedblankquestion__answer', 'answer', 'is_verb','is_preposition')
+        selectedblankquestion__blankquestionset__user=user.qauser).values('level', 'selectedblankquestion__answer', 'answer', 'kind')
     sum_num = 0
     point = 0
     question_count = 0
-    is_verb_count = 0
-    is_verb = 0
-    is_preposition_count = 0
-    is_preposition = 0
+    type_scores = {}
+    for qt in QUESTION_TYPES:
+        type_scores[str(qt)+'_count'] = 0
+        type_scores[str(qt)+'_mistake_count'] = 0
     for q in mc_questions:
         question_count += 1
         sum_num += SCORE_POINT[q['level']]
-        if q['is_verb']:
-            is_verb_count += 1
+        if q['kind'] in QUESTION_TYPES:
+            type_scores[q['kind']+'_count'] += 1
             if not q['selectedblankquestion__answer'] or q['selectedblankquestion__answer'] != q['answer']:
-                is_verb += 1
-        if q['is_preposition']:
-            is_preposition_count += 1
-            if not q['selectedblankquestion__answer'] or q['selectedblankquestion__answer'] != q['answer']:
-                is_preposition += 1
+                type_scores[q['kind']+'_mistake_count'] += 1
         if q['selectedblankquestion__answer'] and q['selectedblankquestion__answer'] == q['answer']:
             point += SCORE_POINT[q['level']]
+    result_type_counts = {}
+    for qt in QUESTION_TYPES:
+        result_type_counts[qt] = 0 if type_scores[qt+'_count'] == 0 else type_scores[qt+'_mistake_count']/type_scores[qt+'_count']
     result = point/sum_num
     level = ''
     if result < 0.33:
@@ -1363,9 +1369,7 @@ def calc_total_level_blank(user):
         level = 'B'
     else:
         level = 'C'
-    is_verb_prob = 0 if is_verb_count == 0 or is_verb/is_verb_count < 0.5 else 1
-    is_preposition_prob = 0 if is_preposition_count ==0 or is_preposition/is_preposition_count < 0.5 else 1
-    return level, is_verb_prob, is_preposition_prob
+    return level, result_type_counts
 
 
 

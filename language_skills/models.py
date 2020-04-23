@@ -77,8 +77,9 @@ class QAGroup(models.Model):
 
 class AbstractAnswer(models.Model):
     answer = models.CharField(max_length=200)
-    is_verb = models.BooleanField(default=False)
-    is_preposition = models.BooleanField(default=False)
+    kind = models.CharField(max_length=200, null=True, blank=True)
+    # is_verb = models.BooleanField(default=False)
+    # is_preposition = models.BooleanField(default=False)
 
     class Meta:
         abstract = True

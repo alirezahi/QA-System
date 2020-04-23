@@ -455,7 +455,7 @@ class Analyser():
     def get_difficulty_level(self):
         features = []
         for field in fields:
-            features.append(min(self.__dict__[field] / alpha[field], 1))
+            features.append(min(self.__dict__[field] / alpha.get(field, 1), 1))
         print('injaaaaa', features)
         result = spatial.distance.cosine(features, [1]*len(features))
         if result > 0.7: return 'A'
@@ -705,7 +705,7 @@ class Analyser():
         return self.pos_trigram_freq_1_above
 
     def pos_trigram_freq_1_to_above_1_ratio_analyse(self):
-        self.pos_trigram_freq_1_to_above_1_ratio = self.pos_trigram_freq_1_analyse() / self.pos_trigram_freq_1_above_analyse()
+        self.pos_trigram_freq_1_to_above_1_ratio = self.pos_trigram_freq_1_analyse() / (self.pos_trigram_freq_1_above_analyse() or 1)
 
     def f4_analyse(self):
         result = 0
