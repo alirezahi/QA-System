@@ -21,22 +21,23 @@ fields = ['freq_1_count',
         'average_word_len',
         'average_sentence_len',
         'type_count_to_token_count',
-        'freq_1_count_to_type_count',
+        'freq_1_count_to_token_count',
         'word_naghshi_count',
         'word_mohtavai_count',
         'word_naghshi_count_to_token_count',
-        'word_mohtavai_count_to_type_count',
+        'word_mohtavai_count_to_token_count',
         'word_naghshi_freq_1_count',
         'word_mohtavai_freq_1_count',
-        'word_naghshi_freq_1_count_to_type_count',
+        'word_naghshi_freq_1_count_to_token_count',
         'word_mohtavai_freq_1_count_to_token_count',
         'word_bon_type_count',
         'word_bon_token_count',
         'word_bon_type_count_to_token_count',
         'word_bon_token_count_to_type_count',
+        'word_bon_freq_1',
         'word_bon_freq_1_to_token_count',
-        'ravabet_dastori_dar_tajziye_vabastegi',
-        'grehaye_sakhtari_dar_tajzie_sazei',
+        'ravabet_dastori_dar_tajziye_vabastegi_type_count',
+        'grehaye_sakhtari_dar_tajzie_sazei_token_count',
         'average_syllable_in_text',
         'syllable_1_count',
         'syllable_3_more_count',
@@ -46,13 +47,13 @@ fields = ['freq_1_count',
         'f2',
         'f3',
         'syllable_2_count',
-        'syllable_2_count_ratio',
+        'syllable_2_count_ratio_to_token_count',
         'cvcc_count',
         'cvc_count',
         'cv_count',
-        'cvcc_ratio',
-        'cvc_ratio',
-        'cv_ratio',
+        'cvcc_to_count_all_syllable_ratio',
+        'cvc_to_count_all_syllable_ratio',
+        'cv_to_count_all_syllable_ratio',
         'count_all_syllable',
         'naghshi_to_mohtavai_ratio',
         'mohtavai_to_naghshi_ratio',
@@ -60,9 +61,9 @@ fields = ['freq_1_count',
         'f5',
         'f6',
         'f7',
-        'syllable_1_count_150',
-        'syllable_3_above_count_100',
-        'count_token_to_word_ratio_100',
+        'syllable_1_count_in_150_word',
+        'syllable_3_above_in_100_word',
+        'count_type_in_100_word',
         'bigram_freq_1_above',
         'bigram_freq_1',
         'bigram_freq_1_to_above_1_ratio',
@@ -75,12 +76,13 @@ fields = ['freq_1_count',
         'pos_trigram_freq_1_above',
         'pos_trigram_freq_1',
         'pos_trigram_freq_1_to_above_1_ratio',
+        'name_entity_count',
         'name_entity_to_token_ratio',
         'count_clauses_dependency',
         'clause_dependency_total_dependency'
 ]
 
-alpha = {'freq_1_count': 128, 'char_count': 2403, 'token_count': 776, 'type_count': 223, 'sentence_count': 90, 'average_word_len': 3.481012658227848, 'average_sentence_len': 10.846153846153847, 'type_count_to_token_count': 0.6111111111111112, 'freq_1_count_to_type_count': 0.765625, 'word_naghshi_count': 348, 'word_mohtavai_count': 428, 'word_naghshi_count_to_token_count': 1.5605381165919283, 'word_mohtavai_count_to_type_count': 1.9192825112107623, 'word_naghshi_freq_1_count': 9, 'word_mohtavai_freq_1_count': 124, 'word_naghshi_freq_1_count_to_type_count': 0.21212121212121213, 'word_mohtavai_freq_1_count_to_token_count': 0.71875, 'word_bon_type_count': 183, 'word_bon_token_count': 776, 'word_bon_type_count_to_token_count': 0.96875, 'word_bon_token_count_to_type_count': 3.4798206278026904, 'word_bon_freq_1_to_token_count': 94, 'ravabet_dastori_dar_tajziye_vabastegi': 33, 'grehaye_sakhtari_dar_tajzie_sazei': 1512, 'average_syllable_in_text': 1.8987341772151898, 'syllable_1_count': 425, 'syllable_3_more_count': 152, 'syllable_1_count_to_token_count': 1.905829596412556, 'syllable_3_more_count_to_token_count': 0.6816143497757847, 'f1': 56.13859908361974, 'f2': 9.060786633933443, 'f3': 30.5628350772297}
+alpha = {'freq_1_count': 128, 'char_count': 2403, 'token_count': 776, 'type_count': 223, 'sentence_count': 90, 'average_word_len': 3.481012658227848, 'average_sentence_len': 10.846153846153847, 'type_count_to_token_count': 0.6111111111111112, 'freq_1_count_to_token_count': 0.765625, 'word_naghshi_count': 348, 'word_mohtavai_count': 428, 'word_naghshi_count_to_token_count': 1.5605381165919283, 'word_mohtavai_count_to_token_count': 1.9192825112107623, 'word_naghshi_freq_1_count': 9, 'word_mohtavai_freq_1_count': 124, 'word_naghshi_freq_1_count_to_token_count': 0.21212121212121213, 'word_mohtavai_freq_1_count_to_token_count': 0.71875, 'word_bon_type_count': 183, 'word_bon_token_count': 776, 'word_bon_type_count_to_token_count': 0.96875, 'word_bon_token_count_to_type_count': 3.4798206278026904, 'word_bon_freq_1_to_token_count': 94, 'ravabet_dastori_dar_tajziye_vabastegi_type_count': 33, 'grehaye_sakhtari_dar_tajzie_sazei_token_count': 1512, 'average_syllable_in_text': 1.8987341772151898, 'syllable_1_count': 425, 'syllable_3_more_count': 152, 'syllable_1_count_to_token_count': 1.905829596412556, 'syllable_3_more_count_to_token_count': 0.6816143497757847, 'f1': 56.13859908361974, 'f2': 9.060786633933443, 'f3': 30.5628350772297}
 
 def save_text(text, fileName):
     f = open("../codes-data-folders/data/persian-archieve/new/fileName.txt","w+")
@@ -118,27 +120,28 @@ class Analyser():
         # ح( محاسبه نسبت واژههای بدون تکرار به واژههای با تکرار در هر متن
         self.type_count_to_token_count = 0
         # خ( محاسبه نسبت واژههای با بسامد ١ به واژههای با تکرار در هر متن
-        self.freq_1_count_to_type_count = 0
+        self.freq_1_count_to_token_count = 0
         # د( شمارش تعداد واژههای نقشی )مثل حرف اضافه و حرف ربط( در هر متن
         self.word_naghshi_count = 0
         # ذ( شمارش تعداد واژههای محتوایی )مثل اسم و صفت و قید و فعل( در هر متن
         self.word_mohtavai_count = 0
         # ر( محاسبه نسبت واژههای محتوایی به واژههای با تکرار در هر متن
-        self.word_mohtavai_count_to_type_count = 0
+        self.word_mohtavai_count_to_token_count = 0
         # ز( محاسبه نسبت واژههای نقشی به واژههای با تکرار در هر متن
         self.word_naghshi_count_to_token_count = 0
         self.word_naghshi_freq_1_count = 0
         # ژ( محاسبه نسبت واژههای نقشی با بسامد ١ به واژههای با تکرار در هر متن
-        self.word_naghshi_freq_1_count_to_type_count = 0
+        self.word_naghshi_freq_1_count_to_token_count = 0
         # س( محاسبه نسبت واژههای محتوایی با بسامد ١ به واژههای با تکرار در هر متن
         self.word_mohtavai_freq_1_count_to_token_count = 0
         self.word_bon_type_count = 0
         self.word_bon_token_count = 0
         self.word_bon_type_count_to_token_count = 0
         self.word_bon_token_count_to_type_count = 0
+        self.word_bon_freq_1 = 0
         self.word_bon_freq_1_to_token_count = 0
-        self.ravabet_dastori_dar_tajziye_vabastegi = 0
-        self.grehaye_sakhtari_dar_tajzie_sazei = 0
+        self.ravabet_dastori_dar_tajziye_vabastegi_type_count = 0
+        self.grehaye_sakhtari_dar_tajzie_sazei_token_count = 0
         # ف( محاسبه متوسط هجای واژهها در هر متن
         self.average_syllable_in_text = 0
         # ک( شمارش تعداد واژههای با تعداد هجای ١
@@ -154,13 +157,13 @@ class Analyser():
         self.f3 = 0
 
         self.syllable_2_count = 0   # 45
-        self.syllable_2_count_ratio = 0 # 46
+        self.syllable_2_count_ratio_to_token_count = 0 # 46
         self.cvcc_count = 0 # 47
         self.cvc_count = 0  # 48
         self.cv_count = 0  # 40
-        self.cvcc_ratio = 0 # 50
-        self.cvc_ratio = 0  # 51
-        self.cv_ratio = 0  # 52
+        self.cvcc_to_count_all_syllable_ratio = 0 # 50
+        self.cvc_to_count_all_syllable_ratio = 0  # 51
+        self.cv_to_count_all_syllable_ratio = 0  # 52
         self.count_all_syllable = 0 # 53
         self.naghshi_to_mohtavai_ratio = 0  # 54
         self.mohtavai_to_naghshi_ratio = 0  # 55
@@ -168,9 +171,9 @@ class Analyser():
         self.f5 = 0 # 57
         self.f6 = 0 # 58
         self.f7 = 0 # 59
-        self.syllable_1_count_150 = 0 # 60
-        self.syllable_3_above_count_100 = 0 # 61
-        self.count_token_to_word_ratio_100 = 0  # 62
+        self.syllable_1_count_in_150_word = 0 # 60
+        self.syllable_3_above_in_100_word = 0 # 61
+        self.count_type_in_100_word = 0  # 62
         self.bigram_freq_1_above = 0    # 63
         self.bigram_freq_1 = 0  # 64
         self.bigram_freq_1_to_above_1_ratio = 0 # 65
@@ -199,19 +202,20 @@ class Analyser():
         self.average_word_len_analyse()
         self.average_sentence_len_analyse()
         self.type_count_to_token_count_analyse()
-        self.freq_1_count_to_type_count_analyse()
+        self.freq_1_count_to_token_count_analyse()
         for posType in ['naghshi', 'mohtavai']:
             self.word_pos_count_analyse(posType)
-            self.word_pos_count_to_type_count_analyse(posType)
+            self.word_pos_count_to_token_count_analyse(posType)
             self.word_pos_freq_1_count_analyse(posType)
-            self.word_pos_freq_1_count_to_type_count_analyse(posType)
+            self.word_pos_freq_1_count_to_token_count_analyse(posType)
         self.word_bon_type_count_analyse()
         self.word_bon_token_count_analyse()
         self.word_bon_type_count_to_token_count_analyse()
         self.word_bon_token_count_to_type_count_analyse()
+        self.word_bon_freq_1_analyse()
         self.word_bon_freq_1_to_token_count_analyse()
-        self.grehaye_sakhtari_dar_tajzie_sazei_analyse()
-        self.ravabet_dastori_dar_tajziye_vabastegi_analyse()
+        self.grehaye_sakhtari_dar_tajzie_sazei_token_count_analyse()
+        self.ravabet_dastori_dar_tajziye_vabastegi_type_count_analyse()
         self.average_syllable_in_text_analyse()
         self.syllable_1_count_analyse()
         self.syllable_3_more_count_analyse()
@@ -221,13 +225,13 @@ class Analyser():
         self.f2_analyse()
         self.f3_analyse()
         self.syllable_2_count_analyse()
-        self.syllable_2_count_analyse()
+        self.syllable_2_count_ratio_to_token_count_analyse()
         self.cvcc_count_analyse()
         self.cvc_count_analyse()
-        self.cvc_count_analyse()
-        self.cvcc_ratio_analyse()
-        self.cvc_ratio_analyse()
-        self.cv_ratio_analyse()
+        self.cv_count_analyse()
+        self.cvcc_to_count_all_syllable_ratio_analyse()
+        self.cvc_to_count_all_syllable_ratio_analyse()
+        self.cv_to_count_all_syllable_ratio_analyse()
         self.count_all_syllable_analyse()
         self.naghshi_to_mohtavai_ratio_analyse()
         self.mohtavai_to_naghshi_ratio_analyse()
@@ -235,9 +239,9 @@ class Analyser():
         self.f5_analyse()
         self.f6_analyse()
         self.f7_analyse()
-        self.syllable_1_count_150_analyse()
-        self.syllable_3_above_count_100_analyse()
-        self.count_token_to_word_ratio_100_analyse()
+        self.syllable_1_count_in_150_word_analyse()
+        self.syllable_3_above_in_100_word_analyse()
+        self.count_type_in_100_word_analyse()
         self.bigram_freq_1_above_analyse()
         self.bigram_freq_1_analyse()
         self.bigram_freq_1_to_above_1_ratio_analyse()
@@ -251,6 +255,7 @@ class Analyser():
         self.pos_trigram_freq_1_analyse()
         self.pos_trigram_freq_1_to_above_1_ratio_analyse()
         self.count_clauses_dependency_analyse()
+        self.name_entity_count_analysis()
         self.name_entity_to_token_ratio_analyse()
         self.clause_dependency_total_dependency_analyse()
     def freq_analyse(self):
@@ -306,8 +311,8 @@ class Analyser():
     def type_count_to_token_count_analyse(self):
         self.type_count_to_token_count = self.type_count / self.token_count
 
-    def freq_1_count_to_type_count_analyse(self):
-        self.freq_1_count_to_type_count = self.freq_1_count / self.type_count
+    def freq_1_count_to_token_count_analyse(self):
+        self.freq_1_count_to_token_count = self.freq_1_count / self.token_count
    
     def word_pos_count_analyse(self, posType):
         count = 0
@@ -319,8 +324,8 @@ class Analyser():
                 pass
         self.__dict__['word_'+posType+'_count'] = count
 
-    def word_pos_count_to_type_count_analyse(self, posType):
-        self.__dict__['word_'+posType+'_count_to_type_count'] = self.__dict__['word_'+posType+'_count'] / self.type_count
+    def word_pos_count_to_token_count_analyse(self, posType):
+        self.__dict__['word_'+posType+'_count_to_token_count'] = self.__dict__['word_'+posType+'_count'] / self.token_count
     
     def word_pos_freq_1_count_analyse(self, posType):
         count = 0
@@ -329,8 +334,8 @@ class Analyser():
                 count += 1
         self.__dict__['word_' + posType+ '_freq_1_count'] = count
         
-    def word_pos_freq_1_count_to_type_count_analyse(self, posType):
-        self.__dict__['word_'+posType+'_freq_1_count_to_type_count'] = self.__dict__['word_'+posType+'_freq_1_count'] / self.type_count
+    def word_pos_freq_1_count_to_token_count_analyse(self, posType):
+        self.__dict__['word_'+posType+'_freq_1_count_to_token_count'] = self.__dict__['word_'+posType+'_freq_1_count'] / self.token_count
     
     def word_bon_type_count_analyse(self):
         self.word_bon_type_count = len(self.freq_dict_bon)
@@ -344,18 +349,21 @@ class Analyser():
     def word_bon_token_count_to_type_count_analyse(self):
         self.word_bon_token_count_to_type_count = self.word_bon_token_count / self.type_count
 
+    def word_bon_freq_1_analyse(self):
+        self.word_bon_freq_1 = sum(value == 1 for value in self.freq_dict_bon.values())
+    
     def word_bon_freq_1_to_token_count_analyse(self):
-        self.word_bon_freq_1_to_token_count = sum(value == 1 for value in self.freq_dict_bon.values())
+        self.word_bon_freq_1_to_token_count = self.word_bon_freq_1/self.token_count if self.token_count else 0
 
-    def ravabet_dastori_dar_tajziye_vabastegi_analyse(self):
-        self.ravabet_dastori_dar_tajziye_vabastegi = len(self.freq_dict_dep)
+    def ravabet_dastori_dar_tajziye_vabastegi_type_count_analyse(self):
+        self.ravabet_dastori_dar_tajziye_vabastegi_type_count = len(self.freq_dict_dep)
 
-    def grehaye_sakhtari_dar_tajzie_sazei_analyse(self):
+    def grehaye_sakhtari_dar_tajzie_sazei_token_count_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
                 result += row['ConstituencyNumberOfNodes'] if not math.isnan(row['ConstituencyNumberOfNodes']) else 0
-        self.grehaye_sakhtari_dar_tajzie_sazei = result
+        self.grehaye_sakhtari_dar_tajzie_sazei_token_count = result
 
     def average_syllable_in_text_analyse(self):
         result = 0
@@ -373,7 +381,7 @@ class Analyser():
     def syllable_1_count_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-            if row['SyllableNumber'] == 1:
+            if row['SyllableNumber'] in ['1',1]:
                 result += 1
         self.syllable_1_count = result
 
@@ -381,17 +389,17 @@ class Analyser():
         result = 0
         for index, row in self.words.iterrows():
             try: #TODO: correct here
-                if row['SyllableNumber'] >= 3:
+                if int(row['SyllableNumber']) >= 3:
                     result += 1
             except:
                 pass
         self.syllable_3_more_count = result
 
     def syllable_1_count_to_token_count_analyse(self):
-        self.syllable_1_count_to_token_count = self.syllable_1_count / self.type_count
+        self.syllable_1_count_to_token_count = self.syllable_1_count / self.token_count
     
     def syllable_3_more_count_to_token_count_analyse(self):
-        self.syllable_3_more_count_to_token_count = self.syllable_3_more_count / self.type_count
+        self.syllable_3_more_count_to_token_count = self.syllable_3_more_count / self.token_count
 
     def f1_analyse(self):
         self.f1 = 206.835 - (1.015 * self.average_sentence_len) - (84.6 * self.average_syllable_in_text)
@@ -463,18 +471,20 @@ class Analyser():
         return 'C'
     #   added features
 
-    def get_phonem_patern_count(self, patern):
+    def get_phonem_pattern_count(self, pattern):
         count = 0
         for index, row in self.words.iterrows():
-            count += row[patern]
+            if isinstance(row['PhonePattern'], str):
+                count += row['PhonePattern'].count(pattern.upper())
         return count
 
-    def get_phonem_count_to_all_patern(self, patern):
+    def get_phonem_count_to_all_patern(self, pattern):
         count = 0
         all_count = 0
         for index, row in self.words.iterrows():
             try:
-                count += row[patern]
+                if isinstance(row['PhonePattern'], str):
+                    count += row['PhonePattern'].count(pattern.upper())
                 all_count += int(row['SyllableNumber'])
             except:
                 pass
@@ -483,78 +493,77 @@ class Analyser():
     def syllable_2_count_analyse(self):
         count = 0
         for index, row in self.words.iterrows():
-            if(row['SyllableNumber']) == 2:
+            if row['SyllableNumber'] in ['2',2]:
                 count += 1
         self.syllable_2_count = count
+    
+    def syllable_2_count_ratio_to_token_count_analyse(self):
+        self.syllable_2_count_ratio_to_token_count = self.syllable_2_count/ self.token_count if self.token_count else 0
 
     def count_all_syllable_analyse(self):
         count = 0
         for index, row in self.words.iterrows():
             try:
-                count += row['SyllableNumber']
+                count += int(row['SyllableNumber'])
             except:
                 pass
         self.count_all_syllable = count
 
     def cv_count_analyse(self):
-        self.cv_count =  self.get_phonem_patern_count('CV Count')
+        self.cv_count =  self.get_phonem_pattern_count('CV')
 
     def cvc_count_analyse(self):
-        self.cvc_count = self.get_phonem_patern_count('CVC Count')
+        self.cvc_count = self.get_phonem_pattern_count('CVC')
 
     def cvcc_count_analyse(self):
-        self.cvcc_count = self.get_phonem_patern_count('CVCC Count')
+        self.cvcc_count = self.get_phonem_pattern_count('CVCC')
 
-    def cv_ratio_analyse(self):
-        self.cv_ratio = self.get_phonem_count_to_all_patern('CV Count')
+    def cv_to_count_all_syllable_ratio_analyse(self):
+        self.cv_ratio = self.get_phonem_count_to_all_patern('CV')
 
-    def cvc_ratio_analyse(self):
-        self.cvc_ratio = self.get_phonem_count_to_all_patern('CVC Count')
+    def cvc_to_count_all_syllable_ratio_analyse(self):
+        self.cvc_ratio = self.get_phonem_count_to_all_patern('CVC')
 
-    def cvcc_ratio_analyse(self):
-        self.cvcc_ratio = self.get_phonem_count_to_all_patern('CVCC Count')
+    def cvcc_to_count_all_syllable_ratio_analyse(self):
+        self.cvcc_to_count_all_syllable_ratio = self.get_phonem_count_to_all_patern('CVCC')
 
     def get_pos_type_count(self, posType):
         count = 0
         for index, row in self.words.iterrows():
             try:
-                if str(row['POS type (functional/content)']) in posTypeDict[posType]:
+                if row['POS type (functional/content)'] in posType:
                     count += 1
             except:
                 pass
         return count
 
     def naghshi_to_mohtavai_ratio_analyse(self):
-        try:
-            self.naghshi_to_mohtavai_ratio = self.get_pos_type_count(posTypeDict['naghshi'])/self.get_pos_type_count(posTypeDict['mohtavai'])
-        except:
-            pass
+        mohtavai_count = self.get_pos_type_count(posTypeDict['mohtavai'])
+        self.naghshi_to_mohtavai_ratio = self.get_pos_type_count(posTypeDict['naghshi'])/mohtavai_count if mohtavai_count else 0
 
     def mohtavai_to_naghshi_ratio_analyse(self):
-        try:
-            self.mohtavai_to_naghshi_ratio = self.get_pos_type_count(posTypeDict['mohtavai'])/self.get_pos_type_count(posTypeDict['naghshi'])
-        except:
-           pass
+        naghshi_count = self.get_pos_type_count(posTypeDict['naghshi'])
+        self.mohtavai_to_naghshi_ratio = self.get_pos_type_count(posTypeDict['mohtavai'])/naghshi_count if naghshi_count else 0
 
-    def syllable_1_count_150_analyse(self):
+    def syllable_1_count_in_150_word_analyse(self):
         count = 0
         for index, row in self.words.iterrows():
-            if row['SyllableNumber'] == 1:
+            if row['SyllableNumber'] in ['1',1]:
                 count += 1
             if index >= 150:
                 break
-        self.syllable_1_count_150_analyse = count
+        self.syllable_1_count_in_150_word = count
 
-    def syllable_3_above_count_100_analyse(self):
+    def syllable_3_above_in_100_word_analyse(self):
         count = 0
         for index, row in self.words.iterrows():
-            if row['SyllableNumber'] == 3:
+            if row['SyllableNumber'] in ['3', 3]:
                 count += 1
             if index >= 100:
                 break
-        self.syllable_3_above_count_100 = count
+        self.syllable_3_above_in_100_word = count
 
-    def count_token_to_word_ratio_100_analyse(self):
+    def count_type_in_100_word_analyse(self):
         words = []
         for index, row in self.words.iterrows():
             if index < 100:
@@ -562,7 +571,7 @@ class Analyser():
                     words.append(row['Lemma'])
             else:
                 break
-        self.count_token_to_word_ratio_100 = len(set(words))
+        self.count_type_in_100_word = len(set(words))
 
     def bigram_freq_1_above_analyse(self):
         words = []
@@ -580,13 +589,17 @@ class Analyser():
     def bigram_freq_1_analyse(self):
         words = []
         for index, row in self.words.iterrows():
-                if not math.isnan(float(row['q'])):
-                    words.append(row['Lemma'])
+            if not math.isnan(float(row['q'])):
+                words.append(row['Lemma'])
 
         bigrams = []
 
+        count = 0
         for i in range(0,len(words)-1):
+            if words[i] == words[i+1]:
+                count+=1
             bigrams.append(words[i] + ' ' + words[i+1])
+            bigrams.append(words[i+1] + ' ' + words[i])
 
         self.bigram_freq_1 = len(set(bigrams))
         return self.bigram_freq_1
@@ -776,7 +789,7 @@ class Analyser():
         result = 0
         for index, row in self.words.iterrows():
             try:
-                if not row['POS'][5] == '-':
+                if row['POS'] and row['POS'].startswith('N') and (row['POS'][4] == '-'):
                     result += 1
             except:
                 pass
@@ -812,16 +825,16 @@ class Analyser():
     def count_clauses_dependency_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-                if str(row['DepType']) in ['MARK', 'PURPCL', 'COMP', 'RCMOD', 'AUX', 'COMPM']:
-                    result += 1
+            if str(row['DepType']) in ['MARK', 'PURPCL', 'COMP', 'RCMOD', 'AUX', 'COMPM']:
+                result += 1
 
         self.count_clauses_dependency = result
 
     def clause_dependency_total_dependency_analyse(self):
         result = 0
         for index, row in self.words.iterrows():
-                if not str(row['DepType']) == 'PUNC':
-                    result += 1
+            if not str(row['DepType']) == 'PUNC':
+                result += 1
 
         self.clause_dependency_total_dependency = self.count_clauses_dependency/result
 

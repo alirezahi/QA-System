@@ -1953,7 +1953,6 @@ def logistic_csv_req(request):
 
 def analyse_request(request):
     file = request.GET.get('file', 'levelC-farsi-biyamuzim-19')
-    import pandas as pd
     words = pd.read_csv('data/'+file+'.csv')
     a = Analyser(words)
     a.analyse()
