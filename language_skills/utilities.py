@@ -587,7 +587,7 @@ class Analyser():
         for index, row in self.words.iterrows():
             if index < 100:
                 if not math.isnan(float(row['q'])):
-                    words.append(row['Lemma'])
+                    words.append(row['wordForm'])
             else:
                 break
         self.count_type_in_100_word = len(set(words))

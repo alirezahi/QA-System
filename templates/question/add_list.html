@@ -5,7 +5,8 @@
   <div class="d-flex justify-content-center">
     اضافه‌کردن لیست
   </div>
-  <form action="/question/add_list" method="POST">
+  <form action="/question/add_list_request" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
     <div class="form-group">
       <select name="type" class="custom-select" required>
         <option value="">نوع فایل</option>
@@ -22,9 +23,12 @@
       <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
     <div class="custom-file">
-      <input type="file" class="custom-file-input" id="customFile" />
+      <input type="file" class="custom-file-input" id="customFile" name="file" />
       <label class="custom-file-label" for="customFile">انتخاب فایل</label>
     </div>
+    <button class="btn btn-success mt-2">
+      اضافه کردن
+    </button>
   </form>
 </div>
 {% endblock %}

@@ -51,6 +51,7 @@ urlpatterns = [
     path('level-check', level_check),
     #text
     path('add_list', AddListTemplateView.as_view()),
+    path('add_list_request', add_list),
     path('export_to_xml', export_to_xml),
     path('svm/csv', svm_csv_req),
     path('svm', svm_req),

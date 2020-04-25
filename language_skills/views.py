@@ -1986,7 +1986,14 @@ class AddListTemplateView(TemplateView):
 
 def add_list(request):
     if request.method == 'POST':
-        list_type = request.GET.get('type', '')
+        print(request.FILES)
+        import pdb;
+        pdb.set_trace()
+        file = request.FILES['file']
+        list_type = request.POST.get('type', '')
+        for line in file:
+            print(line)
+        return HttpResponse('Done')
         # if list_type and list_type in MODEL_MAP:
         #     f = 
         #     MODEL_MAP[list_type].objects
