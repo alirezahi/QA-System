@@ -510,7 +510,7 @@ class Analyser():
                     'name_entity_count',
                 ]
             }
-            categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().split(',')]
+            categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().value.split(',')]
             for c in categories:
                 list_fields.extend(f[c])
 
