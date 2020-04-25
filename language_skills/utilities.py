@@ -504,7 +504,7 @@ class Analyser():
                     pass
             except:
                 pass
-        return count/self.count_all_syllable
+        return count/self.count_all_syllable if self.count_all_syllable else 0
 
     def syllable_2_count_analyse(self):
         count = 0

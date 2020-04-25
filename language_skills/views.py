@@ -27,7 +27,7 @@ import math
 TYPE_MAP = {
     'V':'verb',
     'E':'prep',
-    'J':'conjuction',
+    'J':'conjunction',
     'Z':'pronoun',
     'N':'noun',
     'T':'determiner',
@@ -40,7 +40,7 @@ QUESTION_TYPES = list(TYPE_MAP.values())
 
 MODEL_MAP = {
     'prep': PrePosition,
-    'conjuction': Conjunction,
+    'conjunction': Conjunction,
     'pronoun': Pronoun,
     'noun': Noun,
     'determiner': Determiner,
@@ -1046,7 +1046,7 @@ class CreateMCQuestions(View):
                                 text=p.text)
                             mc.options.add(opt)
                     
-                    if q['answer_type'] in ['prep','conjuction','pronoun','noun','determiner','interjection','adverb','classifier','adjective']:
+                    if q['answer_type'] in ['prep','conjunction','pronoun','noun','determiner','interjection','adverb','classifier','adjective']:
                         selected_options = MODEL_MAP[q['answer_type']].objects.exclude(
                             text=q['answer']).order_by('?')[:3]
                         
@@ -1986,14 +1986,12 @@ class AddListTemplateView(TemplateView):
 
 def add_list(request):
     if request.method == 'POST':
-        print(request.FILES)
-        import pdb;
-        pdb.set_trace()
         file = request.FILES['file']
         list_type = request.POST.get('type', '')
         for line in file:
-            print(line)
-        return HttpResponse('Done')
+            items = line.decode('utf-8').strip().split('\t')
+            MODEL_MAP[list_type].objects.get_or_create(text=items[1], root=items[2], freq=items[3])
+        return HttpResponse('<div>Done</div></div><a href="/question/add_list">بازگشت</div>')
         # if list_type and list_type in MODEL_MAP:
         #     f = 
         #     MODEL_MAP[list_type].objects
