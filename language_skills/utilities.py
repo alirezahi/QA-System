@@ -427,91 +427,92 @@ class Analyser():
         summary = []
 
         list_fields = []
-        for field in fields:
-            category_id = '1'
-            if Config.objects.filter(name='analysis_category', active=True).exists():
-                category = Config.objects.filter(name='analysis_category', active=True).last()
-                f = {
-                    'statistics':[
-                        'freq_1_count',
-                        'char_count',
-                        'token_count',
-                        'type_count',
-                        'sentence_count',
-                        'average_word_len',
-                        'type_count_to_token_count',
-                        'freq_1_count_to_token_count',
-                        'count_type_in_100_word',
-                        'bigram_freq_1_above',
-                        'bigram_freq_1',
-                        'bigram_freq_1_to_above_1_ratio',
-                        'trigram_freq_1_above',
-                        'trigram_freq_1',
-                        'trigram_freq_1_to_above_1_ratio',
-                    ],
-                    'syntax': [
-                        'word_naghshi_count',
-                        'word_mohtavai_count',
-                        'word_naghshi_count_to_token_count',
-                        'word_mohtavai_count_to_token_count',
-                        'word_naghshi_freq_1_count',
-                        'word_mohtavai_freq_1_count',
-                        'word_naghshi_freq_1_count_to_token_count',
-                        'word_mohtavai_freq_1_count_to_token_count',
-                        'pos_bigram_freq_1_above',
-                        'pos_bigram_freq_1',
-                        'pos_bigram_freq_1_to_above_1_ratio',
-                        'pos_trigram_freq_1_above',
-                        'pos_trigram_freq_1',
-                        'pos_trigram_freq_1_to_above_1_ratio',
-                        'count_clauses_dependency',
-                        'clause_dependency_total_dependency',
-                    ],
-                    'morphology':[
-                        'word_bon_type_count',
-                        'word_bon_type_count_to_type_count',
-                        'word_bon_type_count_to_token_count',
-                        'word_bon_freq_1_to_token_count',
-                        'word_bon_freq_1',
-                    ],
-                    'syntax': [
-                        'ravabet_dastori_dar_tajziye_vabastegi_type_count',
-                        'grehaye_sakhtari_dar_tajzie_sazei_token_count',
-                        'naghshi_to_mohtavai_ratio',
-                        'mohtavai_to_naghshi_ratio',
-                    ],
-                    'phonetic': [
-                        'average_syllable_in_text',
-                        'syllable_1_count',
-                        'syllable_3_more_count',
-                        'syllable_1_count_to_token_count',
-                        'syllable_3_more_count_to_token_count',
-                        'syllable_2_count',
-                        'syllable_2_count_ratio_to_token_count',
-                        'cvcc_count',
-                        'cvc_count',
-                        'cv_count',
-                        'cvcc_to_count_all_syllable_ratio',
-                        'cvc_to_count_all_syllable_ratio',
-                        'cv_to_count_all_syllable_ratio',
-                        'count_all_syllable',
-                        'syllable_1_count_in_150_word',
-                        'syllable_3_above_in_100_word',
-                    ],
-                    'readability': [
-                        'f1',
-                        'f2',
-                        'f3',
-                        'f4',
-                        'f5',
-                        'f6',
-                        'f7',
-                    ],
-                    'semantic': [
-                        'name_entity_to_token_ratio',
-                        'name_entity_count',
-                    ]
-                }
+        category = 'statistics'
+        if Config.objects.filter(name='analysis_category', active=True).exists():
+            f = {
+                'statistics':[
+                    'freq_1_count',
+                    'char_count',
+                    'token_count',
+                    'type_count',
+                    'sentence_count',
+                    'average_word_len',
+                    'type_count_to_token_count',
+                    'freq_1_count_to_token_count',
+                    'count_type_in_100_word',
+                    'bigram_freq_1_above',
+                    'bigram_freq_1',
+                    'bigram_freq_1_to_above_1_ratio',
+                    'trigram_freq_1_above',
+                    'trigram_freq_1',
+                    'trigram_freq_1_to_above_1_ratio',
+                ],
+                'syntax': [
+                    'word_naghshi_count',
+                    'word_mohtavai_count',
+                    'word_naghshi_count_to_token_count',
+                    'word_mohtavai_count_to_token_count',
+                    'word_naghshi_freq_1_count',
+                    'word_mohtavai_freq_1_count',
+                    'word_naghshi_freq_1_count_to_token_count',
+                    'word_mohtavai_freq_1_count_to_token_count',
+                    'pos_bigram_freq_1_above',
+                    'pos_bigram_freq_1',
+                    'pos_bigram_freq_1_to_above_1_ratio',
+                    'pos_trigram_freq_1_above',
+                    'pos_trigram_freq_1',
+                    'pos_trigram_freq_1_to_above_1_ratio',
+                    'count_clauses_dependency',
+                    'clause_dependency_total_dependency',
+                ],
+                'morphology':[
+                    'word_bon_type_count',
+                    'word_bon_type_count_to_type_count',
+                    'word_bon_type_count_to_token_count',
+                    'word_bon_freq_1_to_token_count',
+                    'word_bon_freq_1',
+                ],
+                'syntax': [
+                    'ravabet_dastori_dar_tajziye_vabastegi_type_count',
+                    'grehaye_sakhtari_dar_tajzie_sazei_token_count',
+                    'naghshi_to_mohtavai_ratio',
+                    'mohtavai_to_naghshi_ratio',
+                ],
+                'phonetic': [
+                    'average_syllable_in_text',
+                    'syllable_1_count',
+                    'syllable_3_more_count',
+                    'syllable_1_count_to_token_count',
+                    'syllable_3_more_count_to_token_count',
+                    'syllable_2_count',
+                    'syllable_2_count_ratio_to_token_count',
+                    'cvcc_count',
+                    'cvc_count',
+                    'cv_count',
+                    'cvcc_to_count_all_syllable_ratio',
+                    'cvc_to_count_all_syllable_ratio',
+                    'cv_to_count_all_syllable_ratio',
+                    'count_all_syllable',
+                    'syllable_1_count_in_150_word',
+                    'syllable_3_above_in_100_word',
+                ],
+                'readability': [
+                    'f1',
+                    'f2',
+                    'f3',
+                    'f4',
+                    'f5',
+                    'f6',
+                    'f7',
+                ],
+                'semantic': [
+                    'name_entity_to_token_ratio',
+                    'name_entity_count',
+                ]
+            }
+            categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().split(',')]
+            for c in categories:
+                list_fields.extend(f[c])
 
         for field in list_fields:
             summary.append(self.__dict__[field])
