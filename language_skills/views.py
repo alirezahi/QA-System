@@ -38,6 +38,18 @@ TYPE_MAP = {
 }
 QUESTION_TYPES = list(TYPE_MAP.values())
 
+MODEL_MAP = {
+    'prep': PrePosition,
+    'conjuction': Conjunction,
+    'pronoun': Pronoun,
+    'noun': Noun,
+    'determiner': Determiner,
+    'interjection': Interjection,
+    'adverb': Adverb,
+    'classifier': Classifier,
+    'adjective':Adjective,
+}
+
 class StaffRequiredMixin(object):
     """
     View mixin which requires that the authenticated user is a staff member
@@ -1033,6 +1045,16 @@ class CreateMCQuestions(View):
                             opt, is_created = OptionAnswer.objects.get_or_create(
                                 text=p.text)
                             mc.options.add(opt)
+                    
+                    if q['answer_type'] in ['prep','conjuction','pronoun','noun','determiner','interjection','adverb','classifier','adjective']:
+                        selected_options = MODEL_MAP[q['answer_type']].objects.exclude(
+                            text=q['answer']).order_by('?')[:3]
+                        
+                        mc.options.add(o)
+                        for p in selected_options:
+                            opt, is_created = OptionAnswer.objects.get_or_create(
+                                text=p.text)
+                            mc.options.add(opt)
 
         return HttpResponse('Done')
     
@@ -1957,3 +1979,15 @@ def analyse_request(request):
     a = Analyser(words)
     a.analyse()
     return JsonResponse(a.tojson())
+
+
+class AddListTemplateView(TemplateView):
+    template_name = 'question/add_list.html'
+
+def add_list(request):
+    if request.method == 'POST':
+        list_type = request.GET.get('type', '')
+        # if list_type and list_type in MODEL_MAP:
+        #     f = 
+        #     MODEL_MAP[list_type].objects
+        

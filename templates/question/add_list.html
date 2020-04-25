@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load templatetags_custom %}
+{% block 'main-content' %}
+<div>
+  <div class="d-flex justify-content-center">
+    اضافه‌کردن لیست
+  </div>
+  <form action="/question/add_list" method="POST">
+    <div class="form-group">
+      <select name="type" class="custom-select" required>
+        <option value="">نوع فایل</option>
+        <option value="prep">prep</option>
+        <option value="pronoun">pronoun</option>
+        <option value="adjective">adjective</option>
+        <option value="adverb">adverb</option>
+        <option value="conjunction">conjunction</option>
+        <option value="noun">noun</option>
+        <option value="determiner">determiner</option>
+        <option value="interjection">interjection</option>
+        <option value="classifier">classifier</option>
+      </select>
+      <div class="invalid-feedback">Example invalid custom select feedback</div>
+    </div>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="customFile" />
+      <label class="custom-file-label" for="customFile">انتخاب فایل</label>
+    </div>
+  </form>
+</div>
+{% endblock %}

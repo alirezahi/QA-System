@@ -50,6 +50,7 @@ urlpatterns = [
     path('level-detection/mc/<order>', MCLevelQuestionTemplate.as_view()),
     path('level-check', level_check),
     #text
+    path('add_list', AddListTemplateView.as_view()),
     path('export_to_xml', export_to_xml),
     path('svm/csv', svm_csv_req),
     path('svm', svm_req),

@@ -181,6 +181,10 @@ class BlankQuestionSet(models.Model):
 class Blocked(models.Model):
     text = models.CharField(max_length=200)
 
+
+class RandomModel(models.Model):
+    objects = RandomManager()
+
 class PrePosition(models.Model):
     text = models.CharField(max_length=100)
 
@@ -209,6 +213,78 @@ class VerbForm(models.Model):
 
     def __str__(self):
         return self.form
+
+
+class Classifier(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Adjective(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Adverb(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Interjection(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Determiner(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Noun(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Conjunction(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
+
+
+class Pronoun(RandomModel):
+    text = models.CharField(max_length=100)
+    root = models.CharField(max_length=100)
+    freq = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.text[:20] or ''
 
 
 class Config(models.Model):

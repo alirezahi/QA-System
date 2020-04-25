@@ -102,6 +102,13 @@ class Analyser():
         self.freq_dict = 0
         self.freq_dict_bon = 0
         self.freq_dict_dep = 0
+        self.freq_dict_pos = 0
+        
+        self.bigrams = {}
+        self.pos_bigrams = {}
+        self.trigrams = {}
+        self.pos_trigrams = {}
+
         # ت( شمارش تعداد واژههای با بسامد ١ در هر متن
         self.freq_1_count = 0
         # الف( شمارش تعداد حروف متن
@@ -241,17 +248,17 @@ class Analyser():
         self.syllable_1_count_in_150_word_analyse()
         self.syllable_3_above_in_100_word_analyse()
         self.count_type_in_100_word_analyse()
-        self.bigram_freq_1_above_analyse()
         self.bigram_freq_1_analyse()
+        self.bigram_freq_1_above_analyse()
         self.bigram_freq_1_to_above_1_ratio_analyse()
-        self.trigram_freq_1_above_analyse()
         self.trigram_freq_1_analyse()
+        self.trigram_freq_1_above_analyse()
         self.trigram_freq_1_to_above_1_ratio_analyse()
-        self.pos_bigram_freq_1_above_analyse()
         self.pos_bigram_freq_1_analyse()
+        self.pos_bigram_freq_1_above_analyse()
         self.pos_bigram_freq_1_to_above_1_ratio_analyse()
-        self.pos_trigram_freq_1_above_analyse()
         self.pos_trigram_freq_1_analyse()
+        self.pos_trigram_freq_1_above_analyse()
         self.pos_trigram_freq_1_to_above_1_ratio_analyse()
         self.count_clauses_dependency_analyse()
         self.name_entity_count_analysis()
@@ -261,6 +268,7 @@ class Analyser():
         freq_dict = {}
         freq_dict_bon = {}
         freq_dict_dep = {}
+        freq_dict_pos = {}
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
                 word = row['wordForm']
@@ -278,9 +286,15 @@ class Analyser():
                     freq_dict_dep[dep] = freq_dict_dep[dep]+1
                 else:
                     freq_dict_dep[dep] = 1
+                pos = row['POS']
+                if pos in freq_dict_pos:
+                    freq_dict_pos[pos] = freq_dict_pos[pos]+1
+                else:
+                    freq_dict_pos[pos] = 1
         self.freq_dict = freq_dict
         self.freq_dict_bon = freq_dict_bon
         self.freq_dict_dep = freq_dict_dep
+        self.freq_dict_pos = freq_dict_pos
 
     def freq_1_analyse(self):
         self.freq_1_count = sum(value == 1 for value in self.freq_dict.values())
@@ -329,7 +343,7 @@ class Analyser():
     def word_pos_freq_1_count_analyse(self, posType):
         count = 0
         for index, row in self.words.iterrows():
-            if row['POS type (functional/content)'] in posTypeDict[posType] and self.freq_dict[row['wordForm']] == 1:
+            if row['POS type (functional/content)'] in posTypeDict[posType] and self.freq_dict_pos[row['POS']] == 1:
                 count += 1
         self.__dict__['word_' + posType+ '_freq_1_count'] = count
         
@@ -404,10 +418,10 @@ class Analyser():
         self.f1 = 206.835 - (1.015 * self.average_sentence_len) - (84.6 * self.average_syllable_in_text)
 
     def f2_analyse(self):
-        self.f2 = 3.6363 + (0.1579 * (self.syllable_3_more_count / self.token_count)) + (0.496 * self.average_sentence_len)
+        self.f2 = 3.6363 + (0.1579 * (self.syllable_3_more_count)) + (0.496 * self.average_sentence_len)
     
     def f3_analyse(self):
-        self.f3 = (4.71 * (self.char_count / int(self.type_count))) + (0.5 * (self.type_count / int(self.sentence_count))) - 21.43
+        self.f3 = (4.71 * (self.char_count / int(self.token_count))) + (0.5 * (self.token_count / int(self.sentence_count))) - 21.43
 
     def tolist(self):
         summary = []
@@ -582,148 +596,100 @@ class Analyser():
         words = []
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
-                words.append(row['Lemma'])
-        bigrams = []
+                words.append(row['wordForm'])
 
-        for i in range(0,len(words)-1):
-            bigrams.append(words[i] + ' ' + words[i+1])
-
-        self.bigram_freq_1_above = len(bigrams) - len(set(bigrams))
+        self.bigram_freq_1_above = sum(value != 1 for value in self.bigrams.values())
         return self.bigram_freq_1_above
 
     def bigram_freq_1_analyse(self):
         words = []
         for index, row in self.words.iterrows():
             if not math.isnan(float(row['q'])):
-                words.append(row['Lemma'])
+                words.append(row['wordForm'])
 
-        bigrams = []
 
-        count = 0
         for i in range(0,len(words)-1):
-            if words[i] == words[i+1]:
-                count+=1
-            bigrams.append(words[i] + ' ' + words[i+1])
-            bigrams.append(words[i+1] + ' ' + words[i])
+            text = words[i] + ' ' + words[i+1]
+            self.bigrams[text] = self.bigrams.get(text,0)+1
 
-        self.bigram_freq_1 = len(set(bigrams))
+        self.bigram_freq_1 = sum(value == 1 for value in self.bigrams.values())
         return self.bigram_freq_1
 
     def bigram_freq_1_to_above_1_ratio_analyse(self):
-        self.bigram_freq_1_to_above_1_ratio = self.bigram_freq_1_above_analyse() / self.bigram_freq_1_analyse()
+        self.bigram_freq_1_to_above_1_ratio = self.bigram_freq_1 / (self.bigram_freq_1_above or 1)
 
     def trigram_freq_1_analyse(self):
         words = []
         for index, row in self.words.iterrows():
                 if not math.isnan(float(row['q'])):
-                    words.append(row['Lemma'])
-        trigrams = []
+                    words.append(row['wordForm'])
+        trigrams = {}
 
         for i in range(0, len(words) - 2):
-            trigrams.append(words[i] + ' ' + words[i + 1] + ' ' + words[i + 2])
+            text = words[i] + ' ' + words[i + 1] + ' ' + words[i + 2]
+            trigrams[text] = trigrams.get(text, 0) + 1
 
-        self.trigram_freq_1 = len(set(trigrams))
+        self.trigrams = trigrams
+        
+        self.trigram_freq_1 = sum(value == 1 for value in self.trigrams.values())
         return self.trigram_freq_1
 
     def trigram_freq_1_above_analyse(self):
-        words = []
-        for index, row in self.words.iterrows():
-                if not math.isnan(float(row['q'])):
-                    words.append(row['Lemma'])
 
-        trigrams = []
-
-        for i in range(0, len(words) - 2):
-            trigrams.append(words[i] + ' ' + words[i + 1] + ' ' + words[i + 2])
-
-        self.trigram_freq_1_above = len(trigrams) - len(set(trigrams))
+        self.trigram_freq_1_above = sum(value != 1 for value in self.trigrams.values())
         return self.trigram_freq_1_above
 
     def trigram_freq_1_to_above_1_ratio_analyse(self):
-        self.trigram_freq_1_to_above_1_ratio = self.trigram_freq_1_above_analyse() / self.trigram_freq_1_analyse()
+        self.trigram_freq_1_to_above_1_ratio = self.trigram_freq_1 / (self.trigram_freq_1_above or 1)
 
     def pos_bigram_freq_1_analyse(self):
         words = []
         for index, row in self.words.iterrows():
-            if index < 100:
-                if not str(row['POS type (functional/content)']) == 'nan':
-                    words.append(row['POS type (functional/content)'])
-            else:
-                break
-        self.pos_bigram_freq_1 = len(set(words))
+            if not str(row['POS']) == 'nan':
+                words.append(row['POS'])
+            
+        pos_bigrams = {}
 
-    def pos_bigram_freq_1_above_analyse(self):
-        words = []
-        for index, row in self.words.iterrows():
-            if index < 100:
-                try:
-                    if not str(row['POS type (functional/content)']) == 'nan':
-                        words.append(row['POS type (functional/content)'])
-                except:
-                    pass
-            else:
-                break
-        bigrams = []
-
-        for i in range(0,len(words)-1):
-            bigrams.append(str(words[i]) + ' ' + str(words[i+1]))
-
-        self.pos_bigram_freq_1_above = len(bigrams) - len(set(bigrams))
-        return self.pos_bigram_freq_1_above
-
-    def pos_bigram_freq_1_analyse(self):
-        words = []
-        for index, row in self.words.iterrows():
-            if index < 100:
-                if not str(row['POS type (functional/content)']) == 'nan':
-                    words.append(row['POS type (functional/content)'])
-            else:
-                break
-        bigrams = []
-
-        for i in range(0,len(words)-1):
-            bigrams.append(words[i] + ' ' + words[i+1])
-
-        self.pos_bigram_freq_1 = len(set(bigrams))
+        for i in range(0, len(words) - 1):
+            text = words[i] + ' ' + words[i + 1]
+            pos_bigrams[text] = pos_bigrams.get(text, 0) + 1
+        
+        self.pos_bigrams = pos_bigrams
+        
+        self.pos_bigram_freq_1 = sum(value == 1 for value in self.pos_bigrams.values())
         return self.pos_bigram_freq_1
 
+    def pos_bigram_freq_1_above_analyse(self):
+
+        self.pos_bigram_freq_1_above = sum(value != 1 for value in self.pos_bigrams.values())
+        return self.pos_bigram_freq_1_above
+
+
     def pos_bigram_freq_1_to_above_1_ratio_analyse(self):
-        return self.pos_bigram_freq_1_above_analyse()/self.pos_bigram_freq_1_analyse()
+        self.pos_bigram_freq_1_to_above_1_ratio = self.pos_bigram_freq_1_analyse()/(self.pos_bigram_freq_1_above_analyse() or 1)
 
     def pos_trigram_freq_1_analyse(self):
         words = []
         for index, row in self.words.iterrows():
-            if index < 100:
-                if not str(row['POS type (functional/content)']) == 'nan':
-                    words.append(row['POS type (functional/content)'])
-            else:
-                break
-        trigrams = []
+            if not str(row['POS']) == 'nan':
+                words.append(row['POS'])
+        pos_trigrams = {}
 
         for i in range(0, len(words) - 2):
-            trigrams.append(words[i] + ' ' + words[i + 1] + ' ' + words[i + 2])
+            text = words[i] + ' ' + words[i + 1] + ' ' + words[i + 2]
+            pos_trigrams[text] = pos_trigrams.get(text, 0) + 1
+        
+        self.pos_trigrams = pos_trigrams
 
-        self.pos_trigram_freq_1 = len(set(trigrams))
+        self.pos_trigram_freq_1 = sum(value == 1 for value in self.pos_trigrams.values())
         return self.pos_trigram_freq_1
 
     def pos_trigram_freq_1_above_analyse(self):
-        words = []
-        for index, row in self.words.iterrows():
-            if index < 100:
-                if not str(row['POS type (functional/content)']) == 'nan':
-                    words.append(row['POS type (functional/content)'])
-            else:
-                break
-        trigrams = []
-
-        for i in range(0, len(words) - 2):
-            trigrams.append(words[i] + ' ' + words[i + 1] + ' ' + words[i + 2])
-
-        self.pos_trigram_freq_1_above = len(trigrams) - len(set(trigrams))
+        self.pos_trigram_freq_1_above = sum(value != 1 for value in self.pos_trigrams.values())
         return self.pos_trigram_freq_1_above
 
     def pos_trigram_freq_1_to_above_1_ratio_analyse(self):
-        self.pos_trigram_freq_1_to_above_1_ratio = self.pos_trigram_freq_1_analyse() / (self.pos_trigram_freq_1_above_analyse() or 1)
+        self.pos_trigram_freq_1_to_above_1_ratio = self.pos_trigram_freq_1 / (self.pos_trigram_freq_1_above or 1)
 
     def f4_analyse(self):
         result = 0
@@ -802,17 +768,7 @@ class Analyser():
         self.name_entity_count = result
 
     def name_entity_to_token_ratio_analyse(self):
-        result = 0
-        count = self.type_count
-        for index, row in self.words.iterrows():
-            count += 1
-            try:
-                if not row['POS'][5] == '-':
-                    result += 1
-            except:
-                pass
-
-        self.name_entity_to_token_ratio = result/count
+        self.name_entity_to_token_ratio = self.name_entity_count/self.token_count
 
     def count_clause_dependency_tree_analyse(self):
         result = 0
