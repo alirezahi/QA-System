@@ -545,7 +545,7 @@ class Analyser():
         features = []
         for field in fields:
             features.append(min(self.__dict__[field] / alpha.get(field, 1), 1))
-        print('injaaaaa', features)
+        # print('injaaaaa', features)
         result = spatial.distance.cosine(features, [1]*len(features))
         if result > 0.7: return 'A'
         if result > 0.3: return 'B'
