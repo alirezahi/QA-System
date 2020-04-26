@@ -822,9 +822,11 @@ class CreateQuestions(View):
         for file in files:
             if file.endswith('.csv'):
                 csv_files.append(file)
+        count = 0
 
         for file in csv_files:
-            print(file)
+            print(count, file)
+            count += 1
             import re
             file_level = get_level(file)
             words = pd.read_csv('./data/'+file)
