@@ -464,6 +464,10 @@ class Analyser():
                     'pos_trigram_freq_1_to_above_1_ratio',
                     'count_clauses_dependency',
                     'clause_dependency_total_dependency',
+                    'ravabet_dastori_dar_tajziye_vabastegi_type_count',
+                    'grehaye_sakhtari_dar_tajzie_sazei_token_count',
+                    'naghshi_to_mohtavai_ratio',
+                    'mohtavai_to_naghshi_ratio',
                 ],
                 'morphology':[
                     'word_bon_type_count',
@@ -471,12 +475,6 @@ class Analyser():
                     'word_bon_type_count_to_token_count',
                     'word_bon_freq_1_to_token_count',
                     'word_bon_freq_1',
-                ],
-                'syntax': [
-                    'ravabet_dastori_dar_tajziye_vabastegi_type_count',
-                    'grehaye_sakhtari_dar_tajzie_sazei_token_count',
-                    'naghshi_to_mohtavai_ratio',
-                    'mohtavai_to_naghshi_ratio',
                 ],
                 'phonetic': [
                     'average_syllable_in_text',
