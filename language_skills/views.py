@@ -824,6 +824,7 @@ class CreateQuestions(View):
                 csv_files.append(file)
 
         for file in csv_files:
+            print(file)
             import re
             file_level = get_level(file)
             words = pd.read_csv('./data/'+file)
