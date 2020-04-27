@@ -1,0 +1,275 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,در,در,E-,5,VMOD,CVC,1,2,f,(ROOT (S (VPS (E------- *),4,0,1,0
+1,2,افسانه-های,***not found***افسانه-های***Nclp--z
+1,3,ایرانی,ایرانی,Aps-,2,NMOD,CVCVCV,3,6,c,(PPC (As--- *),2,0,0,3
+1,4,چنین,***not found***چنین***Zfs-----
+1,5,گفته-اند,***not found***گفته-اند***Vpyssht----
+1,6,:,:,Oo,8,PUNC,:,1,1,f,(VPA (Oo *),2,0,0,1
+1,7,سال-ها,سال-,Nclp---,8,MWE,CVCCV,2,6,c,(VPA (MADV (NUM (Nclp------ *),4,0,1,1
+1,8,بود,بودن,Vpyksht----,5,CCOMP,CVC,1,3,c,(Vpyk-sht------ *),1,0,1,0
+1,9,که,که,J--,16,COMPM,CV,1,2,f,(NUM (J-------- *),2,0,0,1
+1,10,سربازان,سرباز,Nclp--z,16,NSUBJ,CVCCVCCV,4,7,c,(Nclp----z- *),1,0,2,1
+1,11,ایران,ایران,Naspk--,12,NounCOOR,CVCVC,2,5,c,(Naspk----- *),1,0,1,1
+1,12,و,و,Jr-,10,NN,CV,1,1,f,(Jr------- *))),1,0,0,1
+1,13,توران,توران,Naspk--,12,NounCOOR,CVCVC,2,5,c,(Naspk----- *)),1,0,1,1
+1,14,با,با,E-,16,IDOBJ,CV,1,2,f,(MV (PPC (E------- *),3,0,0,1
+1,15,هم,***not found***هم***Zc------
+1,16,می-جنگیدند,***not found***می-جنگیدند***Vpyslhti---
+1,17,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,عاقبت,***not found***عاقبت***Dgps---
+2,2,برای,برای,Ez,8,VMOD,CVCVCVV,3,4,f,(E------z *)),1,0,0,2
+2,3,اینکه,اینکه,J--,5,NMOD,VCCV,2,5,f,(VPA-nid (VPC-nid (NPA-nid (NPA-nid (NPA (J-------- *),6,0,0,1
+2,4,کینه-ها,***not found***کینه-ها***Nclp---
+2,5,و,و,Jr-,2,POBJ,CV,1,1,f,(Jr------- *))),1,0,0,1
+2,6,دشمنی-ها,دشمنی-,Nclp---,5,NounCOOR,CVCCVCVC,4,8,c,(PPC-nid (Nclp------ *),2,0,2,1
+2,7,تمام,تمام,Aps-,8,MWE,CVCVC,2,4,c,(DPC-nid (DPC (As--- *),3,0,1,1
+2,8,شود,شدن,Vpyssh--u--,14,VMOD,CVVC,2,3,c,(Vpys-sh--u---- *))))),1,0,0,0
+2,9,،,،,Oc,8,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+2,10,پادشاهان,پادشاه,Nclp--z,14,MWE,CVCVCVCCV,5,8,c,(Nclp----z- *)),1,0,1,3
+2,11,ایران,ایران,Naspk--,12,NounCOOR,CVCVC,2,5,c,(PPC (Naspk----- *),2,0,1,1
+2,12,و,و,Jr-,10,NN,CV,1,1,f,(N (Jr------- *),2,0,0,1
+2,13,توران,توران,Naspk--,12,NounCOOR,CVCVC,2,5,c,(Naspk----- *),1,0,1,1
+2,14,پذیرفتند,پذیرفتن,Vpyslht----,0,ROOT,CVCVCVCCVCC,4,8,c,(Vpys-lht------ *))))),1,1,1,2
+2,15,که,که,J--,23,MARK,CV,1,2,f,(DiscE (PPC (J-------- *),3,0,0,1
+2,16,توسط,***not found***توسط***Ez
+2,17,ایرانیان,ایران,Nalp---,16,POBJ,CVCVCVCVC,4,8,c,(Nalp------ *),1,0,1,3
+2,18,تیری,تیر,Ncsp--y,17,NN,CVCCV,2,4,c,(Ncsp----y- *)),1,0,1,1
+2,19,به,به,E-,23,IDOBJ,CV,1,2,f,(ADJ (E------- *),2,0,0,1
+2,20,سوی,سو,Ncsp--z,19,POBJ,CVCVV,3,3,c,(Ncsp----z- *),1,0,0,1
+2,21,شرق,شرق,Ncspc--,20,NN,CVCC,1,3,c,(Ncspc----- *))),1,1,0,0
+2,22,پرتاب,پرتاب,Ncsp---,23,MWE,CVCCVC,2,5,c,(CPC-adj (Ncsp------ *),2,0,2,0
+2,23,شود,شدن,Vpyssh--u--,14,CCOMP,CVVC,2,3,c,(Vpys-sh--u---- *)))))),1,0,0,0
+2,24,.,.,Oe,14,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,هر,***not found***هر***Tf-------
+3,2,جا,جا,Ncsp---,1,DETCOMP,CV,1,2,c,(PPC (Ncsp------ *),2,0,0,1
+3,3,که,که,J--,7,RELSUBJ,CV,1,2,f,(NPA (J-------- *),2,0,0,1
+3,4,تیر,تیر,Ncsp---,7,NSUBJ,CVC,1,3,c,(Ncsp------ *)))),1,0,1,0
+3,5,به,به,E-,7,MWE,CV,1,2,f,(ADVPC (E------- *),2,0,0,1
+3,6,زمین,زمین,Ncspk--,5,POBJ,CVCVC,2,4,c,(NPC (Ncspk----- *),2,0,1,1
+3,7,افتاد,افتادن,Vpyssht----,1,DETCOMP,CVCCVC,2,5,c,(Vpys-sht------ *)))),1,0,2,0
+3,8,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+3,9,آنجا,آنجا,Dgp-k--,14,VMOD,CVCCV,2,4,c,(CPC-verb (VPC (Dgp-k-- *),3,0,1,1
+3,10,مرز,مرز,Ncsp--z,14,MWE,CVCCV,2,3,c,(MV (Ncsp----z- *),2,0,1,1
+3,11,ایران,ایران,Naspk--,12,NounCOOR,CVCVC,2,5,c,(Naspk----- *))),1,0,1,1
+3,12,و,و,Jr-,10,NN,CV,1,1,f,(CPC-verb (MCONJ (Jr------- *),3,0,0,1
+3,13,توران,توران,Naspk--,12,NounCOOR,CVCVC,2,5,c,(Naspk----- *)),1,0,1,1
+3,14,باشد,بودن,Vpyssh--u--,0,ROOT,CVCVC,2,4,c,(Vpys-sh--u---- *)))),1,0,1,1
+3,15,.,.,Oe,14,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,آرش,آرش,Nasp---,4,NSUBJ,CVCVC,2,3,c,(ROOT (S (NPA (Nasp------ *),4,0,1,1
+4,2,قهرمان,قهرمان,Ncsp--z,1,NN,CVCCCVCV,4,6,c,(NPA (Ncsp----z- *),2,1,0,2
+4,3,ایرانیان,ایران,Nalp---,4,MWE,CVCVCVCVC,4,8,c,(Nalp------ *)),1,0,1,3
+4,4,بود,بودن,Vpyksht----,0,ROOT,CVC,1,3,c,(Vpyk-sht------ *)),1,0,1,0
+4,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,فرشته,فرشته,Ncsp--z,6,NSUBJ,CVCVCCVV,4,5,c,(ROOT (S (CL-nid-DiscA (VPS-DiscA (NPA (Ncsp----z- *),6,0,1,1
+5,2,زمین,زمین,Ncspk--,1,NN,CVCVC,2,4,c,(PPC (Ncspk----- *),2,0,1,1
+5,3,نزد,نزد,Ez,5,IDOBJ,CVCCVV,2,3,f,(NPC (E------z *),2,0,1,0
+5,4,او,***not found***او***Zrsh----
+5,5,آمد,آمدن,Vpyssht----,6,VerbCOOR,CVCVC,2,3,c,(VPA-DiscA (Vpys-sht------ *),2,0,1,1
+5,6,و,و,Jr-,0,ROOT,CV,1,1,f,(MV-DiscA (DiscA (CL (Jr------- *),4,0,0,1
+5,7,گفت,گفتن,Vpyssht----,6,VerbCOOR,CVCC,1,3,c,(VPSD (VPC (Vpys-sht------ *),3,1,0,0
+5,8,:,:,Oo,7,PUNC,:,1,1,f,(CLQ (Oo *),2,0,0,1
+5,9,&quot;,***not found***&quot;***Ncsp--z
+5,10,تیر,تیر,Ncsp---,11,NounCOOR,CVC,1,3,c,(VPS (DPC (Ncsp------ *),3,0,1,0
+5,11,و,و,Jr-,9,NN,CV,1,1,f,(Jr------- *)),1,0,0,1
+5,12,کمانت,***not found***کمانت***Ncsp----2-
+5,13,را,را,P,9,ACC,CV,1,2,f,(Cez--nstc *)),1,0,0,1
+5,14,بردار,برداشتن,Vpysst--m--,15,VerbCOOR,CVCCVC,2,5,c,(P *)),1,0,2,0
+5,15,و,و,Jr-,8,VerbCOOR,CV,1,1,f,(VPA (PPC (Vpys-st--m---- *),3,0,0,1
+5,16,به,به,E-,21,IDOBJ,CV,1,2,f,(DPC (Jr------- *),2,0,0,1
+5,17,سوی,سو,Ncsp--z,16,POBJ,CVCVV,3,3,c,(E------- *))),1,0,0,1
+5,18,مشرق-زمین,***not found***مشرق-زمین***Nclp---
+5,19,تیری,تیر,Ncsp--y,18,NN,CVCCV,2,4,c,(Nclp------ *))))))))))),1,0,1,1
+5,20,پرتاب,پرتاب,Ncsp---,21,MWE,CVCCVC,2,5,c,(MV (PPC (Ncsp----y- *),3,0,2,0
+5,21,کن,کردن,Vpysst--m--,15,VerbCOOR,CVC,1,2,c,(Ncsp------ *)),1,0,1,0
+5,22,.,.,Oe,6,PUNC,.,1,1,f,(Vpys-st--m---- *)))))),1,0,0,1
+6,1,&quot;,***not found***&quot;***Nasp--z
+6,2,آرش,آرش,Nasp---,3,MWE,CVCVC,2,3,c,(Nasp------ *),1,0,1,1
+6,3,فهمید,فهمیدن,Vpyssht----,0,ROOT,CVCCVC,2,5,c,(Vpys-sht------ *),1,0,2,0
+6,4,که,که,J--,12,COMPM,CV,1,2,f,(J-------- *),1,0,0,1
+6,5,مرزهای,مرز,Nclpk-z,12,NSUBJ,CVCCVCV,3,6,c,(Nclpk---z- *)),1,0,1,2
+6,6,سرزمین,سرزمین,Ncspk-z,5,NN,CVCCVCVCV,4,6,c,(Ncspk---z- *)),1,0,1,3
+6,7,ایران,ایران,Naspk--,6,POSSESSIVE,CVCVC,2,5,c,(N (Naspk----- *),2,0,1,1
+6,8,به,به,E-,12,IDOBJ,CV,1,2,f,(E------- *),1,0,0,1
+6,9,نیروی,نیرو,Ncsp--z,8,POBJ,CVCVCV,4,5,c,(Ncsp----z- *))),1,0,0,3
+6,10,او,***not found***او***Zrsh----
+6,11,بستگی,بستگی,Ncsp---,12,MWE,CVCCVCV,3,5,c,(Ncsp------ *)),1,0,1,2
+6,12,دارد,داشتن,Vpysshs----,3,COMP,CVCVC,2,4,c,(Vpys-shs------ *))),1,0,1,1
+6,13,.,.,Oe,3,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,پس,***not found***پس***J--
+7,2,برهنه,برهنه,Aps-,3,MWE,CVCVCCV,3,5,c,(NPC (As--- *),2,0,1,2
+7,3,شد,شدن,Vpyssht----,13,VMOD,CVC,1,2,c,(Vpys-sht------ *))),1,0,1,0
+7,4,،,،,Oc,3,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+7,5,بدنش,بدن,Ncsp----3-,12,DOBJ,CVCVCVC,3,4,c,(VPF (DiscE (NPC (NPC (Ncsp------ *),5,0,1,2
+7,6,را,را,P,5,ACC,CV,1,2,f,(Cez--nshc *)),1,0,0,1
+7,7,به,به,E-,12,VMOD,CV,1,2,f,(P *))),1,0,0,1
+7,8,شاه,شاه,Nasp---,9,NounCOOR,CVC,1,3,c,(VPF-nid (VPS-nid-nid (NPA (E------- *),4,0,1,0
+7,9,و,و,Jr-,7,POBJ,CV,1,1,f,(ADJ (Nasp------ *),2,0,0,1
+7,10,سربازان,سرباز,Nclp---,9,NounCOOR,CVCCVCC,3,7,c,(Jr------- *),1,1,1,0
+7,11,نشان,نشان,Ncsp---,12,MWE,CVCVC,2,4,c,(Nclp------ *))),1,0,1,1
+7,12,داد,دادن,Vpyssht----,13,VerbCOOR,CVC,1,3,c,(VPC-nid-nid (CPC-noun-nid-nid (CPC-noun-nid (Ncsp------ *),4,0,1,0
+7,13,و,و,Jr-,0,ROOT,CV,1,1,f,(NPC-nid (Vpys-sht------ *)))),2,0,0,1
+7,14,گفت,گفتن,Vpyssht----,13,VerbCOOR,CVCC,1,3,c,(Jr------- *))),1,1,0,0
+7,15,:,:,Oo,21,PUNC,:,1,1,f,(DiscE (PPC (Vpys-sht------ *),3,0,0,1
+7,16,&quot;,***not found***&quot;***Ncsp---
+7,17,ببینید,***not found***ببینید***Vpyslt--u--
+7,18,بدن,بدن,Ncsp--z,17,NN,CVCVCV,3,3,c,(NPC (Vpys-lt--u---- *),2,0,0,3
+7,19,من,***not found***من***Zrso----
+7,20,سالم,سالم,Aps-,21,COPCOMP,CVCVC,2,4,c,(Zrso---- *)))),1,0,1,1
+7,21,است,بودن,Vpykshs----,14,CCOMP,CVCC,1,3,c,(MV (As--- *),2,1,0,0
+7,22,.,.,Oe,13,PUNC,.,1,1,f,(Vpyk-shs------ *))))))))),1,0,0,1
+8,1,اما,اما,Jr-,0,ROOT,CVCCV,2,3,f,(ROOT (S (VPF (VPS-nid (DPC (Jr------- *),6,0,1,1
+8,2,تیری,تیر,Ncsp--y,7,NSUBJ,CVCCV,2,4,c,(Ncsp----y- *)),1,0,1,1
+8,3,از,از,E-,7,IDOBJ,CVC,1,2,f,(VPC-nid (NPA-nid (NPA-nid (NPA (E------- *),5,0,1,0
+8,4,کمان,کمان,Ncsp---,3,POBJ,CVCVC,2,4,c,(ADJPA (NUM (Ncsp------ *),3,0,1,1
+8,5,رها,رها,Aps-,7,MWE,CVCV,2,3,c,(As--- *),1,0,0,2
+8,6,خواهم,خواستن,Vpx-sou----,7,AUX,CVCVC,2,5,c,(Vpx--sou------ *),1,0,1,1
+8,7,کرد,کردن,Vpyssht----,1,VerbCOOR,CVCC,1,3,c,(Vpys-sht------ *),1,1,0,0
+8,8,که,که,J--,17,COMPM,CV,1,2,f,(J-------- *)),1,0,0,1
+8,9,به,به,E-,17,IDOBJ,CV,1,2,f,(E------- *))),1,0,0,1
+8,10,نیروی,نیرو,Ncsp--z,9,POBJ,CVCVCV,4,5,c,(PPC-nid (Ncsp----z- *),2,0,0,3
+8,11,این,***not found***این***Tm-------
+8,12,تن,تن,Ncsp---,13,NounCOOR,CVC,1,2,c,(Ncsp------ *))))),1,0,1,0
+8,13,و,و,Jr-,11,DETCOMP,CV,1,1,f,(Jr------- *)),1,0,0,1
+8,14,بدن,بدن,Ncsp---,13,NounCOOR,CVCVC,2,3,c,(Ncsp------ *))),1,0,1,1
+8,15,حرکت,حرکت,Ncsp---,17,MWE,CVCVCVC,3,4,c,(DiscE (MN (Ncsp------ *),3,0,1,2
+8,16,خواهد,خواستن,Vpx-shu----,17,AUX,CVCVC,2,5,c,(Vpx--shu------ *),1,0,1,1
+8,17,کرد,کردن,Vpyssht----,7,CCOMP,CVCC,1,3,c,(Vpys-sht------ *)))),1,1,0,0
+8,18,.,.,Oe,1,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+9,1,من,***not found***من***Zrso----
+9,2,جانم,جان,Ncsp----1-,7,DOBJ,CVCVC,2,4,c,(VPC (NPC (NPC (Ncsp------ *),4,0,1,1
+9,3,را,را,P,2,ACC,CV,1,2,f,(Cez--nsoc *)),1,0,0,1
+9,4,به,به,E-,7,VMOD,CV,1,2,f,(P *)),1,0,0,1
+9,5,ایران-زمین,***not found***ایران-زمین***Ncsp---
+9,6,هدیه,هدیه,Ncsp---,7,MWE,CVCVCV,2,4,c,(NPA (NUM (Ncsp------ *),3,0,0,3
+9,7,می-کنم,***not found***می-کنم***Vpyssosi---
+9,8,.,.,Oe,7,PUNC,.,1,1,f,(Vpys-sosi----- *))),1,0,0,1
+10,1,&quot;,***not found***&quot;***Nasp--z
+10,2,آرش,آرش,Nasp--z,13,DOBJ,CVCVCV,3,3,c,(ADJ (Nasp----z- *),2,0,0,3
+10,3,تیر,تیر,Nasp---,4,NounCOOR,CVC,1,3,c,(Nasp------ *),1,0,1,0
+10,4,و,و,Jr-,2,NN,CV,1,1,f,(Jr------- *))),1,0,0,1
+10,5,کمانش,کمان,Ncsp----3-,4,NounCOOR,CVCVCVC,3,5,c,(VPC (NPC (NPC (Ncsp------ *),4,0,1,2
+10,6,را,را,P,2,ACC,CV,1,2,f,(Cez--nshc *)),1,0,0,1
+10,7,برداشت,برداشت,Ncsp---,8,NounCOOR,CVCCVCC,2,6,c,(P *)),1,1,1,0
+10,8,و,و,Jr-,13,VMOD,CV,1,1,f,(Ncsp------ *))),1,0,0,1
+10,9,به,به,E-,8,PrepCOOR,CV,1,2,f,(CL (Jr------- *),2,0,0,1
+10,10,بالای,بالا,Ncsp--z,9,POBJ,CVCCVV,3,5,c,(RES (E------- *),2,0,1,0
+10,11,قله,قله,Ncspk-z,10,NN,CVCCVV,3,3,c,(Ncsp----z- *),1,0,1,0
+10,12,دماوند,دماوند,Naspk--,13,MWE,CVCVCVCC,3,6,c,(Ncspk---z- *),1,1,0,2
+10,13,رفت,رفتن,Vpyssht----,0,ROOT,CVCC,1,3,c,(Naspk----- *),1,1,0,0
+10,14,.,.,Oe,13,PUNC,.,1,1,f,(Vpys-sht------ *)))),1,0,0,1
+11,1,تیری,تیر,Ncsp--y,4,NSUBJ,CVCCV,2,4,c,(ROOT (S (CL-nid-DiscA (VPS-DiscA (DPC (Ncsp----y- *),6,0,1,1
+11,2,در,در,E-,4,MWE,CVC,1,2,f,(NPA (E------- *),2,0,1,0
+11,3,کمان,کمان,Ncsp---,2,POBJ,CVCVC,2,4,c,(Ncsp------ *))),1,0,1,1
+11,4,گذاشت,گذاشتن,Vpyssht----,5,VerbCOOR,CVCVCC,2,5,c,(VPA-DiscA (Vpys-sht------ *),2,1,0,1
+11,5,و,و,Jr-,0,ROOT,CV,1,1,f,(MV-DiscA (DiscA (CL (Jr------- *),4,0,0,1
+11,6,آن,***not found***آن***Zms-----
+11,7,را,را,P,6,ACC,CV,1,2,f,(P *)),1,0,0,1
+11,8,به,به,E-,12,VMOD,CV,1,2,f,(MV (E------- *),2,0,0,1
+11,9,سوی,سو,Ncsp--z,8,POBJ,CVCVV,3,3,c,(Ncsp----z- *)))))),1,0,0,1
+11,10,مشرق-زمین,***not found***مشرق-زمین***Nclp---
+11,11,نشانه,نشانه,Ncsp---,12,MWE,CVCVCV,3,5,c,(Ncsp------ *)),1,0,0,3
+11,12,گرفت,گرفتن,Vpyssht----,5,VerbCOOR,CVCVCC,2,4,c,(Vpys-sht------ *)))))),1,1,0,1
+11,13,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+12,1,آنگاه,***not found***آنگاه***J--
+12,2,با,با,E-,8,IDOBJ,CV,1,2,f,(E------- *)),1,0,0,1
+12,3,همه,***not found***همه***Tf------z
+12,4,نیرو,نیرو,Ncsp---,3,DETCOMP,CVCV,2,4,c,(NPC (Ncsp------ *),2,0,0,2
+12,5,تیر,تیر,Ncsp---,8,DOBJ,CVC,1,3,c,(Ncsp------ *))),1,0,1,0
+12,6,را,را,P,5,ACC,CV,1,2,f,(P *)),1,0,0,1
+12,7,رها,رها,Aps-,8,MWE,CVCV,2,3,c,(MV (As--- *),2,0,0,2
+12,8,کرد,کردن,Vpyssht----,0,ROOT,CVCC,1,3,c,(Vpys-sht------ *)))),1,1,0,0
+12,9,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+13,1,تیر,تیر,Ncsp---,5,NSUBJ,CVC,1,3,c,(ROOT (S (VPA (N (Ncsp------ *),5,0,1,0
+13,2,از,از,E-,5,VMOD,CVC,1,2,f,(E------- *)),1,0,1,0
+13,3,کمان,کمان,Ncsp---,2,POBJ,CVCVC,2,4,c,(VPA (MADV (NUM (Ncsp------ *),4,0,1,1
+13,4,رها,رها,Aps-,5,MWE,CVCV,2,3,c,(As--- *),1,0,0,2
+13,5,شد,شدن,Vpyssht----,6,VerbCOOR,CVC,1,2,c,(NUM (Vpys-sht------ *),2,0,1,0
+13,6,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *),1,0,0,1
+13,7,بدن,بدن,Ncsp--z,12,NSUBJ,CVCVCV,3,3,c,(Ncsp----z- *),1,0,0,3
+13,8,بی-جان,***not found***بی-جان***Nclp--z
+13,9,آرش,آرش,Nasp---,8,NN,CVCVC,2,3,c,(Nasp------ *)),1,0,1,1
+13,10,بر,بر,E-,12,MWE,CVC,1,2,f,(MV (PPC (E------- *),3,0,1,0
+13,11,زمین,زمین,Ncspk--,10,POBJ,CVCVC,2,4,c,(Ncspk----- *)),1,0,1,1
+13,12,افتاد,افتادن,Vpyssht----,6,VerbCOOR,CVCCVC,2,5,c,(Vpys-sht------ *)))),1,0,2,0
+13,13,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+14,1,هرمزد,هرمزد,Nasp---,10,VMOD,CVCCVCVC,2,5,c,(ROOT (S (CL (CONJ (Nasp------ *),5,0,2,1
+14,2,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+14,3,خدای,خدا,Nasp--z,10,NSUBJ,CVCVCV,3,4,c,(VPS (DPC (DPC (Nasp----z- *),4,0,0,3
+14,4,بزرگ,بزرگ,Aps-,3,NMOD,CVCVCC,2,4,c,(As--- *)),1,1,0,1
+14,5,،,،,Oc,3,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+14,6,به,به,E-,10,IDOBJ,CV,1,2,f,(VPA (MADV (NUM (E------- *),4,0,0,1
+14,7,فرشته,فرشته,Ncsp--z,6,POBJ,CVCVCCVV,4,5,c,(Ncsp----z- *),1,0,1,1
+14,8,باد,باد,Ncsp---,7,NN,CVC,1,3,c,(NUM (Ncsp------ *),2,0,1,0
+14,9,دستور,دستور,Ncsp---,10,MWE,CVCCVC,2,5,c,(Ncsp------ *),1,0,2,0
+14,10,داد,دادن,Vpyssht----,0,ROOT,CVC,1,3,c,(Vpys-sht------ *),1,0,1,0
+14,11,تا,تا,J--,15,PURPCL,CV,1,2,f,(J-------- *))),1,0,0,1
+14,12,از,از,E-,15,IDOBJ,CVC,1,2,f,(E------- *)),1,0,1,0
+14,13,تیر,تیر,Ncsp---,12,POBJ,CVC,1,3,c,(MV (PPC (Ncsp------ *),3,0,1,0
+14,14,مراقبت,مراقبت,Ncsp---,15,MWE,CVCVCVCVC,4,6,c,(Ncsp------ *)),1,0,1,3
+14,15,کند,کردن,Vpyssh--u--,10,VMOD,CVCVC,2,3,c,(Vpys-sh--u---- *))))),1,0,1,1
+14,16,.,.,Oe,10,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+15,1,تیر,تیر,Ncsp---,9,NSUBJ,CVC,1,3,c,(ROOT (S (NPA (Ncsp------ *),4,0,1,0
+15,2,از,از,E-,1,NMOD,CVC,1,2,f,(NPA (E------- *),2,0,1,0
+15,3,صبح,صبح,Ncspt--,2,POBJ,CVCC,1,3,c,(ADJPA (NUM (Ncspt----- *),3,1,0,0
+15,4,تا,تا,E-,2,POBJ,CV,1,2,f,(E------- *),1,0,0,1
+15,5,ظهر,ظهر,Ncspt--,4,POBJ,CVCC,1,3,c,(Ncspt----- *),1,1,0,0
+15,6,در,در,E-,9,VMOD,CVC,1,2,f,(E------- *),1,0,1,0
+15,7,آسمان,آسمان,Ncsp---,6,POBJ,CVCVCVC,3,5,c,(Ncsp------ *)),1,0,1,2
+15,8,پرواز,پرواز,Ncsp---,9,MWE,CVCCVC,2,5,c,(Ncsp------ *))),1,0,2,0
+15,9,کرد,کردن,Vpyssht----,0,ROOT,CVCC,1,3,c,(Vpys-sht------ *)),1,1,0,0
+15,10,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+16,1,از,از,E-,7,VMOD,CVC,1,2,f,(ROOT (S (VPF (VPS-nid (DPC (MD (PPC (E------- *),8,0,1,0
+16,2,کوه-ها,کوه-,Nclp---,3,NounCOOR,CVCCV,2,6,c,(Nclp------ *),1,0,1,1
+16,3,و,و,Jr-,1,POBJ,CV,1,1,f,(Jr------- *)),1,0,0,1
+16,4,دشت-ها,دشت-,Nclp---,5,NounCOOR,CVCCCV,2,6,c,(Nclp------ *)),1,1,0,1
+16,5,و,و,Jr-,3,NounCOOR,CV,1,1,f,(NPA (Jr------- *),2,0,0,1
+16,6,دره-ها,***not found***دره-ها***Nclp---
+16,7,گذشت,گذشتن,Vpyssht----,8,VerbCOOR,CVCVCC,2,4,c,(VPA-nid (CPC-adv (Vpys-sht------ *),3,1,0,1
+16,8,و,و,Jr-,0,ROOT,CV,1,1,f,(CPC-adv (Jr------- *),2,0,0,1
+16,9,سرانجام,***not found***سرانجام***Dgps---
+16,10,در,در,E-,20,IDOBJ,CVC,1,2,f,(VPC-nid (PPA-nid (PPC (E------- *),4,0,1,0
+16,11,کنار,***not found***کنار***Dgps--z
+16,12,درخت,درخت,Ncsp--z,11,ADVCOMP,CVCVCCV,3,4,c,(NPC (Ncsp----z- *),2,0,1,2
+16,13,گردویی,گردویی,Aps-,12,NMOD,CVCCVCV,3,6,c,(As--- *))))),1,0,1,2
+16,14,در,در,E-,20,VMOD,CVC,1,2,f,(E------- *)))),1,0,1,0
+16,15,ساحل,ساحل,Ncspk-z,14,POBJ,CVCVCV,3,4,c,(DiscE (NPA (NUM (Ncspk---z- *),4,0,0,3
+16,16,رود,رود,Ncspk-z,15,NN,CVCV,2,3,c,(Ncspk---z- *),1,0,0,2
+16,17,جیحون,جیحون,Naspk--,16,NN,CVCCVC,2,5,c,(Naspk----- *),1,0,2,0
+16,18,بر,بر,E-,20,MWE,CVC,1,2,f,(E------- *),1,0,1,0
+16,19,زمین,زمین,Ncspk--,18,POBJ,CVCVC,2,4,c,(Ncspk----- *)),1,0,1,1
+16,20,نشست,نشستن,Vpyssht----,8,VerbCOOR,CVCVCC,2,4,c,(Vpys-sht------ *)))),1,1,0,1
+16,21,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+17,1,آنجا,آنجا,Dgp-k--,8,VMOD,CVCCV,2,4,c,(ROOT (S (VPF (DiscE (NPC (Dgp-k-- *),6,0,1,1
+17,2,را,را,P,1,NN,CV,1,2,f,(P *))),1,0,0,1
+17,3,مرز,مرز,Ncsp--z,8,DOBJ,CVCCV,2,3,c,(VPS-nid (MN (Ncsp----z- *),3,0,1,1
+17,4,ایران,ایران,Naspk--,5,NounCOOR,CVCVC,2,5,c,(Naspk----- *),1,0,1,1
+17,5,و,و,Jr-,3,NN,CV,1,1,f,(Jr------- *)),1,0,0,1
+17,6,توران,توران,Naspk--,5,NounCOOR,CVCVC,2,5,c,(VPA-nid (PPC (Naspk----- *),3,0,1,1
+17,7,قرار,قرار,Ncsp---,8,MWE,CVCVC,2,4,c,(N (Ncsp------ *),2,0,1,1
+17,8,دادند,دادن,Vpyslht----,9,VerbCOOR,CVCVCC,2,5,c,(Vpys-lht------ *),1,1,0,1
+17,9,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *))),1,0,0,1
+17,10,هر,***not found***هر***Tf-------
+17,11,سال,سال,Ncspt--,10,DETCOMP,CVC,1,3,c,(Ncspt----- *)),1,0,1,0
+17,12,به,به,E-,17,IDOBJ,CV,1,2,f,(PPC-nid (E------- *),2,0,0,1
+17,13,یاد,یاد,Ncsp--z,12,POBJ,CVCV,2,3,c,(NPC-nid (Ncsp----z- *),2,0,0,2
+17,14,آن,***not found***آن***Tm-------
+17,15,روز,روز,Ncspt--,14,DETCOMP,CVC,1,3,c,(Ncspt----- *)))))),1,0,1,0
+17,16,جشن,جشن,Ncsp---,17,MWE,CVCC,1,3,c,(MV (Ncsp------ *),2,1,0,0
+17,17,گرفتند,گرفتن,Vpyslht----,9,VerbCOOR,CVCVCCVCC,3,6,c,(Vpys-lht------ *)))))),1,1,1,1
+17,18,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+18,1,می-گویند,***not found***می-گویند***Vpyslhsi---
+18,2,جشن,جشن,Ncsp--z,15,NSUBJ,CVCCV,2,3,c,(CPC-adj (Ncsp----z- *),2,0,1,1
+18,3,تیرگان,***not found***تیرگان***Nclp---
+18,4,که,که,J--,9,RELSUBJ,CV,1,2,f,(ADJPA (ADJ (J-------- *),3,0,0,1
+18,5,از,از,E-,9,IDOBJ,CVC,1,2,f,(E------- *),1,0,1,0
+18,6,جشن-های,جشن-,Nclp--z,5,POBJ,CVCCCVCVV,3,7,c,(Nclp----z- *)),1,1,0,1
+18,7,ایرانیان,ایران,Nalp--z,6,NN,CVCVCVCVCV,5,8,c,(ADJ (Nalp----z- *),2,0,0,5
+18,8,باستان,باستان,Aps-,7,NMOD,CVCCVC,2,6,c,(As--- *),1,0,2,0
+18,9,بوده,بودن,Vp------p--,2,NN,CVCV,2,4,c,(Vpys-sh-f----- *)))))),1,0,0,2
+18,10,است,بودن,Vpykshs----,9,MWE,CVCC,1,3,c,(Oc *)),1,1,0,0
+18,11,،,،,Oc,2,PUNC,،,1,1,f,(VPA (PPC (E------- *),3,0,0,1
+18,12,از,از,E-,15,VMOD,CVC,1,2,f,(Dgp-k-- *)),1,0,1,0
+18,13,اینجا,***not found***اینجا***Dgp-k--
+18,14,پدیدار,پدیدار,Ncsp---,15,MWE,CVCVCVC,3,6,c,(Vpys-sht------ *)))),1,0,1,2
+18,15,شد,شدن,Vpyssht----,0,ROOT,CVC,1,2,c,(Oe *))) ,1,0,1,0
+18,16,.,.,Oe,15,PUNC,.,1,1,f,,-1,0,0,1

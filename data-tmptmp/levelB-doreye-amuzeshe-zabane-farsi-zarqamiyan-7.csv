@@ -1,0 +1,128 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,این,***not found***این***Tm-------
+1,2,تصویر,تصویر,Ncsp---,1,DETCOMP,CVCCVC,2,5,c,(Ncsp------ *)),1,0,2,0
+1,3,یک,یک,Urns---,4,NUM,CVC,1,2,f,(VPC (ADJPA (Urns----- *),3,0,1,0
+1,4,کارخانه,کارخانه,Ncspk--,5,COPCOMP,CVCCVCV,3,7,c,(Ncspk----- *)),1,0,1,2
+1,5,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+1,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,این,***not found***این***Tm-------
+2,2,کارخانه,کارخانه,Ncspk--,1,DETCOMP,CVCCVCV,3,7,c,(Ncspk----- *)),1,0,1,2
+2,3,خیلی,***not found***خیلی***Dips---
+2,4,بزرگ,بزرگ,Aps-,5,COPCOMP,CVCVCC,2,4,c,(As--- *)),1,1,0,1
+2,5,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+2,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,کارگران,کارگر,Nclp--z,7,NSUBJ,CVCCVCCV,4,7,c,(ROOT (S (VPA (N (Nclp----z- *),5,0,2,1
+3,2,زیادی,زیاد,Apsy,1,NMOD,CVCVCV,3,5,c,(As-y- *)),1,0,0,3
+3,3,در,در,E-,7,VMOD,CVC,1,2,f,(VPA (PPC (E------- *),3,0,1,0
+3,4,این,***not found***این***Tm-------
+3,5,کارخانه,کارخانه,Ncspk--,4,DETCOMP,CVCCVCV,3,7,c,(Ncspk----- *))),1,0,1,2
+3,6,کار,کار,Ncsp---,7,MWE,CVC,1,3,c,(MV (Ncsp------ *),2,0,1,0
+3,7,می-کنند,***not found***می-کنند***Vpyslhsi---
+3,8,.,.,Oe,7,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,دستگاه-های,دستگاه-,Nclp--z,6,NSUBJ,CVCCCVCCVCVV,4,10,c,(ROOT (S (VPA (N (Nclp----z- *),5,1,1,1
+4,2,زیادی,زیاد,Apsy,1,NMOD,CVCVCV,3,5,c,(As-y- *)),1,0,0,3
+4,3,در,در,E-,6,VMOD,CVC,1,2,f,(VPA (PPC (E------- *),3,0,1,0
+4,4,اینجا,***not found***اینجا***Dgp-k--
+4,5,وجود,وجود,Ncsp---,6,MWE,CVCVC,2,4,c,(MV (Ncsp------ *),2,0,1,1
+4,6,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *)))),1,0,1,1
+4,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,صاحب,صاحب,Ncsp--z,7,NSUBJ,CVCVCV,3,4,c,(ROOT (S (VPS (NPC (Ncsp----z- *),5,0,0,3
+5,2,این,***not found***این***Tm-------
+5,3,کارخانه,کارخانه,Ncspk--,2,DETCOMP,CVCCVCV,3,7,c,(Ncspk----- *))),1,0,1,2
+5,4,در,در,E-,7,COPCOMP,CVC,1,2,f,(VPC (ADJPC (E------- *),3,0,1,0
+5,5,دفتر,دفتر,Ncspk-z,4,POBJ,CVCCVCV,3,4,c,(PPC (Ncspk---z- *),2,0,1,2
+5,6,کارش,کار,Ncsp----3-,5,NN,CVCVC,2,4,c,(NPC (Ncsp------ *),2,0,1,1
+5,7,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Cez--nshc *)))),1,1,0,0
+5,8,.,.,Oe,7,PUNC,.,1,1,f,(Vpyk-shs------ *))),1,0,0,1
+6,1,او,***not found***او***Zrsh----
+6,2,یک,یک,Urns---,3,NUM,CVC,1,2,f,(VPC (ADJPA (Urns----- *),3,0,1,0
+6,3,کارخانه-دار,***not found***کارخانه-دار***Ncsp---
+6,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+6,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,او,***not found***او***Zrsh----
+7,2,ثروت,ثروت,Ncsp--z,4,MWE,CVCCVCV,3,4,c,(VPC (ADJPA (Ncsp----z- *),3,0,1,2
+7,3,زیادی,زیاد,Apsy,2,NMOD,CVCVCV,3,5,c,(As-y- *)),1,0,0,3
+7,4,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *))),1,0,1,1
+7,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+8,1,این,***not found***این***Tm-------
+8,2,کارخانه-دار,***not found***کارخانه-دار***Ncsp---
+8,3,در,در,E-,9,VMOD,CVC,1,2,f,(VPA (PPC (E------- *),3,0,1,0
+8,4,دفترش,دفتر,Ncspk---3-,3,POBJ,CVCCVCVC,3,5,c,(NPC (Ncspk----- *),2,0,2,1
+8,5,اثاث,اثاث,Ncsp--z,4,NN,CVCVCV,3,4,c,(Cez--nshc *))),1,0,0,3
+8,6,زیبا,زیبا,Aps-,7,AdjCOOR,CVCV,2,4,c,(VPC (PPC (Ncsp----z- *),3,0,0,2
+8,7,و,و,Jr-,5,NMOD,CV,1,1,f,(NPC (As--- *),2,0,0,1
+8,8,شیکی,***not found***شیکی***Aps-
+8,9,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(MV (As--- *),2,0,1,1
+8,10,.,.,Oe,9,PUNC,.,1,1,f,(Vpys-shs------ *))))),1,0,0,1
+9,1,دفتر,دفتر,Ncspk-z,6,NSUBJ,CVCCVCV,3,4,c,(ROOT (S (VPS (NPC (Ncspk---z- *),5,0,1,2
+9,2,او,***not found***او***Zrsh----
+9,3,بزرگ,بزرگ,Aps-,4,AdjCOOR,CVCVCC,2,4,c,(VPC (PPC (As--- *),3,1,0,1
+9,4,و,و,Jr-,6,COPCOMP,CV,1,1,f,(Jr------- *)),1,0,0,1
+9,5,زیبا,زیبا,Aps-,4,AdjCOOR,CVCV,2,4,c,(MV (As--- *),2,0,0,2
+9,6,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+9,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+10,1,او,***not found***او***Zrsh----
+10,2,مرد,مرد,Ncsp--z,4,COPCOMP,CVCCV,2,3,c,(VPC (ADJPA (Ncsp----z- *),3,0,1,1
+10,3,ثروتمندی,ثروتمند,Apsy,2,NMOD,CVCCVCCVCCC,4,8,c,(As-y- *)),1,0,2,0
+10,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+10,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+11,1,این,***not found***این***Zms-----
+11,2,هم,هم,J--,1,NMOD,CVC,1,2,f,(VPC-nid (NPA-nid (NPA-nid (NPA (J-------- *),5,0,1,0
+11,3,تصویر,تصویر,Ncsp--z,6,COPCOMP,CVCCVCV,3,5,c,(Ncsp----z- *)),1,0,1,2
+11,4,یک,یک,Urns---,5,NUM,CVC,1,2,f,(PPC-nid (Urns----- *),2,0,1,0
+11,5,کارخانه,کارخانه,Ncspk--,3,NN,CVCCVCV,3,7,c,(DPC-nid (DPC (Ncspk----- *),3,0,1,2
+11,6,است,بودن,Vpykshs----,8,VerbCOOR,CVCC,1,3,c,(Vpyk-shs------ *))))),1,1,0,0
+11,7,،,،,Oc,6,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+11,8,ولی,ولی,Jr-,0,ROOT,CVCV,2,3,f,(Jr------- *))),1,0,0,2
+11,9,این,***not found***این***Tm-------
+11,10,کارخانه,کارخانه,Ncspk--,9,DETCOMP,CVCCVCV,3,7,c,(Ncspk----- *)))),1,0,1,2
+11,11,مثل,***not found***مثل***Dgp-e-z
+11,12,کارخانه,کارخانه,Ncspk-z,11,ADVCOMP,CVCCVCVV,4,7,c,(CPC-noun (NPA (Ncspk---z- *),3,0,1,1
+11,13,قبل,قبل,Dgp-t--,14,ADJMOD,CVCC,1,3,c,(Dgp-t-- *)),1,1,0,0
+11,14,بزرگ,بزرگ,Aps-,12,NMOD,CVCVCC,2,4,c,(CPC-noun (As--- *),2,1,0,1
+11,15,نیست,بودن,Vnykshs----,8,VerbCOOR,CVCC,1,4,c,(Vnyk-shs------ *))))),1,1,0,0
+11,16,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+12,1,این,***not found***این***Tm-------
+12,2,کارخانه,کارخانه,Ncspk-z,1,DETCOMP,CVCCVCVV,4,7,c,(Ncspk---z- *)),1,0,1,1
+12,3,کوچک,کوچک,Aps-,4,MWE,CVCVC,2,4,c,(VPC (As--- *),2,0,1,1
+12,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+12,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+13,1,صاحب,صاحب,Ncsp--z,6,NSUBJ,CVCVCV,3,4,c,(ROOT (S (VPSD (VPA (PPC (PPC (Ncsp----z- *),7,0,0,3
+13,2,این,***not found***این***Tm-------
+13,3,کارخانه,کارخانه,Ncspk--,2,DETCOMP,CVCCVCV,3,7,c,(Ncspk----- *))),1,0,1,2
+13,4,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+13,5,پرویز,پرویز,Nasp---,6,MWE,CVCCVC,2,5,c,(MV (Nasp------ *),2,0,2,0
+13,6,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+13,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+14,1,پرویز,پرویز,Nasp--z,3,NSUBJ,CVCCVCV,3,5,c,(ROOT (S (DPC (Nasp----z- *),4,0,1,2
+14,2,کارخانه-دار,***not found***کارخانه-دار***Nasp---
+14,3,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+14,4,.,.,Oe,3,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+15,1,کارگران,کارگر,Nclp--z,4,NSUBJ,CVCCVCCV,4,7,c,(ROOT (S (VPS (Nclp----z- *),4,0,2,1
+15,2,او,***not found***او***Zrsh----
+15,3,کم,***not found***کم***Aps-
+15,4,هستند,بودن,Vpyklhs----,0,ROOT,CVCCVCC,2,5,c,(Vpyk-lhs------ *))),1,1,1,0
+15,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+16,1,دفتر,دفتر,Ncspk-z,5,NSUBJ,CVCCVCV,3,4,c,(ROOT (S (NPA (Ncspk---z- *),4,0,1,2
+16,2,کار,کار,Ncsp--z,1,NN,CVCV,2,3,c,(NPA (Ncsp----z- *),2,0,0,2
+16,3,پرویز,پرویز,Nasp--z,2,NN,CVCCVCV,3,5,c,(MN (Nasp----z- *),2,0,1,2
+16,4,ساده,ساده,Nasp---,5,MWE,CVCVC,2,4,c,(Nasp------ *))),1,0,1,1
+16,5,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+16,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+17,1,ثروت,ثروت,Ncsp--z,10,NSUBJ,CVCCVCV,3,4,c,(ROOT (S (VPA (N (Ncsp----z- *),5,0,1,2
+17,2,پرویز,پرویز,Nasp---,1,NN,CVCCVC,2,5,c,(Nasp------ *)),1,0,2,0
+17,3,مثل,***not found***مثل***Dgp-e-z
+17,4,ثروت,ثروت,Ncsp--z,3,ADVCOMP,CVCCVCV,3,4,c,(CPC-noun (Ncsp----z- *),2,0,1,2
+17,5,صاحب,صاحب,Ncsp--z,4,NN,CVCVCV,3,4,c,(CPC-noun (Ncsp----z- *),2,0,0,3
+17,6,کارخانه,کارخانه,Ncspk-z,5,NN,CVCCVCVV,4,7,c,(NPC (Ncspk---z- *),2,0,1,1
+17,7,بزرگ,بزرگ,Aps-,6,NMOD,CVCVCC,2,4,c,(As--- *))))),1,1,0,1
+17,8,،,،,Oc,3,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+17,9,زیاد,زیاد,Aps-,10,MWE,CVCVC,2,4,c,(VPC (As--- *),2,0,1,1
+17,10,نیست,بودن,Vnykshs----,0,ROOT,CVCC,1,4,c,(Vnyk-shs------ *)))),1,1,0,0
+17,11,.,.,Oe,10,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+18,1,پرویز,پرویز,Nasp---,5,NSUBJ,CVCCVC,2,5,c,(ROOT (S (VPS (DPC (Nasp------ *),5,0,2,0
+18,2,مثل,***not found***مثل***Dgp-e-z
+18,3,او,***not found***او***Zrsh----
+18,4,ثروتمند,ثروتمند,Aps-,5,MWE,CVCCVCCVCC,3,7,c,(As--- *)),1,1,2,0
+18,5,نیست,بودن,Vnykshs----,0,ROOT,CVCC,1,4,c,(Vnyk-shs------ *))),1,1,0,0
+18,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1

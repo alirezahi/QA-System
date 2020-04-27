@@ -1,0 +1,66 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,کشور,کشور,Ncspk--,10,NSUBJ,CVCCVC,2,4,c,(ROOT (S (VPA (PPC (PPC (Ncspk----- *),6,0,2,0
+1,2,عزیزم,عزیز,As-1-,1,NMOD,CVCVCVC,3,5,c,(NPC (As--- *),2,0,1,2
+1,3,،,،,Oc,1,PUNC,،,1,1,f,(Cez--asoc *))),1,0,0,1
+1,4,ایران,ایران,Naspk-z,10,NSUBJ,CVCVCV,3,5,c,(Oc *)),1,0,0,3
+1,5,زیبا,زیبا,Aps-,4,NMOD,CVCV,2,4,c,(VPS (NPA (NPA (Naspk---z- *),4,0,0,2
+1,6,،,،,Oc,4,PUNC,،,1,1,f,(As--- *)),1,0,0,1
+1,7,تو,***not found***تو***Zrst----
+1,8,را,را,P,7,ACC,CV,1,2,f,(VPC (NPC (Zrst---- *),3,0,0,1
+1,9,دوست,دوست,Ncsp---,10,MWE,CVCC,1,4,c,(P *)),1,1,0,0
+1,10,دارم,داشتن,Vpyssos----,0,ROOT,CVCVC,2,4,c,(MV (Ncsp------ *),2,0,1,1
+1,11,.,.,Oe,10,PUNC,.,1,1,f,(Vpys-sos------ *))))),1,0,0,1
+2,1,دریا,دریا,Ncspk--,9,VMOD,CVCCV,2,4,c,(ROOT (S (CL-nid-DiscA (VPS-DiscA (N (Ncspk----- *),6,0,1,1
+2,2,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+2,3,جنگل,جنگل,Ncspk--,4,NounCOOR,CVCCVC,2,4,c,(VPC-DiscA (DiscA (Ncspk----- *)),3,0,2,0
+2,4,و,و,Jr-,9,COORCOMP,CV,1,1,f,(VPC (DPC (DPC (Jr------- *),4,0,0,1
+2,5,کوه-های,کوه-,Nclp--z,4,NounCOOR,CVCVCV,3,7,c,(PPC (Nclp----z- *),2,0,0,3
+2,6,بلندت,بلند,As-2-,5,NMOD,CVCVCCVC,3,5,c,(NPA (As--- *),2,0,2,1
+2,7,را,را,P,4,ACC,CV,1,2,f,(Cez--astc *)))),1,0,0,1
+2,8,دوست,دوست,Ncsp---,9,MWE,CVCC,1,4,c,(P *)),1,1,0,0
+2,9,دارم,داشتن,Vpyssos----,0,ROOT,CVCVC,2,4,c,(MV (Ncsp------ *),2,0,1,1
+2,10,.,.,Oe,9,PUNC,.,1,1,f,(Vpys-sos------ *)))))),1,0,0,1
+3,1,مردم,مردم,Nclp---,14,NSUBJ,CVCCVC,2,4,c,(ROOT (S (VPA (PPC (PPC (Nclp------ *),6,0,2,0
+3,2,خوب,***not found***خوب***Dgps---
+3,3,تو,***not found***تو***Zrst----
+3,4,،,،,Oc,2,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+3,5,این,***not found***این***Tm-------
+3,6,مردان,مرد,Nclp---,7,NounCOOR,CVCCCVC,2,5,c,(Nclp------ *)),1,1,1,0
+3,7,و,و,Jr-,5,DETCOMP,CV,1,1,f,(VPA (PPC (Jr------- *),3,0,0,1
+3,8,زنان,زن,Nclp--z,7,NounCOOR,CVCCVCV,3,4,c,(DPC (Nclp----z- *),2,0,1,2
+3,9,زحمت-کش,زحمت-کش,Aps-,10,AdjCOOR,CVCCVCCVC,3,7,c,(As--- *))),1,0,3,0
+3,10,و,و,Jr-,8,NMOD,CV,1,1,f,(VPC (NPC (NPC (Jr------- *),4,0,0,1
+3,11,مهربان,مهربان,Aps-,10,AdjCOOR,CVCCVCVC,3,6,c,(As--- *)),1,0,2,1
+3,12,را,را,P,5,ACC,CV,1,2,f,(P *)),1,0,0,1
+3,13,دوست,دوست,Ncsp---,14,MWE,CVCC,1,4,c,(MV (Ncsp------ *),2,1,0,0
+3,14,دارم,داشتن,Vpyssos----,0,ROOT,CVCVC,2,4,c,(Vpys-sos------ *)))))),1,0,1,1
+3,15,.,.,Oe,14,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,با,با,E-,8,VMOD,CV,1,2,f,(ROOT (S (CPC-verb (VPF (VPF (DiscE (PPC (E------- *),8,0,0,1
+4,2,این,***not found***این***Zms-----
+4,3,که,که,J--,6,RELSUBJ,CV,1,2,f,(VPSD-nid (VPA-nid (PPA-nid (J-------- *),4,0,0,1
+4,4,از,از,E-,6,IDOBJ,CVC,1,2,f,(PPC-nid (E------- *),2,0,1,0
+4,5,تو,***not found***تو***Zrst----
+4,6,دورم,***not found***دورم***Vpyk------a-1-
+4,7,،,،,Oc,1,PUNC,،,1,1,f,(Cevpkasoc *))))),1,0,0,1
+4,8,اما,اما,Jr-,0,ROOT,CVCCV,2,3,f,(Oc *)),1,0,1,1
+4,9,همیشه,همیشه,Dgp-t--,13,VMOD,CVCVCV,3,5,c,(CPC-verb (Jr------- *),2,0,0,3
+4,10,به,به,E-,13,IDOBJ,CV,1,2,f,(VPA (Dgp-t-- *),2,0,0,1
+4,11,تو,***not found***تو***Zrst----
+4,12,فکر,فکر,Ncsp---,13,MWE,CVCC,1,3,c,(Zrst---- *)),1,1,0,0
+4,13,می-کنم,***not found***می-کنم***Vpyssosi---
+4,14,.,.,Oe,8,PUNC,.,1,1,f,(Vpys-sosi----- *)))))),1,0,0,1
+5,1,خودم,***not found***خودم***Zx----1-
+5,2,را,را,P,1,ACC,CV,1,2,f,(CPC-noun (NPA (NPC (NPC (Cez--zsoc *),5,0,0,1
+5,3,همیشه,همیشه,Dgp-t--,5,VMOD,CVCVCV,3,5,c,(P *)),1,0,0,3
+5,4,ایرانی,ایرانی,Aps-,5,MWE,CVCVCV,3,6,c,(NPA (Dgp-t-- *),2,0,0,3
+5,5,می-دانم,***not found***می-دانم***Vpyssosi---
+5,6,و,و,Jr-,0,ROOT,CV,1,1,f,(N (Vpys-sosi----- *),2,0,0,1
+5,7,قول,قول,Ncsp---,8,MWE,CVC,1,3,c,(Jr------- *),1,0,1,0
+5,8,می-دهم,***not found***می-دهم***Vpyssosi---
+5,9,که,که,J--,14,RELSUBJ,CV,1,2,f,(CPC-noun (Vpys-sosi----- *),2,0,0,1
+5,10,فرزند,فرزند,Ncsp--z,14,NSUBJ,CVCCVCCV,3,5,c,(J-------- *)))),1,0,2,1
+5,11,شایسته-ای,***not found***شایسته-ای***Apsy
+5,12,برای,برای,Ez,14,VMOD,CVCVCVV,3,4,f,(VPC-DiscA (DiscA (As-y- *)),3,0,0,2
+5,13,تو,***not found***تو***Zrst----
+5,14,باشم,بودن,Vpysso--u--,8,COMP,CVCVC,2,4,c,(Zrst---- *)),1,0,1,1
+5,15,.,.,Oe,6,PUNC,.,1,1,f,(Vpys-so--u---- *))))),1,0,0,1

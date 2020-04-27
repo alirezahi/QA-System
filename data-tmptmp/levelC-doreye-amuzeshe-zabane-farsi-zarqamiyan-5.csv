@@ -1,0 +1,192 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,عید,عید,Ncsp--z,9,NSUBJ,CVCCV,2,3,c,(ROOT (S (NPA (Ncsp----z- *),4,0,1,1
+1,2,فطر,فطر,Nasp---,1,NN,CVCC,1,3,c,(NPA (Nasp------ *),2,1,0,0
+1,3,از,از,E-,9,COPCOMP,CVC,1,2,f,(ADJPA (NUM (E------- *),3,0,1,0
+1,4,عیدهای,عید,Nclp--z,3,POBJ,CVCCCVCVV,3,6,c,(Nclp----z- *),1,1,0,1
+1,5,بزرگ,بزرگ,Aps-,6,AdjCOOR,CVCVCC,2,4,c,(As--- *),1,1,0,1
+1,6,و,و,Jr-,4,NMOD,CV,1,1,f,(Jr------- *),1,0,0,1
+1,7,مهم,مهم,Apsz,6,AdjCOOR,CVCVCCV,3,3,c,(As-z- *)),1,0,1,2
+1,8,مسلمانان,مسلمان,Nclp---,4,NN,CVCVCCVCC,4,8,c,(Nclp------ *))),1,1,1,1
+1,9,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+1,10,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,مسلمانان,مسلمان,Nclp---,9,NSUBJ,CVCVCCVCC,4,8,c,(ROOT (S (NPA (Nclp------ *),4,1,1,1
+2,2,در,در,E-,9,VMOD,CVC,1,2,f,(NPA (E------- *),2,0,1,0
+2,3,ماه,ماه,Ncspt-z,2,POBJ,CVCV,2,3,c,(ADJPA (NUM (Ncspt---z- *),3,0,0,2
+2,4,رمضان,رمضان,Naspm--,3,POSSESSIVE,CVCVCVC,3,5,c,(Naspm----- *),1,0,1,2
+2,5,باید,باید,Vpx-------n,9,AUX,CVCVC,2,4,c,(Vpx----------n *),1,0,1,1
+2,6,سی,سی,Urns---,7,NUM,CV,1,2,f,(Urns----- *),1,0,0,1
+2,7,روز,روز,Ncspt--,9,VMOD,CVC,1,3,c,(Ncspt----- *)),1,0,1,0
+2,8,روزه,روزه,Ncsp---,9,MWE,CVCV,2,4,c,(Ncsp------ *))),1,0,0,2
+2,9,بگیرند,***not found***بگیرند***Vpyslh--u--
+2,10,.,.,Oe,9,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,کسی,کس,Ncsp--y,8,NSUBJ,CVCCV,2,3,c,(ROOT (S (VPA (N (Ncsp----y- *),5,0,1,1
+3,2,که,که,J--,4,RELSUBJ,CV,1,2,f,(J-------- *)),1,0,0,1
+3,3,روزه,روزه,Ncsp---,4,MWE,CVCV,2,4,c,(VPA (PPC (PPC (Ncsp------ *),4,0,0,2
+3,4,می-گیرد,***not found***می-گیرد***Vpysshsi---
+3,5,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+3,6,روزه-دار,***not found***روزه-دار***Ncsp---
+3,7,نام,نام,Ncsp---,8,MWE,CVC,1,3,c,(Ncsp------ *)),1,0,1,0
+3,8,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *)))),1,0,1,1
+3,9,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,روزه-دارها,***not found***روزه-دارها***Nclp---
+4,2,در,در,E-,10,VMOD,CVC,1,2,f,(NPA (N (E------- *),3,0,1,0
+4,3,نخستین,***not found***نخستین***Uoa----
+4,4,روز,روز,Ncspt--,2,POBJ,CVC,1,3,c,(Ncspt----- *)),1,0,1,0
+4,5,پس,***not found***پس***E-
+4,6,از,از,E-,5,POBJ,CVC,1,2,f,(E------- *),1,0,1,0
+4,7,ماه,ماه,Ncspt-z,6,POBJ,CVCV,2,3,c,(Ncspt---z- *),1,0,0,2
+4,8,رمضان,رمضان,Naspm--,7,POSSESSIVE,CVCVCVC,3,5,c,(Naspm----- *),1,0,1,2
+4,9,جشن,جشن,Ncsp--z,10,MWE,CVCCV,2,3,c,(Ncsp----z- *))),1,0,1,1
+4,10,می-گیرند,***not found***می-گیرند***Vpyk------n-6-
+4,11,.,.,Oe,10,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,کسی,کس,Ncsp--y,14,NSUBJ,CVCCV,2,3,c,(ROOT (S (VPS (NPA (NPA (Ncsp----y- *),6,0,1,1
+5,2,که,که,J--,3,RELSUBJ,CV,1,2,f,(J-------- *)),1,0,0,1
+5,3,می-خواهد,***not found***می-خواهد***Vpysshsi---
+5,4,روزه,روزه,Ncsp---,5,MWE,CVCV,2,4,c,(Ncsp------ *),1,0,0,2
+5,5,بگیرد,***not found***بگیرد***Vpyssh--u--
+5,6,،,،,Oc,1,PUNC,،,1,1,f,(VPC-nid-DiscA (DiscA (ADVPC (Oc *),4,0,0,1
+5,7,باید,باید,Vpx-------n,14,AUX,CVCVC,2,4,c,(ADVPC (Vpx----------n *),2,0,1,1
+5,8,هنگام,هنگام,Ncsp--z,13,NSUBJ,CVCCVCV,3,5,c,(NPA (NPA (Ncsp----z- *),3,0,1,2
+5,9,سحر,سحر,Ncspt--,8,NN,CVCVC,2?,3,c,(CPC-adj (Ncspt----- *),2,0,1,1
+5,10,از,از,E-,13,IDOBJ,CVC,1,2,f,(CPC-adj (E------- *),2,0,1,0
+5,11,خواب,خواب,Ncsp---,10,POBJ,CVC,1,4,c,(Ncsp------ *)))),1,0,1,0
+5,12,بیدار,بیدار,Aps-,13,MWE,CVCVC,2,5,c,(N (As--- *),2,0,1,1
+5,13,شود,شدن,Vpyssh--u--,14,VerbCOOR,CVVC,2,3,c,(Vpys-sh--u---- *),1,0,0,0
+5,14,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *)))))),1,0,0,1
+5,15,کمی,***not found***کمی***Tf-------
+5,16,آب,آب,Ncsp---,17,NounCOOR,CVC,1,2,c,(Ncsp------ *))),1,0,1,0
+5,17,و,و,Jr-,15,DETCOMP,CV,1,1,f,(MV (PPC (Jr------- *),3,0,0,1
+5,18,غذا,غذا,Ncsp---,17,NounCOOR,CVCV,1,3,c,(Ncsp------ *)),1,0,0,2
+5,19,بخورد,خوردن,Vpyssh--u--,14,VerbCOOR,CVCVCC,3,5,c,(Vpys-sh--u---- *))))),1,1,0,1
+5,20,.,.,Oe,14,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+6,1,سپس,***not found***سپس***J--
+6,2,نماز,نماز,Ncsp--z,4,NSUBJ,CVCVCV,3,4,c,(NPA (Ncsp----z- *),2,0,0,3
+6,3,صبح,صبح,Ncspt--,4,MWE,CVCC,1,3,c,(Ncspt----- *)),1,1,0,0
+6,4,می-خواند,-خواندن,Vpysshsi---,0,ROOT,VCVCVCC,2,8,c,(Vpys-shsi----- *)),1,1,0,1
+6,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,روزه-دارها,***not found***روزه-دارها***Nclp---
+7,2,تا,تا,E-,7,VMOD,CV,1,2,f,(E------- *))),1,0,0,1
+7,3,هنگام,هنگام,Ncsp--z,2,POBJ,CVCCVCV,3,5,c,(Ncsp----z- *)),1,0,1,2
+7,4,غروب,غروب,Ncspt-z,3,NN,CVCVCV,3,4,c,(VPA-DiscA (DiscA (Ncspt---z- *)),3,0,0,3
+7,5,خورشید,خورشید,Nasp---,4,NN,CVCCVC,2,6,c,(VPA (MADV (NUM (Nasp------ *),4,0,2,0
+7,6,چیزی,چیز,Ncsp--y,7,MWE,CVCCV,2,4,c,(Ncsp----y- *),1,0,1,1
+7,7,نمی-خورند,***not found***نمی-خورند***Vnyslh--u--
+7,8,اما,اما,Jr-,0,ROOT,CVCCV,2,3,f,(Jr------- *),1,0,1,1
+7,9,پس,***not found***پس***E-
+7,10,از,از,E-,12,MWE,CVC,1,2,f,(E------- *))),1,0,1,0
+7,11,غروب,غروب,Ncspt--,10,POBJ,CVCVC,2,4,c,(Ncspt----- *)),1,0,1,1
+7,12,می-توانند,***not found***می-توانند***Vpyslhsi---
+7,13,غذا,غذا,Ncsp---,14,MWE,CVCV,1,3,c,(Ncsp------ *)),1,0,0,2
+7,14,بخورند,***not found***بخورند***Vpyslh--u--
+7,15,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+8,1,غذای,غذا,Ncsp--z,8,NSUBJ,CVCVCV,3,4,c,(ROOT (S (NPA (Ncsp----z- *),4,0,0,3
+8,2,پس,***not found***پس***E-
+8,3,از,از,E-,2,POBJ,CVC,1,2,f,(E------- *),1,0,1,0
+8,4,غروب,غروب,Ncspt-z,3,POBJ,CVCVCV,3,4,c,(Ncspt---z- *),1,0,0,3
+8,5,روزه-دارها,***not found***روزه-دارها***Nclp---
+8,6,افطار,افطار,Ncsp---,5,NN,CVCCVC,2,5,c,(Ncsp------ *)),1,0,2,0
+8,7,نام,نام,Ncsp---,8,MWE,CVC,1,3,c,(Ncsp------ *)),1,0,1,0
+8,8,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *)),1,0,1,1
+8,9,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+9,1,افطار,افطار,Ncsp---,4,NSUBJ,CVCCVC,2,5,c,(ROOT (S (VPF (VPTD-nid (MV (PPC (Ncsp------ *),7,0,2,0
+9,2,غذای,غذا,Ncsp--z,1,NN,CVCVCV,3,4,c,(Ncsp----z- *)),1,0,0,3
+9,3,ساده-ای,***not found***ساده-ای***Apsy
+9,4,است,بودن,Vpykshs----,5,VerbCOOR,CVCC,1,3,c,(DiscE (PPC (Vpyk-shs------ *),3,1,0,0
+9,5,و,و,Jr-,0,ROOT,CV,1,1,f,(CPC-adj (ADJPA (ADJ (Jr------- *),4,0,0,1
+9,6,معمولاٌ,***not found***معمولاٌ***Ncsp---
+9,7,شامل,شامل,Apsz,6,NMOD,CVCVCV,3,4,c,(As-z- *)),1,0,0,3
+9,8,نان,نان,Ncsp---,9,NounCOOR,CVC,1,3,c,(ADJ (Ncsp------ *),2,0,1,0
+9,9,و,و,Jr-,17,COORCOMP,CV,1,1,f,(Jr------- *),1,0,0,1
+9,10,چای,چای,Ncsp---,11,NounCOOR,CVC,1,3,c,(Ncsp------ *))),1,0,1,0
+9,11,و,و,Jr-,9,NounCOOR,CV,1,1,f,(CPC-adj (Jr------- *),2,0,0,1
+9,12,کره,کره,Ncsp---,13,NounCOOR,CVCCV,2,3,c,(ADJPA (ADJ (Ncsp------ *),3,0,1,1
+9,13,و,و,Jr-,11,NounCOOR,CV,1,1,f,(Jr------- *),1,0,0,1
+9,14,پنیر,پنیر,Ncsp---,15,NounCOOR,CVCVC,2,4,c,(Ncsp------ *)),1,0,1,1
+9,15,و,و,Jr-,13,NounCOOR,CV,1,1,f,(ADJ (Jr------- *),2,0,0,1
+9,16,خرما,خرما,Ncsp---,15,NounCOOR,CVCCV,2,4,c,(Ncsp------ *),1,0,1,1
+9,17,می-شود,***not found***می-شود***Vpysshsi---
+9,18,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+10,1,در,در,E-,16,VMOD,CVC,1,2,f,(ROOT (S (VPS (NPA (NPA (N (E------- *),7,0,1,0
+10,2,آخرین,***not found***آخرین***Uoa----
+10,3,شب,***not found***شب***Ncspt-z
+10,4,ماه,ماه,Ncspt-z,3,MWE,CVCV,2,3,c,(NUM (Ncspt---z- *),2,0,0,2
+10,5,رمضان,رمضان,Naspm--,3,APPOS,CVCVCVC,3,5,c,(Naspm----- *))),1,0,1,2
+10,6,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+10,7,مسلمانان,مسلمان,Nclp---,16,NSUBJ,CVCVCCVCC,4,8,c,(VPC-nid-DiscA (DiscA (Nclp------ *)),3,1,1,1
+10,8,باید,باید,Vpx-------n,16,AUX,CVCVC,2,4,c,(VPC-nid (Vpx----------n *),2,0,1,1
+10,9,مبلغی,مبلغ,Ncsp--y,16,DOBJ,CVCVCCVCC,3,5,c,(VPC-nid (NPC (Ncsp----y- *),3,1,1,1
+10,10,را,را,P,9,ACC,CV,1,2,f,(P *)),1,0,0,1
+10,11,برای,برای,Ez,16,VMOD,CVCVCVV,3,4,f,(VPA-nid (ADJPC-nid (E------z *),3,0,0,2
+10,12,فقرا,فقیر,Nclp---,13,NounCOOR,CVCVCV,3,4,c,(PPC-nid (Nclp------ *),2,0,0,3
+10,13,و,و,Jr-,11,POBJ,CV,1,1,f,(DPC-nid (DPC (Jr------- *),3,0,0,1
+10,14,نیازمندان,***not found***نیازمندان***Nclp---
+10,15,کنار,***not found***کنار***Dgps---
+10,16,بگذارند,***not found***بگذارند***Vpyslh--u--
+10,17,.,.,Oe,16,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+11,1,این,***not found***این***Tm-------
+11,2,پول,پول,Ncsp---,1,DETCOMP,CVC,1,3,c,(Ncsp------ *)),1,0,1,0
+11,3,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+11,4,فطریه,***not found***فطریه***Ncsp---
+11,5,یا,یا,Jr-,8,COORCOMP,CV,1,2,f,(DPC (Jr------- *),2,0,0,1
+11,6,زکات,زکات,Ncsp---,5,NounCOOR,CVCVC,2,4,c,(Ncsp------ *))),1,0,1,1
+11,7,نام,نام,Ncsp---,8,MWE,CVC,1,3,c,(MV (Ncsp------ *),2,0,1,0
+11,8,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *)))),1,0,1,1
+11,9,.,.,Oe,8,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+12,1,همه,***not found***همه***Tf------z
+12,2,مردم,مردم,Nclp---,1,DETCOMP,CVCCVC,2,4,c,(Nclp------ *)),1,0,2,0
+12,3,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+12,4,صبح,صبح,Ncspt-z,14,DOBJ,CVCCV,2,3,c,(VPA (NPC (Ncspt---z- *),3,0,1,1
+12,5,روز,روز,Ncspt-z,4,NN,CVCV,2,3,c,(Ncspt---z- *)),1,0,0,2
+12,6,بعد,***not found***بعد***Dgps---
+12,7,،,،,Oc,6,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+12,8,شاد,شاد,Aps-,9,AdjCOOR,CVC,1,3,c,(VPF (VPTD-nid (VPC (As--- *),4,0,1,0
+12,9,و,و,Jr-,4,NMOD,CV,1,1,f,(Jr------- *))),1,0,0,1
+12,10,سرحال,سرحال,Aps-,9,AdjCOOR,CVCVCVC,3,5,c,(DiscE (CLR (As--- *),3,0,1,2
+12,11,از,از,E-,4,NMOD,CVC,1,2,f,(VPS-nid-DiscA (VPS-nid (E------- *),3,0,1,0
+12,12,خواب,خواب,Ncsp---,11,POBJ,CVC,1,4,c,(VPC-nid (PPC-nid (Ncsp------ *),3,0,1,0
+12,13,بلند,بلند,Aps-,12,NMOD,CVCVCC,2,4,c,(DPC-nid (DPC (As--- *),3,1,0,1
+12,14,می-شوند,***not found***می-شوند***Vpyslhsi---
+12,15,و,و,Jr-,0,ROOT,CV,1,1,f,(Jr------- *))),1,0,0,1
+12,16,می-توانند,***not found***می-توانند***Vpyslhsi---
+12,17,مانند,***not found***مانند***Dgp-e-z
+12,18,روزهای,روز,Nclpt-z,21,NSUBJ,CVCCVCVV,3,6,c,(CPC-noun (Nclpt---z- *),2,0,1,1
+12,19,عادی,عادی,Aps-,18,NMOD,CVCCV,2,4,c,(CPC-noun (As--- *),2,0,1,1
+12,20,صبحانه,صبحانه,Ncsp---,21,MWE,CVCCVCV,3,6,c,(NPC (Ncsp------ *),2,0,1,2
+12,21,بخورند,***not found***بخورند***Vpyslh--u--
+12,22,.,.,Oe,15,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+13,1,معمولاٌ,***not found***معمولاٌ***Ncsp--z
+13,2,همه,***not found***همه***Zfs-----
+13,3,برای,برای,Ez,10,VMOD,CVCVCVV,3,4,f,(VPC (ADJPA (MADV (E------z *),4,0,0,2
+13,4,صبحانه,صبحانه,Ncsp--z,3,POBJ,CVCCVCVV,4,6,c,(Ncsp----z- *)),1,0,1,1
+13,5,روز,روز,Ncspt-z,4,NN,CVCV,2,3,c,(ADJPC (Ncspt---z- *),2,0,0,2
+13,6,عید,عید,Ncsp--z,5,POSSESSIVE,CVCCV,2,3,c,(NPA (Ncsp----z- *),2,0,1,1
+13,7,فطر,فطر,Nasp---,10,MWE,CVCC,1,3,c,(CPC-adj (Nasp------ *),2,1,0,0
+13,8,اشتهای,اشتها,Ncsp--z,7,NN,CVCCVCVCV,4,6,c,(CPC-adj (Ncsp----z- *),2,0,1,3
+13,9,خوبی,خوب,Apsy,8,NMOD,CVCCV,2,4,c,(As-y- *)))))),1,0,1,1
+13,10,دارند,داشتن,Vpyslhs----,0,ROOT,CVCVCC,2,5,c,(Vpys-lhs------ *))),1,1,0,1
+13,11,.,.,Oe,10,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+14,1,طبیعتاٌ,***not found***طبیعتاٌ***Ncsp--z
+14,2,بعد,***not found***بعد***E-
+14,3,از,از,E-,2,POBJ,CVC,1,2,f,(E------- *)),1,0,1,0
+14,4,سی,سی,Urns---,5,NUM,CV,1,2,f,(CPC-det (Urns----- *),2,0,0,1
+14,5,روز,روز,Ncspt--,3,POBJ,CVC,1,3,c,(DPC (Ncspt----- *),2,0,1,0
+14,6,روزه,روزه,Ncsp---,5,POSSESSIVE,CVCV,2,4,c,(Ncsp------ *)))),1,0,0,2
+14,7,،,،,Oc,1,PUNC,،,1,1,f,(Oc *)))),1,0,0,1
+14,8,نان,نان,Ncsp--z,24,NSUBJ,CVCV,2,3,c,(VPA-nid (Ncsp----z- *),2,0,0,2
+14,9,سنگک,سنگک,Ncsp--z,8,NN,CVCCVCV,3,4,c,(VPF-nid (VPS-nid-nid (NPA (Ncsp----z- *),4,0,1,2
+14,10,داغ,داغ,Aps-,9,NMOD,CVC,1,3,c,(ADJ (As--- *),2,0,1,0
+14,11,با,با,E-,9,NN,CV,1,2,f,(E------- *),1,0,0,1
+14,12,کره,کره,Ncsp---,13,NounCOOR,CVCCV,2,3,c,(Ncsp------ *))),1,0,1,1
+14,13,و,و,Jr-,11,POBJ,CV,1,1,f,(VPC-nid-nid (CPC-noun-nid-nid (CPC-noun-nid (Jr------- *),4,0,0,1
+14,14,مربا,مربا,Ncsp---,15,NounCOOR,CVCVCCV,3,4,c,(NPC-nid (Ncsp------ *)))),2,0,1,2
+14,15,و,و,Jr-,13,NounCOOR,CV,1,1,f,(Jr------- *))),1,0,0,1
+14,16,پنیر,پنیر,Ncsp---,17,NounCOOR,CVCVC,2,4,c,(DiscE (PPC (Ncsp------ *),3,0,1,1
+14,17,و,و,Jr-,15,NounCOOR,CV,1,1,f,(CPC-adj (ADJPA (ADJ (Jr------- *),4,0,0,1
+14,18,چای,چا,Ncsp--z,17,NounCOOR,CVCV,2,3,c,(Ncsp----z- *),1,0,0,2
+14,19,داغ,داغ,Aps-,20,AdjCOOR,CVC,1,3,c,(As--- *)),1,0,1,0
+14,20,و,و,Jr-,18,NMOD,CV,1,1,f,(ADJ (Jr------- *),2,0,0,1
+14,21,خوش-رنگ,خوش-رنگ,Aps-,20,AdjCOOR,CVCCVCC,2,7,c,(As--- *),1,1,1,0
+14,22,باید,باید,Vpx-------n,24,AUX,CVCVC,2,4,c,(Vpx----------n *))),1,0,1,1
+14,23,مزه,مزه,Ncsp---,24,MWE,CVCCV,2,3,c,(CPC-adj (Ncsp------ *),2,0,1,1
+14,24,بدهد,***not found***بدهد***Vpyssh--u--
+14,25,.,.,Oe,24,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1

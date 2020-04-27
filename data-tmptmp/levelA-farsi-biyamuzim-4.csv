@@ -1,0 +1,53 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,الان,الان,Dgp-t--,3,VMOD,CVCCVC,2,4,c,(ROOT (S (DPC (Dgp-t-- *),4,0,2,0
+1,2,صبح,صبح,Ncspt--,3,MWE,CVCC,1,3,c,(NPC (Ncspt----- *),2,1,0,0
+1,3,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+1,4,.,.,Oe,3,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,مهیار,مهیار,Nasp---,4,NSUBJ,CVCCVC,2,5,c,(ROOT (S (NPA (Nasp------ *),4,0,2,0
+2,2,در,در,E-,4,VMOD,CVC,1,2,f,(NPA (E------- *),2,0,1,0
+2,3,حمام,حمام,Ncspk--,2,POBJ,CVCCVC,2,4,c,(Ncspk----- *)),1,0,2,0
+2,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+2,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,او,***not found***او***Zrsh----
+3,2,دست,دست,Ncsp---,3,NounCOOR,CVCC,1,3,c,(VPC (Ncsp------ *),2,1,0,0
+3,3,و,و,Jr-,10,COORCOMP,CV,1,1,f,(VPSD (Jr------- *),2,0,0,1
+3,4,صورتش,صورت,Ncsp----3-,3,NounCOOR,CVCVCVC,3,5,c,(VPSD (VPC (NPC (NPC (Ncsp------ *),5,0,1,2
+3,5,را,را,P,3,ACC,CV,1,2,f,(Cez--nshc *)),1,0,0,1
+3,6,با,با,E-,10,VMOD,CV,1,2,f,(P *)),1,0,0,1
+3,7,آب,آب,Ncsp---,8,NounCOOR,CVC,1,2,c,(VPA (PPC (E------- *),3,0,1,0
+3,8,و,و,Jr-,6,POBJ,CV,1,1,f,(DPC (Ncsp------ *),2,0,0,1
+3,9,صابون,صابون,Ncsp---,8,NounCOOR,CVCVC,2,5,c,(Jr------- *))),1,0,1,1
+3,10,می-شوید,***not found***می-شوید***Vpysshsi---
+3,11,.,.,Oe,10,PUNC,.,1,1,f,(Vpys-shsi----- *)))))))),1,0,0,1
+4,1,او,***not found***او***Zrsh----
+4,2,یک,یک,Urns---,3,NUM,CVC,1,2,f,(VPC (ADJPA (Urns----- *),3,0,1,0
+4,3,حوله,حوله,Ncsp---,4,MWE,CVCV,2,4,c,(Ncsp------ *)),1,0,0,2
+4,4,دارد,داشتن,Vpysshs----,0,ROOT,CVCVC,2,4,c,(Vpys-shs------ *))),1,0,1,1
+4,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,او,***not found***او***Zrsh----
+5,2,با,با,E-,9,VMOD,CV,1,2,f,(VPA (PPC (PPC (E------- *),4,0,0,1
+5,3,حوله,حوله,Ncsp---,2,POBJ,CVCV,2,4,c,(NPC (Ncsp------ *),2,0,0,2
+5,4,دست,دست,Ncsp---,5,NounCOOR,CVCC,1,3,c,(Ncsp------ *))),1,1,0,0
+5,5,و,و,Jr-,9,COORCOMP,CV,1,1,f,(Jr------- *)),1,0,0,1
+5,6,صورتش,صورت,Ncsp----3-,5,NounCOOR,CVCVCVC,3,5,c,(VPC (NPC (NPC (Ncsp------ *),4,0,1,2
+5,7,را,را,P,5,ACC,CV,1,2,f,(Cez--nshc *)),1,0,0,1
+5,8,خشک,خشک,Aps-,9,MWE,CVCC,1,3,c,(P *)),1,1,0,0
+5,9,می-کند,***not found***می-کند***Vpyslhsi---
+5,10,.,.,Oe,9,PUNC,.,1,1,f,(Vpys-lhsi----- *))))),1,0,0,1
+6,1,الان,الان,Dgp-t--,3,VMOD,CVCCVC,2,4,c,(ROOT (S (DPC (Dgp-t-- *),4,0,2,0
+6,2,ظهر,ظهر,Ncspt--,3,MWE,CVCC,1,3,c,(NPC (Ncspt----- *),2,1,0,0
+6,3,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *))),1,1,0,0
+6,4,.,.,Oe,3,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,مادر,مادر,Ncsp--z,5,NSUBJ,CVCVCV,3,4,c,(ROOT (S (NPA (Ncsp----z- *),4,0,0,3
+7,2,مهیار,مهیار,Nasp---,1,NN,CVCCVC,2,5,c,(NPA (Nasp------ *),2,0,2,0
+7,3,در,در,E-,5,VMOD,CVC,1,2,f,(MN (E------- *),2,0,1,0
+7,4,آشپزخانه,آشپزخانه,Ncspk--,3,POBJ,CVCCVCCVCV,4,8,c,(Ncspk----- *))),1,0,2,2
+7,5,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)),1,1,0,0
+7,6,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+8,1,او,***not found***او***Zrsh----
+8,2,ظرف-ها,ظرف-,Nclp---,6,DOBJ,CVCCCV,2,6,c,(VPC (NPC (Nclp------ *),3,1,0,1
+8,3,را,را,P,2,ACC,CV,1,2,f,(P *)),1,0,0,1
+8,4,در,در,E-,6,VMOD,CVC,1,2,f,(MV (PPC (E------- *),3,0,1,0
+8,5,ظرف-شویی,ظرف-شو,Ncsp--y,4,POBJ,CVCCCVCV,3,8,c,(Ncsp----y- *)),1,1,0,2
+8,6,می-شوید,***not found***می-شوید***Vpysshsi---
+8,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1

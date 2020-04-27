@@ -1,0 +1,44 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,سلام,سلام,Ncsp---,0,ROOT,CVCVC,2,4,c,(ROOT (S (VPSD (VPCompD (Ncsp------ *))),5,0,1,1
+1,2,.,.,Oe,1,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,من,***not found***من***Zrso----
+2,2,نادری,نادری,Aps-,3,MWE,CVCVCC,3,5,c,(VPC (As--- *),2,1,0,1
+2,3,هستم,بودن,Vpyksos----,0,ROOT,CVCCVC,2,4,c,(Vpyk-sos------ *))),1,0,2,0
+2,4,.,.,Oe,3,PUNC,.,1,1,f,(Oe *)))) ,1,0,0,1
+3,1,اسم,اسم,Ncsp--z,4,NSUBJ,CVCCV,2,3,c,(ROOT (S (VPSD (VPA (PPC (Ncsp----z- *),6,0,1,1
+3,2,من,***not found***من***Zrso----
+3,3,ناهید,ناهید,Nasp---,4,MWE,CVCVC,2,5,c,(MV (Nasp------ *),2,0,1,1
+3,4,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Vpyk-shs------ *)))),1,1,0,0
+3,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+4,1,چهل,چهل,Urns---,2,NUM,CVCVC,2,3,f,(ROOT (S (VPSD (VPA-nid-DiscA (DiscA (PPC (Urns----- *),7,0,1,1
+4,2,سال,سال,Ncspt--,3,MWE,CVC,1,3,c,(Ncspt----- *))),1,0,1,0
+4,3,دارم,داشتن,Vpyssos----,4,VerbCOOR,CVCVC,2,4,c,(VPA-nid (Vpys-sos------ *),2,0,1,1
+4,4,و,و,Jr-,0,ROOT,CV,1,1,f,(VPC-nid (PPA-nid (PPC (Jr------- *),4,0,0,1
+4,5,معلم,معلم,Ncsp--z,7,NSUBJ,CVCVCCVCV,4,4,c,(ADVPC (Ncsp----z- *),2,0,1,3
+4,6,شما,***not found***شما***Zrlt----
+4,7,هستم,بودن,Vpyksos----,4,VerbCOOR,CVCCVC,2,4,c,(Vpyk-sos------ *))))),1,0,2,0
+4,8,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,من,***not found***من***Zrso----
+5,2,ایرانی,ایرانی,Aps-,3,MWE,CVCVCV,3,6,c,(VPC (As--- *),2,0,0,3
+5,3,هستم,بودن,Vpyksos----,5,VMOD,CVCCVC,2,4,c,(Vpyk-sos------ *))),1,0,2,0
+5,4,،,،,Oc,3,PUNC,،,1,1,f,(Oc *)),1,0,0,1
+5,5,ولی,ولی,Jr-,0,ROOT,CVCV,2,3,f,(NPA (N (Jr------- *),3,0,0,2
+5,6,در,در,E-,9,IDOBJ,CVC,1,2,f,(E------- *),1,0,1,0
+5,7,نیویورک,نیویورک,Naspk--,6,POBJ,CVCVCVCC,3,7,c,(Naspk----- *)),1,1,0,2
+5,8,زندگی,زندگی,Ncsp---,9,MWE,CVCCVCV,3,5,c,(NUM (Ncsp------ *),2,0,1,2
+5,9,می-کنم,***not found***می-کنم***Vpyssosi---
+5,10,.,.,Oe,5,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+6,1,من,***not found***من***Zrso----
+6,2,در,در,E-,6,VMOD,CVC,1,2,f,(VPC-DiscA (DiscA (E------- *)),3,0,1,0
+6,3,نیویورک,نیویورک,Naspk--,2,POBJ,CVCVCVCC,3,7,c,(VPC (DPC (DPC (Naspk----- *),4,1,0,2
+6,4,فارسی,فارسی,Nasp---,3,NN,CVCCCV,2,5,c,(Nasp------ *)),1,1,0,1
+6,5,درس,درس,Ncsp---,6,MWE,CVCC,1,3,c,(Ncsp------ *)),1,1,0,0
+6,6,می-دهم,***not found***می-دهم***Vpyssosi---
+6,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+7,1,پدرم,پدر,Ncsp----1-,6,NSUBJ,CVCVCVC,3,4,c,(ROOT (S (VPS (NPC (NPC (Ncsp------ *),6,0,1,2
+7,2,دکتر,دکتر,Naspf--,3,NounCOOR,CVCCVC,2,4,c,(Cez--nsoc *)),1,0,2,0
+7,3,و,و,Jr-,1,NN,CV,1,1,f,(Naspf----- *)),1,0,0,1
+7,4,مادرم,مادر,Ncsp----1-,3,NounCOOR,CVCVCVC,3,5,c,(VPC (PPC (Jr------- *),3,0,1,2
+7,5,خانه-دار,***not found***خانه-دار***Aps-
+7,6,است,بودن,Vpykshs----,0,ROOT,CVCC,1,3,c,(Cez--nsoc *))),1,1,0,0
+7,7,.,.,Oe,6,PUNC,.,1,1,f,(MV (As--- *),2,0,0,1

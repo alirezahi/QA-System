@@ -23,6 +23,7 @@ from django.http import JsonResponse
 import numpy as np
 import os
 import math
+import random
 
 TYPE_MAP = {
     'V':'verb',
@@ -49,6 +50,10 @@ MODEL_MAP = {
     'classifier': Classifier,
     'adjective':Adjective,
 }
+
+
+def random_gen():
+    return int(random.random()*100000) + 100000
 
 class StaffRequiredMixin(object):
     """
@@ -1583,14 +1588,25 @@ def svm_req(request):
 
     response += '<div> Mean Precision:</div>'
     response += '<div> '+ str(mean_precision) + ':</div>'
+    
 
     response = FileResponse(open('./static/texts-'+request.user.username+'.xml', 'rb'))
     response['Content-Disposition'] = 'attachment; filename=' + 'texts-'+request.user.username+'.xml'
     
     return HttpResponse(response)
 
+def send_file_req(request):
+    return HttpResponse(response)
+
 
 def svm_csv_req(request):
+    id_num = random_gen()
+
+    t1 = Thread(target=svm_csv, args=(id_num,))
+    t1.start()
+    return HttpResponse('File id: '+str(id_num))
+
+def svm_csv(id_num):
     
     SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
     SVM_DEGREE = int(Config.objects.filter(name='svm_degree', active=True).last().value) if Config.objects.filter(name='svm_degree', active=True) else 10
@@ -1645,9 +1661,9 @@ def svm_csv_req(request):
         counter += 1
     
     file = pd.DataFrame(csv_data)
-    file.T.to_csv('./static/file_svm.csv')
+    file.T.to_csv('./static/file_svm'+str(id_num)+'.csv')
 
-    response = FileResponse(open('./static/file_svm.csv', 'rb'))
+    response = FileResponse(open('./static/file_svm'+str(id_num)+'.csv', 'rb'))
     response['Content-Disposition'] = 'attachment; filename=file_svm.csv'
     
     return response
@@ -1741,6 +1757,13 @@ def rf_req(request):
 
 
 def rf_csv_req(request):
+    id_num = random_gen()
+
+    t1 = Thread(target=rf_csv, args=(id_num,))
+    t1.start()
+    return HttpResponse('File id: '+str(id_num))
+
+def rf_csv(id_num):
     from sklearn.ensemble import RandomForestClassifier
     
     SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
@@ -1796,10 +1819,10 @@ def rf_csv_req(request):
         counter += 1
 
     file = pd.DataFrame(csv_data)
-    file.T.to_csv('./static/file_rf.csv')
+    file.T.to_csv('./static/file_rf'+str(id_num)+'.csv')
 
-    response = FileResponse(open('./static/file_rf.csv', 'rb'))
-    response['Content-Disposition'] = 'attachment; filename=file_rf.csv'
+    response = FileResponse(open('./static/file_rf'+str(id_num)+'.csv', 'rb'))
+    response['Content-Disposition'] = 'attachment; filename=file_rf'+str(id_num)+'.csv'
     
     return response
 
@@ -1892,6 +1915,14 @@ def logistic_req(request):
 
 
 def logistic_csv_req(request):
+    id_num = random_gen()
+
+    t1 = Thread(target=logistic_csv, args=(id_num,))
+    t1.start()
+    return HttpResponse('File id: '+str(id_num))
+
+
+def logistic_csv(id_num):
     from sklearn.linear_model import LogisticRegression
     
     SPLIT_COUNT = int(Config.objects.filter(name='split_count', active=True).last().value) if Config.objects.filter(name='split_count', active=True) else 10
@@ -1969,10 +2000,10 @@ def logistic_csv_req(request):
         counter += 1
 
     file = pd.DataFrame(csv_data)
-    file.T.to_csv('./static/file_logistic.csv')
+    file.T.to_csv('./static/file_logistic'+str(id_num)+'.csv')
 
-    response = FileResponse(open('./static/file_logistic.csv', 'rb'))
-    response['Content-Disposition'] = 'attachment; filename=file_logistic.csv'
+    response = FileResponse(open('./static/file_logistic'+str(id_num)+'.csv', 'rb'))
+    response['Content-Disposition'] = 'attachment; filename=file_logistic'+str(id_num)+'.csv'
     
     return response
 
@@ -1999,3 +2030,12 @@ def add_list(request):
         #     f = 
         #     MODEL_MAP[list_type].objects
         
+
+def files_req(request):
+    initial_address = 'http://'+request.get_host()+'/static/'
+    files = os.listdir('./static')
+    
+    final_files = filter(lambda x: x.startswith('file_'), files)
+    results = ['<div><a href='+initial_address+f+'>'+f+'</a></div>' for f in final_files]
+    return HttpResponse(results)
+    

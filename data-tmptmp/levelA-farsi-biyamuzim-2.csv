@@ -1,0 +1,30 @@
+q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
+1,1,سلام,سلام,Ncsp---,0,ROOT,CVCVC,2,4,c,(ROOT (S (VPSD (VPCompD (Ncsp------ *))),5,0,1,1
+1,2,.,.,Oe,1,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+2,1,من,***not found***من***Zrso----
+2,2,ندا,ندا,Ncsp---,4,MWE,CVCV,2,3,c,(VPC-DiscA (DiscA (Ncsp------ *)),3,0,0,2
+2,3,آزاد,آزاد,Aps-,2,NMOD,CVCVC,2,4,c,(VPC (As--- *),2,0,1,1
+2,4,هستم,بودن,Vpyksos----,0,ROOT,CVCCVC,2,4,c,(Vpyk-sos------ *))))),1,0,2,0
+2,5,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+3,1,ده,ده,Urns---,2,NUM,CVC,1,2,f,(ROOT (S (NPA (Urns----- *),4,0,1,0
+3,2,سال,سال,Ncspt--,4,MWE,CVC,1,3,c,(NPA (Ncspt----- *),2,0,1,0
+3,3,دارم,داشتن,Vpyssos----,4,VerbCOOR,CVCVC,2,4,c,(CPC-adj (Vpys-sos------ *),2,0,1,1
+3,4,و,و,Jr-,0,ROOT,CV,1,1,f,(CPC-adj (Jr------- *),2,0,0,1
+3,5,دانش-آموزم,***not found***دانش-آموزم***Vpyk------a-1-
+3,6,.,.,Oe,4,PUNC,.,1,1,f,(Cevpkasoc *)),1,0,0,1
+4,1,من,***not found***من***Zrso----
+4,2,ایرانی,ایرانی,Aps-,3,MWE,CVCVCV,3,6,c,(VPC-DiscA (DiscA (As--- *)),3,0,0,3
+4,3,هستم,بودن,Vpyksos----,4,VerbCOOR,CVCCVC,2,4,c,(VPC (DPC (DPC (Vpyk-sos------ *),4,0,2,0
+4,4,و,و,Jr-,0,ROOT,CV,1,1,f,(NPA (Jr------- *),2,0,0,1
+4,5,در,در,E-,8,VMOD,CVC,1,2,f,(E------- *))),1,0,1,0
+4,6,نیویورک,نیویورک,Naspk--,5,POBJ,CVCVCVCC,3,7,c,(Naspk----- *)),1,1,0,2
+4,7,زندگی,زندگی,Ncsp---,8,MWE,CVCCVCV,3,5,c,(MV (Ncsp------ *),2,0,1,2
+4,8,می-کنم,***not found***می-کنم***Vpyssosi---
+4,9,.,.,Oe,4,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
+5,1,روزهای,روز,Nclpt-z,6,NSUBJ,CVCCVCVV,3,6,c,(ROOT (S (NPA (Nclpt---z- *),4,0,1,1
+5,2,یکشنبه,یکشنبه,Naspd--,1,POSSESSIVE,CVCCVCCV,3,6,c,(NPA (Naspd----- *),2,0,2,1
+5,3,به,به,E-,6,IDOBJ,CV,1,2,f,(CPC-adj (E------- *),2,0,0,1
+5,4,کلاس,کلاس,Ncspk-z,3,POBJ,CVCVCV,3,4,c,(CPC-adj (Ncspk---z- *),2,0,0,3
+5,5,فارسی,فارسی,Nasp---,6,MWE,CVCCCV,2,5,c,(Nasp------ *)))),1,1,0,1
+5,6,می-روم,***not found***می-روم***Vpyssosi---
+5,7,.,.,Oe,6,PUNC,.,1,1,f,(Oe *))) ,1,0,0,1
