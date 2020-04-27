@@ -60,4 +60,5 @@ urlpatterns = [
     path('logistic/csv', logistic_csv_req),
     path('logistic', logistic_req),
     path('analyse', analyse_request),
+    path('files', files_req),
 ]
