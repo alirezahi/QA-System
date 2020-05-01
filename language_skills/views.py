@@ -1539,7 +1539,7 @@ def svm_req(request):
     y = np.array(levels)
     kf = KFold(n_splits=SPLIT_COUNT)
 
-    response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
+    response = '< style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
 
     mean_accuracy = 0
@@ -1646,6 +1646,12 @@ def svm_csv(id_num):
 
     csv_data = [[],[],[]]
 
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+    txt = ''
+
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
@@ -1658,10 +1664,48 @@ def svm_csv(id_num):
         csv_data[0].append('')
         csv_data[1].append('')
         csv_data[2].append('')
+        txt += 'Test '+ str(counter) + ':\n'
+        y_pred = clf.predict(X_test)
+        score = clf.score(X_test, y_test)
+        mean_accuracy += score
+        txt += 'Accuracy:\n'
+        txt += ' '+ str(score) + ':\n'
+        score = f1_score(y_test, y_pred, average=AVERAGE)
+        mean_f1 += score
+        txt += ' F1:\n'
+        txt += ' '+ str(score) + ':\n'
+        score = recall_score(y_test, y_pred, average=AVERAGE)
+        mean_recall += score
+        txt += ' Recall:\n'
+        txt += ' '+ str(score) + ':\n'
+        score = precision_score(y_test, y_pred, average=AVERAGE)
+        mean_precision += score
+        txt += ' Precision:\n'
+        txt += ' '+ str(score) + ':\n\n'
         counter += 1
     
+    mean_accuracy /= SPLIT_COUNT
+    mean_f1 /= SPLIT_COUNT
+    mean_recall /= SPLIT_COUNT
+    mean_precision /= SPLIT_COUNT
+    txt += 'Mean Accuracy:\n'
+    txt += ''+ str(mean_accuracy) + ':\n'
+
+    txt += 'Mean F1:\n'
+    txt += ''+ str(mean_f1) + ':\n'
+
+    txt += 'Mean Recall:\n'
+    txt += ''+ str(mean_recall) + ':\n'
+
+    txt += 'Mean Precision:\n'
+    txt += ''+ str(mean_precision) + ':\n'
+    
+    file_txt = open('./static/file_svm_analysis_'+str(id_num)+'.txt', 'w+')
+    file_txt.write(txt)
+    file_txt.close()
+
     file = pd.DataFrame(csv_data)
-    file.T.to_csv('./static/file_svm'+str(id_num)+'.csv')
+    file.T.to_csv('./static/file_svm_'+str(id_num)+'.csv')
 
     response = FileResponse(open('./static/file_svm'+str(id_num)+'.csv', 'rb'))
     response['Content-Disposition'] = 'attachment; filename=file_svm.csv'
@@ -1803,6 +1847,12 @@ def rf_csv(id_num):
 
     counter = 1
 
+    txt = ''
+    mean_accuracy = 0
+    mean_f1 = 0
+    mean_recall = 0
+    mean_precision = 0
+
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
@@ -1816,7 +1866,51 @@ def rf_csv(id_num):
         csv_data[1].append('')
         csv_data[2].append('')
 
+        txt += 'Test '+ str(counter) + ':\n'
+        y_pred = clf.predict(X_test)
+
+        score = clf.score(X_test, y_test)
+        mean_accuracy += score
+        txt += 'Accuracy:\n'
+        txt += ''+ str(score) + ':\n'
+
+        score = f1_score(y_test, y_pred, average=AVERAGE)
+        mean_f1 += score
+        txt += 'F1:\n'
+        txt += ''+ str(score) + ':\n'
+
+        score = recall_score(y_test, y_pred, average=AVERAGE)
+        mean_recall += score
+        txt += 'Recall:\n'
+        txt += ''+ str(score) + ':\n'
+
+
+        score = precision_score(y_test, y_pred, average=AVERAGE)
+        mean_precision += score
+        txt += 'Precision:\n'
+        txt += ''+ str(score) + ':\n\n'
+
         counter += 1
+
+    mean_accuracy /= SPLIT_COUNT
+    mean_f1 /= SPLIT_COUNT
+    mean_recall /= SPLIT_COUNT
+    mean_precision /= SPLIT_COUNT
+    txt += 'Mean Accuracy:\n'
+    txt += ''+ str(mean_accuracy) + ':\n'
+
+    txt += 'Mean F1:\n'
+    txt += ''+ str(mean_f1) + ':\n'
+
+    txt += 'Mean Recall:\n'
+    txt += ''+ str(mean_recall) + ':\n'
+
+    txt += 'Mean Precision:\n'
+    txt += ''+ str(mean_precision) + ':\n'
+
+    file_txt = open('./static/file_rf_analysis_'+str(id_num)+'.txt', 'w+')
+    file_txt.write(txt)
+    file_txt.close()
 
     file = pd.DataFrame(csv_data)
     file.T.to_csv('./static/file_rf'+str(id_num)+'.csv')
@@ -1959,15 +2053,15 @@ def logistic_csv(id_num):
     csv_data = [[],[],[]]
 
 
-    response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
+
+    txt = ''
 
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         clf = LogisticRegression(random_state=RANDOM_STATE)
         clf.fit(X_train, y_train)
-        response += '<div> Test '+ str(counter) + ':</div>'
         y_pred = clf.predict(X_test)
         csv_data[0].extend(csv_np[test_index])
         csv_data[1].extend(y_test)
@@ -1976,28 +2070,51 @@ def logistic_csv(id_num):
         csv_data[1].append('')
         csv_data[2].append('')
 
+        txt += 'Test '+ str(counter) + ':\n'
+
         score = clf.score(X_test, y_test)
         mean_accuracy += score
-        response += '<div> Accuracy:</div>'
-        response += '<div> '+ str(score) + ':</div>'
+        txt += 'Accuracy:\n'
+        txt += ''+ str(score) + ':\n'
 
         score = f1_score(y_test, y_pred, average=AVERAGE)
         mean_f1 += score
-        response += '<div> F1:</div>'
-        response += '<div> '+ str(score) + ':</div>'
+        txt += 'F1:\n'
+        txt += ''+ str(score) + ':\n'
 
         score = recall_score(y_test, y_pred, average=AVERAGE)
         mean_recall += score
-        response += '<div> Recall:</div>'
-        response += '<div> '+ str(score) + ':</div>'
+        txt += 'Recall:\n'
+        txt += ''+ str(score) + ':\n'
 
 
         score = precision_score(y_test, y_pred, average=AVERAGE)
         mean_precision += score
-        response += '<div> Precision:</div>'
-        response += '<div> '+ str(score) + ':</div><hr />'
+        txt += 'Precision:\n'
+        txt += ''+ str(score) + ':\n\n'
 
         counter += 1
+    
+
+    mean_accuracy /= SPLIT_COUNT
+    mean_f1 /= SPLIT_COUNT
+    mean_recall /= SPLIT_COUNT
+    mean_precision /= SPLIT_COUNT
+    txt += 'Mean Accuracy:\n'
+    txt += ''+ str(mean_accuracy) + ':\n'
+
+    txt += 'Mean F1:\n'
+    txt += ''+ str(mean_f1) + ':\n'
+
+    txt += 'Mean Recall:\n'
+    txt += ''+ str(mean_recall) + ':\n'
+
+    txt += 'Mean Precision:\n'
+    txt += ''+ str(mean_precision) + ':\n'
+
+    file_txt = open('./static/file_logistic_analysis_'+str(id_num)+'.txt', 'w+')
+    file_txt.write(txt)
+    file_txt.close()
 
     file = pd.DataFrame(csv_data)
     file.T.to_csv('./static/file_logistic'+str(id_num)+'.csv')
