@@ -21,11 +21,16 @@ class QAUserAdmin(admin.ModelAdmin):
     search_fields = ('user__username',)
 
 
+class ConfigAdmin(admin.ModelAdmin):
+    list_display = ('name', 'value')
+
+
 app = apps.get_app_config('language_skills')
 for model_name, model in app.models.items():
-    if not(model_name in ['qagroup', 'qauser']):
+    if not(model_name in ['qagroup', 'qauser', 'config']):
         admin.site.register(model)
 
 
 admin.site.register(QAGroup, GroupAdmin)
 admin.site.register(QAUser, QAUserAdmin)
+admin.site.register(Config, ConfigAdmin)
