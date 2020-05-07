@@ -22,7 +22,7 @@ class QAUserAdmin(admin.ModelAdmin):
 
 
 class ConfigAdmin(admin.ModelAdmin):
-    list_display = ('name', 'value')
+    list_display = ('name', 'value', 'active')
 
 
 app = apps.get_app_config('language_skills')
