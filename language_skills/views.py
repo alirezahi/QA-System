@@ -1644,7 +1644,7 @@ def svm_csv(id_num):
     mean_recall = 0
     mean_precision = 0
 
-    csv_data = [[],[],[]]
+    csv_data = [[],[],[], []]
 
     mean_accuracy = 0
     mean_f1 = 0
@@ -1661,9 +1661,11 @@ def svm_csv(id_num):
         csv_data[0].extend(csv_np[test_index])
         csv_data[1].extend(y_test)
         csv_data[2].extend(y_pred)
+        csv_data[3].extend(X[test_index])
         csv_data[0].append('')
         csv_data[1].append('')
         csv_data[2].append('')
+        csv_data[3].append('')
         txt += 'Test '+ str(counter) + ':\n'
         y_pred = clf.predict(X_test)
         score = clf.score(X_test, y_test)
@@ -1842,7 +1844,7 @@ def rf_csv(id_num):
     y = np.array(levels)
     csv_np = np.array(csv_files)
     kf = KFold(n_splits=SPLIT_COUNT)
-    csv_data = [[],[],[]]
+    csv_data = [[],[],[], []]
 
 
     counter = 1
@@ -1862,9 +1864,11 @@ def rf_csv(id_num):
         csv_data[0].extend(csv_np[test_index])
         csv_data[1].extend(y_test)
         csv_data[2].extend(y_pred)
+        csv_data[3].extend(X[test_index])
         csv_data[0].append('')
         csv_data[1].append('')
         csv_data[2].append('')
+        csv_data[3].append('')
 
         txt += 'Test '+ str(counter) + ':\n'
         y_pred = clf.predict(X_test)
@@ -2050,7 +2054,7 @@ def logistic_csv(id_num):
     y = np.array(levels)
     csv_np = np.array(csv_files)
     kf = KFold(n_splits=SPLIT_COUNT)
-    csv_data = [[],[],[]]
+    csv_data = [[],[],[], []]
 
 
     counter = 1
@@ -2066,9 +2070,11 @@ def logistic_csv(id_num):
         csv_data[0].extend(csv_np[test_index])
         csv_data[1].extend(y_test)
         csv_data[2].extend(y_pred)
+        csv_data[3].extend(X[test_index])
         csv_data[0].append('')
         csv_data[1].append('')
         csv_data[2].append('')
+        csv_data[3].append('')
 
         txt += 'Test '+ str(counter) + ':\n'
 
