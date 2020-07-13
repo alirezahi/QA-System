@@ -1043,16 +1043,6 @@ class CreateMCQuestions(View):
                                 opt, is_created = OptionAnswer.objects.get_or_create(
                                     text=v.form)
                                 mc.options.add(opt)
-
-                    if q['answer_type'] == 'prep':
-                        pres = PrePosition.objects.exclude(
-                            text=q['answer']).order_by('?')[:3]
-                        
-                        mc.options.add(o)
-                        for p in pres:
-                            opt, is_created = OptionAnswer.objects.get_or_create(
-                                text=p.text)
-                            mc.options.add(opt)
                     
                     if q['answer_type'] in ['prep','conjunction','pronoun','noun','determiner','interjection','adverb','classifier','adjective']:
                         selected_options = MODEL_MAP[q['answer_type']].objects.exclude(
@@ -1060,8 +1050,7 @@ class CreateMCQuestions(View):
                         
                         mc.options.add(o)
                         for p in selected_options:
-                            opt, is_created = OptionAnswer.objects.get_or_create(
-                                text=p.text)
+                            opt, is_created = OptionAnswer.objects.get_or_create(text=p.text)
                             mc.options.add(opt)
 
         return HttpResponse('Done')
@@ -2129,6 +2118,7 @@ def logistic_csv(id_num):
     response['Content-Disposition'] = 'attachment; filename=file_logistic'+str(id_num)+'.csv'
     
     return response
+
 
 def analyse_request(request):
     file = request.GET.get('file', 'levelC-farsi-biyamuzim-19')
