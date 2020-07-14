@@ -24,13 +24,20 @@ class QAUserAdmin(admin.ModelAdmin):
 class ConfigAdmin(admin.ModelAdmin):
     list_display = ('name', 'value', 'active')
 
+class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
+    list_display = ('text', 'active', 'options_count')
+    list_filter = ('active','options_count')
+
+    def options_count(self, obj):
+        return obj.options.all().count()
 
 app = apps.get_app_config('language_skills')
 for model_name, model in app.models.items():
-    if not(model_name in ['qagroup', 'qauser', 'config']):
+    if not(model_name in ['qagroup', 'qauser', 'config', 'multiplechoicequestion']):
         admin.site.register(model)
 
 
 admin.site.register(QAGroup, GroupAdmin)
 admin.site.register(QAUser, QAUserAdmin)
 admin.site.register(Config, ConfigAdmin)
+admin.site.register(MultipleChoiceQuestion, MultipleChoiceQuestionAdmin)
