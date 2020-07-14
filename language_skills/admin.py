@@ -26,7 +26,7 @@ class ConfigAdmin(admin.ModelAdmin):
 
 class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
     list_display = ('text', 'is_active', 'options_count')
-    list_filter = ('is_active','options_count')
+    list_filter = ('is_active',)
 
     def options_count(self, obj):
         return obj.options.all().count()
