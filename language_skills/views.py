@@ -970,7 +970,6 @@ class CreateMCQuestions(View):
                     'level': sentence['level'],
                 })
                 index += 1
-
             for index, sentence in enumerate(sentences):
                 whole_vacancy = ''
                 for tmp_sen in sentences:
@@ -999,30 +998,30 @@ class CreateMCQuestions(View):
                         answer=q['answer'],
                         kind=q['answer_type'],
                     )
-                    o, is_created = OptionAnswer.objects.get_or_create(text=q['answer'])
+                    o, _ = OptionAnswer.objects.get_or_create(text=q['answer'])
                     options = [o]
-                    
-                    if q['answer_type'] == 'verb':
-                        # TODO: make more options
+                    if q['answer_type'] == 'verb': # TODO: make more options
                         if VerbForm.objects.filter(form=q['answer']).exists():
                             verb_form = VerbForm.objects.filter(
                                 form=q['answer']).last()
                             v_forms = list(verb_form.verb.verbform_set.exclude(form=q['answer']).order_by('-freq'))[:12]
+                            v_forms = list(set([v_form.form for v_form in v_forms]))
                             import random
                             random.shuffle(v_forms)
                             v_forms = v_forms[:3]
                             for v in v_forms:
-                                opt, is_created = OptionAnswer.objects.get_or_create(
-                                    text=v.form)
+                                opt, _ = OptionAnswer.objects.get_or_create(
+                                    text=v)
                                 options.append(opt)
                         else:
                             v_forms = list(VerbForm.objects.exclude(
                                 form=q['answer']).order_by('-freq')[:50])
+                            v_forms = list(set([v_form.form for v_form in v_forms]))
                             import random
                             random.shuffle(v_forms)
-                            v_forms = v_forms[:3]
-                            for v in v_forms:
-                                opt, is_created = OptionAnswer.objects.get_or_create(text=v.form)
+                            v_forms_tmp = v_forms[:3]
+                            for v in v_forms_tmp:
+                                opt, _ = OptionAnswer.objects.get_or_create(text=v)
                                 options.append(opt)
                         import random
                         random.shuffle(options)
@@ -1036,21 +1035,20 @@ class CreateMCQuestions(View):
                                 form=q['answer']).last()
                             v_forms = list(VerbForm.objects.filter(tense=verb_form.tense).exclude(
                                 form=q['answer']).order_by('-freq'))[:40]
+                            v_forms = list(set([v_form.form for v_form in v_forms]))
                             import random
                             random.shuffle(v_forms)
-                            v_forms = v_forms[:3]
-                            for v in v_forms:
-                                opt, is_created = OptionAnswer.objects.get_or_create(
-                                    text=v.form)
+                            v_forms_tmp = v_forms[:3]
+                            for v in v_forms_tmp:
+                                opt, _ = OptionAnswer.objects.get_or_create(
+                                    text=v)
                                 mc.options.add(opt)
-                    
                     if q['answer_type'] in ['prep','conjunction','pronoun','noun','determiner','interjection','adverb','classifier','adjective']:
                         selected_options = MODEL_MAP[q['answer_type']].objects.exclude(
                             text=q['answer']).order_by('?')[:3]
-                        
                         mc.options.add(o)
                         for p in selected_options:
-                            opt, is_created = OptionAnswer.objects.get_or_create(text=p.text)
+                            opt, _ = OptionAnswer.objects.get_or_create(text=p.text)
                             mc.options.add(opt)
 
         return HttpResponse('Done')
