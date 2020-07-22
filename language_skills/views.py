@@ -973,10 +973,11 @@ class CreateMCQuestions(View):
             for index, sentence in enumerate(sentences):
                 whole_vacancy = ''
                 for tmp_sen in sentences:
-                    if tmp_sen['index'] == index:
-                        whole_vacancy += tmp_sen['vacancy'] + ' '
-                    else:
-                        whole_vacancy += tmp_sen['origin'] + ' '
+                    if -3 < (tmp_sen['index'] - index) < 3:
+                        if tmp_sen['index'] == index:
+                            whole_vacancy += tmp_sen['vacancy'] + ' '
+                        else:
+                            whole_vacancy += tmp_sen['origin'] + ' '
                 res = res.replace('-', '‌').replace('&quot;', '\"')
                 whole_vacancy = whole_vacancy.replace(
                     '-', '‌').replace('&quot;', '\"')
