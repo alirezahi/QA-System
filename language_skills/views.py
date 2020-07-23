@@ -897,6 +897,7 @@ class CreateQuestions(View):
                 part_vacancy = part_vacancy.replace(
                     '-', '‌').replace('&quot;', '\"')
                 sentence['origin-text'] = res
+                sentence['whole_vacancy'] = whole_vacancy
                 sentence['part_vacancy'] = part_vacancy
             if len(res.split(' ')) < 3:
                 continue
