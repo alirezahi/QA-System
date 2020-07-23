@@ -77,6 +77,7 @@
             user_answer:'{{question.answer|default_if_none:''}}',
             text: '{{question.question.text}}',
             whole_text: '{{question.question.whole_text}}',
+            part_text: '{{question.question.part_text}}',
         },
         {% endfor %}
     ];
@@ -108,8 +109,10 @@
             '{{option.text}}',
         {% endfor %}
     ];
-    {% if whole_text %}
+    {% if whole_text == 'whole' %}
     text = '{{question.whole_text}}';
+    {% elif whole_text == 'part' %}
+    text = '{{question.part_text}}';
     {% else %}
     text = '{{question.text}}';
     {% endif %}

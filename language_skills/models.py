@@ -117,6 +117,7 @@ class OptionAnswer(models.Model):
 class MultipleChoiceQuestion(AbstractAnswer, AbstractActive):
     text = models.TextField()
     whole_text = models.TextField()
+    part_text = models.TextField(null=True,blank=True)
     level = models.CharField(max_length=4)
     options = models.ManyToManyField(OptionAnswer, blank=True)
     origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
@@ -153,6 +154,7 @@ class MCQuestionSet(models.Model):
 class BlankQuestion(AbstractAnswer, AbstractActive):
     text = models.TextField()
     whole_text = models.TextField()
+    part_text = models.TextField(null=True,blank=True)
     level = models.CharField(max_length=4)
     origin_text = models.ForeignKey(Text, on_delete=models.CASCADE)
 

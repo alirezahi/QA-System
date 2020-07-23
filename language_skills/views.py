@@ -79,8 +79,8 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-            ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+            ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
             ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
@@ -92,7 +92,7 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
@@ -137,8 +137,8 @@ class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
         ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
@@ -149,7 +149,7 @@ class OfferBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer', '')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
@@ -196,8 +196,8 @@ class CommonBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
         ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
@@ -208,7 +208,7 @@ class CommonBlankQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer', '')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = BlankQuestionSet.objects.get(id=set_id)
@@ -548,8 +548,8 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
     
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
             ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
         set_id = self.kwargs['set_id']
@@ -558,7 +558,7 @@ class MCQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer','')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
@@ -602,8 +602,8 @@ class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
             ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
         set_id = self.kwargs['set_id']
@@ -612,7 +612,7 @@ class OfferMCQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer', '')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
@@ -658,8 +658,8 @@ class CommonMCQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
             ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
         set_id = self.kwargs['set_id']
@@ -668,7 +668,7 @@ class CommonMCQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer', '')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['timer_limit'] = TIMER_LIMIT
         question_set = MCQuestionSet.objects.get(id=set_id)
         index = question_set.questions.filter(order__lt=order).count()
@@ -881,18 +881,23 @@ class CreateQuestions(View):
                 index += 1
 
             for index, sentence in enumerate(sentences):
+                part_vacancy = ''
                 whole_vacancy = ''
                 for tmp_sen in sentences:
-                    if -3 < (tmp_sen['index'] - index) < 3:
-                        if tmp_sen['index'] == index:
-                            whole_vacancy += tmp_sen['vacancy'] + ' '
-                        else:
-                            whole_vacancy += tmp_sen['origin'] + ' '
+                    is_added_to_part = -3 < (tmp_sen['index'] - index) < 3
+                    if tmp_sen['index'] == index:
+                        whole_vacancy += tmp_sen['vacancy'] + ' '
+                        part_vacancy += tmp_sen['vacancy'] + ' ' if is_added_to_part else ''
+                    else:
+                        whole_vacancy += tmp_sen['origin'] + ' '
+                        part_vacancy += tmp_sen['origin'] + ' ' if is_added_to_part else ''
                 res = res.replace('-', '‌').replace('&quot;','\"')
                 whole_vacancy = whole_vacancy.replace(
                     '-', '‌').replace('&quot;', '\"')
+                part_vacancy = part_vacancy.replace(
+                    '-', '‌').replace('&quot;', '\"')
                 sentence['origin-text'] = res
-                sentence['whole_vacancy'] = whole_vacancy
+                sentence['part_vacancy'] = part_vacancy
             if len(res.split(' ')) < 3:
                 continue
             text = Text.objects.create(
@@ -904,6 +909,7 @@ class CreateQuestions(View):
                     BlankQuestion.objects.create(
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
+                        part_text=q['part_vacancy'],
                         origin_text=text,
                         level=file_level,
                         answer=q['answer'],
@@ -974,28 +980,35 @@ class CreateMCQuestions(View):
                 index += 1
             for index, sentence in enumerate(sentences):
                 whole_vacancy = ''
+                part_vacancy = ''
                 for tmp_sen in sentences:
-                    if -3 < (tmp_sen['index'] - index) < 3:
+                    is_added_to_part = -3 < (tmp_sen['index'] - index) < 3
                         if tmp_sen['index'] == index:
                             whole_vacancy += tmp_sen['vacancy'] + ' '
+                            part_vacancy += tmp_sen['vacancy'] + ' ' if is_added_to_part else ''
                         else:
                             whole_vacancy += tmp_sen['origin'] + ' '
+                            part_vacancy += tmp_sen['origin'] + ' ' if is_added_to_part else ''
                 res = res.replace('-', '‌').replace('&quot;', '\"')
                 whole_vacancy = whole_vacancy.replace(
                     '-', '‌').replace('&quot;', '\"')
+                part_vacancy = part_vacancy.replace(
+                    '-', '‌').replace('&quot;', '\"')
                 sentence['origin-text'] = res
                 sentence['whole_vacancy'] = whole_vacancy
+                sentence['part_vacancy'] = part_vacancy
             if len(res.split(' ')) < 3:
                 continue
             text = Text.objects.create(
                 text=res,
                 level=''
             )
-            for q in sentences:
+            for q in sentences[2:-2]:
                 if q['answer_type'] in QUESTION_TYPES:
                     mc = MultipleChoiceQuestion.objects.create(
                         text=q['vacancy'],
                         whole_text=q['whole_vacancy'],
+                        part_text=q['part_vacancy'],
                         origin_text=text,
                         level=file_level,
                         answer=q['answer'],
@@ -1118,8 +1131,8 @@ class MCLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
             ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
         order = self.kwargs['order']
@@ -1127,7 +1140,7 @@ class MCLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer', '')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['timer_limit'] = TIMER_LIMIT
         question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().mc
         index = question_set.questions.filter(order__lt=order).count()
@@ -1169,8 +1182,8 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         generate_leveled_vquestion_set(self.request.user)
         generate_leveled_mcquestion_set(self.request.user)
-        SHOW_WHOLE_TEXT = Config.objects.filter(name='show_whole_text', active=True).last(
-        ).value if Config.objects.filter(name='show_whole_text', active=True) else 'false'
+        QUESTION_TEXT_CONDITION = Config.objects.filter(name='question_text_condition', active=True).last(
+        ).value if Config.objects.filter(name='question_text_condition', active=True) else 'part'
         ANSWER_REQUIRED = Config.objects.filter(name='answer_required', active=True).last(
         ).value if Config.objects.filter(name='answer_required', active=True) else 'false'
         TIMER_LIMIT = int(Config.objects.filter(name='timer_limit', active=True).last(
@@ -1180,7 +1193,7 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
             data = self.request.GET
             answer = data.get('answer', '')
         context = super().get_context_data(**kwargs)
-        context['whole_text'] = True if SHOW_WHOLE_TEXT == 'true' else False
+        context['whole_text'] = QUESTION_TEXT_CONDITION
         context['answer_required'] = True if ANSWER_REQUIRED == 'true' else False
         context['timer_limit'] = TIMER_LIMIT
         question_set = LevelDetectionQuestion.objects.filter(user=self.request.user).last().blank
