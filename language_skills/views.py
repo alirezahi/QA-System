@@ -87,6 +87,7 @@ class BlankQuestionTemplate(LoginRequiredMixin, TemplateView):
             ).value) if Config.objects.filter(name='timer_limit', active=True) else 60
         set_id = self.kwargs['set_id']
         order = self.kwargs['order']
+        
         if self.request.method == 'GET':
             data = self.request.GET
             answer = data.get('answer','')
@@ -1202,6 +1203,9 @@ class BlankLevelQuestionTemplate(LoginRequiredMixin, TemplateView):
     def dispatch(self, request, *args, **kwargs):
         kwargs['last'] = True
         order = self.kwargs['order']
+        if not LevelDetectionQuestion.objects.filter(user=request.user).exists():
+            generate_leveled_vquestion_set(request.user)
+            generate_leveled_mcquestion_set(request.user)
         question_set = LevelDetectionQuestion.objects.filter(
             user=request.user).last().blank
         question_select = question_set.questions.filter(
