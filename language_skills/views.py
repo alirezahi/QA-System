@@ -983,12 +983,12 @@ class CreateMCQuestions(View):
                 part_vacancy = ''
                 for tmp_sen in sentences:
                     is_added_to_part = -3 < (tmp_sen['index'] - index) < 3
-                        if tmp_sen['index'] == index:
-                            whole_vacancy += tmp_sen['vacancy'] + ' '
-                            part_vacancy += tmp_sen['vacancy'] + ' ' if is_added_to_part else ''
-                        else:
-                            whole_vacancy += tmp_sen['origin'] + ' '
-                            part_vacancy += tmp_sen['origin'] + ' ' if is_added_to_part else ''
+                    if tmp_sen['index'] == index:
+                        whole_vacancy += tmp_sen['vacancy'] + ' '
+                        part_vacancy += tmp_sen['vacancy'] + ' ' if is_added_to_part else ''
+                    else:
+                        whole_vacancy += tmp_sen['origin'] + ' '
+                        part_vacancy += tmp_sen['origin'] + ' ' if is_added_to_part else ''
                 res = res.replace('-', '‌').replace('&quot;', '\"')
                 whole_vacancy = whole_vacancy.replace(
                     '-', '‌').replace('&quot;', '\"')
