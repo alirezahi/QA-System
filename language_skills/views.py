@@ -1535,7 +1535,7 @@ def svm_req(request):
     words = []
     sentences = []
 
-    for index, item in csv_files:
+    for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
@@ -1642,7 +1642,7 @@ def svm_csv(id_num):
     words = []
     sentences = []
 
-    for index, item in csv_files:
+    for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
@@ -1766,7 +1766,7 @@ def rf_req(request):
     words = []
     sentences = []
 
-    for index, item in csv_files:
+    for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
@@ -1870,7 +1870,7 @@ def rf_csv(id_num):
     words = []
     sentences = []
 
-    for index, item in csv_files:
+    for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
@@ -1995,7 +1995,7 @@ def logistic_req(request):
     words = []
     sentences = []
 
-    for index, item in csv_files:
+    for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
@@ -2100,7 +2100,7 @@ def logistic_csv(id_num):
     words = []
     sentences = []
 
-    for index, item in csv_files:
+    for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
