@@ -457,7 +457,7 @@ class Analyser():
     def f3_analyse(self):
         self.f3 = (4.71 * (self.char_count / int(self.token_count))) + (0.5 * (self.token_count / int(self.sentence_count))) - 21.43
 
-    def tolist(self):
+   def tolist(self):
         summary = []
 
         list_fields = []

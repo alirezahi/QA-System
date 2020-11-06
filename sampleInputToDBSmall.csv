@@ -1,7 +1,0 @@
-q,WordIndex,wordForm,Lemma,POS,DepRelation,DepType,PhonePattern,SyllableNumber,WordCharacter,POS type (functional/content),ConstituencyParsing,ConstituencyNumberOfNodes,CVCC Count,CVC Count,CV Count
-1,1,هادی,هادی,Nasp---,5,NSUBJ,CVCV,2,4,c,(ROOT(S(VPS(N *),4,0,0,2
-1,2,کارمند,کارمند,Ncsp--z,1,NN,CVCCVC,2,6,c,(VPC(NPC(N *),3,0,2,0
-1,3,اداره,اداره,Ncspk-z,5,COPCOMP,CVCVCV,3,5,c,(NPC(NPC(N *),3,0,0,3
-1,4,پست,پست,Ncsp---,3,NN,CVC,1,3,c,(NPC(N *))),2,0,1,0
-1,5,است,بودن,Vpykshs----,0,ROOT,CVC,1,3,c,(V *)),1,0,1,0
-1,6,.,.,Oe,5,PUNC,.,1,1,f,(PUNC *)),1,0,0,1
