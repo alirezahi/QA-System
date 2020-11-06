@@ -301,12 +301,7 @@ class Analyser():
         self.count_clauses_dependency_analyse()
         self.name_entity_count_analysis()
         self.name_entity_to_token_ratio_analyse()
-<<<<<<< HEAD
         self.clause_dependency_to_total_dependency_analyse()
-=======
-        self.clause_dependency_total_dependency_analyse()
-
->>>>>>> 76b2d6f0395347e1f67f31b0ebacf0b99648f5a1
     def freq_analyse(self):
         freq_dict = {}
         freq_dict_bon = {}
