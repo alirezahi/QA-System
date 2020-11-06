@@ -12,7 +12,7 @@ import pandas as pd
 from language_skills.models import *
 from django.views import View
 from django.shortcuts import redirect
-from language_skills.utilities import Analyser
+from language_skills.utilities import Analyser, tf_idf
 from django.http import HttpResponse, FileResponse
 from threading import Thread
 from scipy import spatial
@@ -1532,12 +1532,22 @@ def svm_req(request):
 
     datas = []
     levels = []
+    words = []
+    sentences = []
 
-    for file in csv_files:
+    for index, item in csv_files:
+        word_list = pd.read_csv('./data/'+file)
+        words.append(word_list)
+        sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
+        sentences.append(senetence)
+    
+
+    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+
+    for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        words = pd.read_csv('./data/'+file)
-        a = Analyser(words)
+        a = Analyser(words[index], tf_idf=tf_idf_results)
         a.analyse()
         datas.append(a.tolist())
 
@@ -1546,7 +1556,7 @@ def svm_req(request):
     y = np.array(levels)
     kf = KFold(n_splits=SPLIT_COUNT)
 
-    response = '< style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
+    response = '<div style="padding: 10px;margin: 10px;border: 2px solid #0b3daf;border-radius: 5px;background-color: aliceblue;">'
     counter = 1
 
     mean_accuracy = 0
@@ -1629,12 +1639,22 @@ def svm_csv(id_num):
 
     datas = []
     levels = []
+    words = []
+    sentences = []
 
-    for file in csv_files:
+    for index, item in csv_files:
+        word_list = pd.read_csv('./data/'+file)
+        words.append(word_list)
+        sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
+        sentences.append(senetence)
+    
+
+    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+
+    for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        words = pd.read_csv('./data/'+file)
-        a = Analyser(words)
+        a = Analyser(words[index], tf_idf=tf_idf_results)
         a.analyse()
         datas.append(a.tolist())
 
@@ -1743,12 +1763,22 @@ def rf_req(request):
     mean_f1 = 0
     mean_recall = 0
     mean_precision = 0
+    words = []
+    sentences = []
 
-    for file in csv_files:
+    for index, item in csv_files:
+        word_list = pd.read_csv('./data/'+file)
+        words.append(word_list)
+        sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
+        sentences.append(senetence)
+    
+
+    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+
+    for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        words = pd.read_csv('./data/'+file)
-        a = Analyser(words)
+        a = Analyser(words[index], tf_idf=tf_idf_results)
         a.analyse()
         datas.append(a.tolist())
 
@@ -1837,12 +1867,22 @@ def rf_csv(id_num):
     mean_f1 = 0
     mean_recall = 0
     mean_precision = 0
+    words = []
+    sentences = []
 
-    for file in csv_files:
+    for index, item in csv_files:
+        word_list = pd.read_csv('./data/'+file)
+        words.append(word_list)
+        sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
+        sentences.append(senetence)
+    
+
+    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+
+    for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        words = pd.read_csv('./data/'+file)
-        a = Analyser(words)
+        a = Analyser(words[index], tf_idf=tf_idf_results)
         a.analyse()
         datas.append(a.tolist())
 
@@ -1952,12 +1992,22 @@ def logistic_req(request):
     mean_f1 = 0
     mean_recall = 0
     mean_precision = 0
+    words = []
+    sentences = []
 
-    for file in csv_files:
+    for index, item in csv_files:
+        word_list = pd.read_csv('./data/'+file)
+        words.append(word_list)
+        sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
+        sentences.append(senetence)
+    
+
+    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+
+    for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        words = pd.read_csv('./data/'+file)
-        a = Analyser(words)
+        a = Analyser(words[index], tf_idf=tf_idf_results)
         a.analyse()
         datas.append(a.tolist())
 
@@ -2047,12 +2097,22 @@ def logistic_csv(id_num):
     mean_f1 = 0
     mean_recall = 0
     mean_precision = 0
+    words = []
+    sentences = []
 
-    for file in csv_files:
+    for index, item in csv_files:
+        word_list = pd.read_csv('./data/'+file)
+        words.append(word_list)
+        sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
+        sentences.append(senetence)
+    
+
+    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+
+    for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        words = pd.read_csv('./data/'+file)
-        a = Analyser(words)
+        a = Analyser(words[index], tf_idf=tf_idf_results)
         a.analyse()
         datas.append(a.tolist())
 

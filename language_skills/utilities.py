@@ -96,9 +96,20 @@ def run_perl():
     )
     perl_script.communicate()
 
+
+def tf_idf(texts):
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    import numpy as np
+
+    vectorizer = TfidfVectorizer()
+    results = vectorizer.fit_transform(texts)
+
+    return results
+
 class Analyser():
-    def __init__(self, words):
+    def __init__(self, words, tf_idf_results=None):
         self.words = words
+        self.tf_idf_results = tf_idf_results
         self.freq_dict = 0
         self.freq_dict_bon = 0
         self.freq_dict_dep = 0
@@ -264,6 +275,7 @@ class Analyser():
         self.name_entity_count_analysis()
         self.name_entity_to_token_ratio_analyse()
         self.clause_dependency_total_dependency_analyse()
+
     def freq_analyse(self):
         freq_dict = {}
         freq_dict_bon = {}
@@ -507,13 +519,17 @@ class Analyser():
                     'name_entity_to_token_ratio',
                     'name_entity_count',
                 ],
+                'tf_idf': ['tf_idf_results']
             }
             categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().value.split(',')]
             for c in categories:
                 list_fields.extend(f[c])
 
         for field in list_fields:
-            summary.append(self.__dict__[field])
+            if isinstance(self.__dict__[field], list):
+                summary.extend(self.__dict__[field])
+            else:
+                summary.append(self.__dict__[field])
             
         return summary
 
