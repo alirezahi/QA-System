@@ -1539,7 +1539,7 @@ def svm_req(request):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
-        sentences.append(senetence)
+        sentences.append(sentence)
     
 
     tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
@@ -1646,7 +1646,7 @@ def svm_csv(id_num):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
-        sentences.append(senetence)
+        sentences.append(sentence)
     
 
     tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
@@ -1770,7 +1770,7 @@ def rf_req(request):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
-        sentences.append(senetence)
+        sentences.append(sentence)
     
 
     tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
@@ -1874,7 +1874,7 @@ def rf_csv(id_num):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
-        sentences.append(senetence)
+        sentences.append(sentence)
     
 
     tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
@@ -1999,7 +1999,7 @@ def logistic_req(request):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
-        sentences.append(senetence)
+        sentences.append(sentence)
     
 
     tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
@@ -2104,7 +2104,7 @@ def logistic_csv(id_num):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
-        sentences.append(senetence)
+        sentences.append(sentence)
     
 
     tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
