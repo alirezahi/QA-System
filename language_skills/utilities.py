@@ -7,6 +7,7 @@ import networkx as nx
 from scipy import spatial
 from language_skills.models import *
 
+
 posTypeDict = {
     'naghshi': ['f'],
     'mohtavai': ['c'],
@@ -116,9 +117,10 @@ def tf_idf(texts):
     return results
 
 class Analyser():
-    def __init__(self, words, tf_idf=None):
+    def __init__(self, words, tf_idf=None, tf_idf_without_stopwords):
         self.words = words
         self.tf_idf_results = tf_idf
+        self.tf_idf_without_stopwords = tf_idf_without_stopwords
         self.freq_dict = 0
         self.freq_dict_bon = 0
         self.freq_dict_dep = 0

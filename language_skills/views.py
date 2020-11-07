@@ -20,6 +20,7 @@ from sklearn.model_selection import KFold
 from sklearn.svm import SVC
 from sklearn.metrics import f1_score, recall_score, precision_score
 from django.http import JsonResponse
+import stopwrods from .stopwords
 import numpy as np
 import os
 import math
@@ -1534,20 +1535,37 @@ def svm_req(request):
     levels = []
     words = []
     sentences = []
+    sentences_without_stopwords = []
 
     for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
+
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
         sentences.append(sentence)
-    
 
-    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+        sentence_without_stopwords = []
+        for i_index, i in word_list.iterrows():
+            if not(i['Lemma'] in stopwords):
+                sentences_without_stopwords.append(i['Lemma']+ ' ')
+        sentence_without_stopwords = ' '.join([word for word in sentence_without_stopwords])
+        sentences_without_stopwords.append(sentence)
+    
+    categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().value.split(',')]
+
+    tf_idf_results = None
+    tf_idf_without_stopwords_results = None
+
+    if 'tf_idf_without_stopwords' in categories:
+        tf_idf_without_stopwords_results = [list(i) for i in list(tf_idf(sentences_without_stopwords).toarray())]
+    
+    if 'tf_idf' in categories:
+        tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
 
     for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        a = Analyser(words[index], tf_idf=tf_idf_results)
+        a = Analyser(words[index], tf_idf=tf_idf_results, tf_idf_without_stopwords=tf_idf_without_stopwords_results)
         a.analyse()
         datas.append(a.tolist())
 
@@ -1641,20 +1659,37 @@ def svm_csv(id_num):
     levels = []
     words = []
     sentences = []
+    sentences_without_stopwords = []
 
     for index, item in enumerate(csv_files):
         word_list = pd.read_csv('./data/'+file)
         words.append(word_list)
+
         sentence = ' '.join([i['Lemma'] for i_index, i in word_list.iterrows()])
         sentences.append(sentence)
-    
 
-    tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
+        sentence_without_stopwords = []
+        for i_index, i in word_list.iterrows():
+            if not(i['Lemma'] in stopwords):
+                sentences_without_stopwords.append(i['Lemma']+ ' ')
+        sentence_without_stopwords = ' '.join([word for word in sentence_without_stopwords])
+        sentences_without_stopwords.append(sentence)
+    
+    categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().value.split(',')]
+
+    tf_idf_results = None
+    tf_idf_without_stopwords_results = None
+
+    if 'tf_idf_without_stopwords' in categories:
+        tf_idf_without_stopwords_results = [list(i) for i in list(tf_idf(sentences_without_stopwords).toarray())]
+    
+    if 'tf_idf' in categories:
+        tf_idf_results = [list(i) for i in list(tf_idf(sentences).toarray())]
 
     for index,file in enumerate(csv_files):
         file_level = get_level(file)
         levels.append(file_level)
-        a = Analyser(words[index], tf_idf=tf_idf_results)
+        a = Analyser(words[index], tf_idf=tf_idf_results, tf_idf_without_stopwords=tf_idf_without_stopwords_results)
         a.analyse()
         datas.append(a.tolist())
 
