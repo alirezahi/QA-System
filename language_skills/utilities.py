@@ -564,7 +564,8 @@ class Analyser():
                     'name_entity_to_token_ratio',
                     #'name_entity_count',
                 ],
-                'tf_idf': ['tf_idf_results']
+                'tf_idf': ['tf_idf_results'],
+                'tf_idf_without_stopwords': ['tf_idf_without_stopwords']
             }
             categories = [i.strip() for i in Config.objects.filter(name='analysis_category', active=True).last().value.split(',')]
             for c in categories:
