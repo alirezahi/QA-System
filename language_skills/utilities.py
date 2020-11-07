@@ -117,7 +117,7 @@ def tf_idf(texts):
     return results
 
 class Analyser():
-    def __init__(self, words, tf_idf=None, tf_idf_without_stopwords):
+    def __init__(self, words, tf_idf=None, tf_idf_without_stopwords=None):
         self.words = words
         self.tf_idf_results = tf_idf
         self.tf_idf_without_stopwords = tf_idf_without_stopwords
