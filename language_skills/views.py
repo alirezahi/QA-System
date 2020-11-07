@@ -20,7 +20,7 @@ from sklearn.model_selection import KFold
 from sklearn.svm import SVC
 from sklearn.metrics import f1_score, recall_score, precision_score
 from django.http import JsonResponse
-import stopwrods from .stopwords
+from .stopwords import stopwords
 import numpy as np
 import os
 import math
